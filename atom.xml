@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>新媒体开发</title>
+  
+  <subtitle>Unity多媒体互动开发，Unity最新技术学习</subtitle>
+  <link href="/atom.xml" rel="self"/>
+  
+  <link href="https://fredlyu.github.io/"/>
+  <updated>2019-08-10T15:27:24.894Z</updated>
+  <id>https://fredlyu.github.io/</id>
+  
+  <author>
+    <name>柒月</name>
+    
+  </author>
+  
+  <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>设计模式与游戏完美开发学习--状态模式(应用篇)</title>
+    <link href="https://fredlyu.github.io/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B8%8E%E6%B8%B8%E6%88%8F%E5%AE%8C%E7%BE%8E%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0-%E7%8A%B6%E6%80%81%E6%A8%A1%E5%BC%8F-%E5%BA%94%E7%94%A8%E7%AF%87.html"/>
+    <id>https://fredlyu.github.io/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B8%8E%E6%B8%B8%E6%88%8F%E5%AE%8C%E7%BE%8E%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0-%E7%8A%B6%E6%80%81%E6%A8%A1%E5%BC%8F-%E5%BA%94%E7%94%A8%E7%AF%87.html</id>
+    <published>2019-08-10T13:40:48.000Z</published>
+    <updated>2019-08-10T15:27:24.894Z</updated>
+    
+    <content type="html"><![CDATA[<html><head></head><body><h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>  上一个章节，我们已经了解了什么是状态模式，并设计实现了状态模式。本节我们主要来完成状态模式的实际应用。<br>  我们知道，基于Unity3D开发的游戏都只会再一个场景中运行，因此我们可以把每一个场景都当作一个状态类，并维护这个类。这样场景之间的跳转就可以看作是状态之间的跳转；而且同一时间只会有一个状态存在，也符合游戏执行时只有一个场景存在的实际情况。</p><h3 id="场景状态类SceneState的设计"><a href="#场景状态类SceneState的设计" class="headerlink" title="场景状态类SceneState的设计"></a>场景状态类SceneState的设计</h3><p>对于游戏大致可分为开始场景、主画面场景和打斗场景，因此可分别对于三个不同的状态。让三个场景类都继承ISceneState，然后再设计一个拥有者SceneStateController,而我们此次主要基于Unity3D来学习设计模式，因此我们还需要一个GameLoop类，让其拥有SceneStateController，以便完成与Unity3D的互动对接，结构如下图所示：  </p><img src="/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B8%8E%E6%B8%B8%E6%88%8F%E5%AE%8C%E7%BE%8E%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0-%E7%8A%B6%E6%80%81%E6%A8%A1%E5%BC%8F-%E5%BA%94%E7%94%A8%E7%AF%87/SceneState.png" class>  <h4 id="说明如下："><a href="#说明如下：" class="headerlink" title="说明如下："></a>说明如下：</h4><blockquote><p>ISceneSate：场景类的接口，主要用于规范场景状态的行为；<br>StartState、MainMenuState、BattleState：分别对应开始场景、主画面场景和打斗场景；<br>SceneStateController：场景状态的拥有者，保持当前游戏状态，并控制场景状态的转变，而且负责与GameLoop互动操作；<br>GameLoop：游戏的主循环，负责与Unity3D互动，并且可以初始化游戏和定期更新游戏。  </p></blockquote><h3 id="场景状态模式的实现"><a href="#场景状态模式的实现" class="headerlink" title="场景状态模式的实现"></a>场景状态模式的实现</h3><h4 id="ISceneState接口类实现"><a href="#ISceneState接口类实现" class="headerlink" title="ISceneState接口类实现"></a>ISceneState接口类实现</h4><pre><code>public class ISceneState{    /// <summary>    /// 状态名称    /// </summary>    private string m_StateName = "ISceneState";    public string StateName    {        get        {            return m_StateName;        }        set        {            m_StateName = value;        }    }    /// <summary>    /// 状态控制者    /// </summary>    protected SceneStateController m_Controller = null;    public ISceneState(SceneStateController controller)    {        m_Controller = controller;    }    /// <summary>    /// 状态开始，可初始化一些数据    /// </summary>    public virtual void StateBegin() { }    /// <summary>    /// 状态更新，可以做游戏定时更新输入等    /// </summary>    public virtual void StateUpdate() { }    /// <summary>    /// 状态结束，可做资源释放    /// </summary>    public virtual void StateEnd() { }}</code></pre><p>  StateBegin、StateUpdate和StateEnd三个方法分别完成每个场景状态的初始化、更新和结束场景状态时一些释放操作。</p><h4 id="开始状态类StartState的实现"><a href="#开始状态类StartState的实现" class="headerlink" title="开始状态类StartState的实现"></a>开始状态类StartState的实现</h4><pre><code>public class StartState : ISceneState{    public StartState(SceneStateController controller) : base(controller)    {        StateName = "StartState";    }    /// <summary>    /// 开始    /// </summary>    public override void StateBegin()    {        //可以在此进行游戏数据加载和初始化等    }    /// <summary>    /// 更新    /// </summary>    public override void StateUpdate()    {        //更新状态        m_Controller.SetState(new MainMenuState(m_Controller), "MainMenuScene");    }}</code></pre><p>  开始场景主要完成一些游戏数据的加载，因此可以放在StateBegin方法中执行，而在StateUpdate方法中数据加载完成之后来切换游戏的状态，进入MainMenuState主画面场景。</p><h4 id="主画面场景类MainMenuState的实现"><a href="#主画面场景类MainMenuState的实现" class="headerlink" title="主画面场景类MainMenuState的实现"></a>主画面场景类MainMenuState的实现</h4><pre><code>public class MainMenuState : ISceneState{    public MainMenuState(SceneStateController controller) : base(controller)    {        StateName = "MainMenuState";    }    /// <summary>    /// 开始    /// </summary>    public override void StateBegin()    {        Button tempBtn = GameObject.Find("StartGameBtn").GetComponent<Button>();        if (tempBtn)            tempBtn.onClick.AddListener(() => OnStartGameBtnClick(tempBtn));    }    /// <summary>    /// 开始游戏按键的响应事件    /// </summary>    /// <param name="button"></param>    private void OnStartGameBtnClick(Button button)    {        m_Controller.SetState(new BattleState(m_Controller), "BattleScene");    }}</code></pre><p>  主画面场景主要用来展示玩家的UI一些操作，本次只是简单的应用案例，因此我们在此场景主要时一个“开始”按钮，用来切换进入打斗场景。因此在StateBegin方法中完成开始按钮的查找和点击事件的初始化，当玩家点击按钮时，状态就会被切换为打斗状态，从而进入打斗场景。</p><h4 id="打斗场景BattleState的实现"><a href="#打斗场景BattleState的实现" class="headerlink" title="打斗场景BattleState的实现"></a>打斗场景BattleState的实现</h4><pre><code>public class BattleState : ISceneState{    public BattleState(SceneStateController controller) : base(controller)    {        StateName = "BattleState";    }    public override void StateBegin()    {        //游戏初始化等    }    public override void StateEnd()    {        //状态的释放或其他资源的释放    }    public override void StateUpdate()    {        //输入        InputProcess();        //游戏逻辑更新        //游戏是否结束    }    /// <summary>    /// 游戏输入    /// </summary>    private void InputProcess()    {        //玩家输入程序判断代码......    }}</code></pre><p>  在刚开始的StateBegin方法中完成游戏画面等一些的初始化，然后在StateUpdate方法中完成游戏的输入、游戏逻辑、游戏状态的一些更新，最后如果状态结束就在StateEnd方法中完成一些资源的释放等操作。</p><h4 id="状态拥有者SceneStateController的实现"><a href="#状态拥有者SceneStateController的实现" class="headerlink" title="状态拥有者SceneStateController的实现"></a>状态拥有者SceneStateController的实现</h4><pre><code>public class SceneStateController{    /// <summary>    /// 状态    /// </summary>    private ISceneState m_State = null;    /// <summary>    /// 状态是不是刚启动    /// </summary>    private bool m_bRunBegin = false;    /// <summary>    /// 场景加载的进度    /// </summary>    private AsyncOperation asyncOperation;    public SceneStateController() { }    /// <summary>    /// 设置状态    /// </summary>    /// <param name="state">具体状态的实例</param>    /// <param name="loadSceneName">场景名称</param>    public void SetState(ISceneState state,string loadSceneName)    {        m_bRunBegin = false;        //加载场景        LoadScene(loadSceneName);        //释放前一个状态        if (m_State != null)            m_State.StateEnd();        //更新状态        m_State = state;    }    /// <summary>    /// 载入场景    /// </summary>    /// <param name="sceneName">场景名称</param>    private void LoadScene(string sceneName)    {        if (string.IsNullOrEmpty(sceneName))            return;        //异步加载场景        asyncOperation = SceneManager.LoadSceneAsync(sceneName);    }    /// <summary>    /// 更新    /// </summary>    public void StateUpdate()    {        //Debug.Log(asyncOperation.progress);        //场景是否加载完成        if (asyncOperation != null && !asyncOperation.isDone)            return;        //通知新的State开始        if(m_State != null && m_bRunBegin == false)        {            m_bRunBegin = true;            m_State.StateBegin();        }        //更新        if (m_State != null)            m_State.StateUpdate();    }}</code></pre><p>  SceneStateController拥有一个IScneState字段，用来存储当前的游戏状态；SetState实现场景之间的相互转换，首先加载新场景，然后释放前一个场景并把当前场景设置为新的场景，由于加载场景使用了异步加载，因此在StateUpdate方法中先判断场景是否加载完毕，如果加载完毕则初始化新的场景并更新场景。</p><h4 id="游戏主循环GameLoop的实现"><a href="#游戏主循环GameLoop的实现" class="headerlink" title="游戏主循环GameLoop的实现"></a>游戏主循环GameLoop的实现</h4><pre><code>public class GameLoop : MonoBehaviour{    private SceneStateController sceneStateController = new SceneStateController();    private void Awake()    {        //切换场景时不销毁        DontDestroyOnLoad(this.gameObject);        //随机数种子        Random.InitState((int)System.DateTime.Now.Ticks);    }    private void Start()    {        //设置起始场景        sceneStateController.SetState(new StartState(sceneStateController), "");    }    // Update is called once per frame    void Update()    {        //更新        sceneStateController.StateUpdate();    }}</code></pre><p>  GameLoop中定义并初始化SceneStateController对象，在Start方法中初始化游戏场景状态，在Update方法中定时更新游戏状态。<br>  游戏结果在此就不放出了，有兴趣的可自行实现并体验，下面会给出具体的项目工程地址。</p><h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>  在此状态模式的应用也就讲完了，但为什么我们要使用状态模式呢？<br>  首先，状态模式可以降低维护的难度：当有新的状态增加时，我们只要实现具体的状态，并完成状态的调用就好；也可以减少switch的使用。<br>  其次，状态执行环境单一化：因为每一个场景状态类已经完成了对一个状态的操作相关工作，因此可以清晰了解一个状态执行所需要的资源。<br>  最后我们再回到设计模式的最初目的，就是减少代码的重写，提高复用；因此使用状态模式可以在项目之间共享场景。<br>  那么状态模式还有哪些应用场景？动画有限状态机、NPC角色AI和服务器连接状态等。</p><h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><<设计模式与游戏完美开发>></p><hr><blockquote><p>项目工程地址：<a href="https://github.com/FredLyu/DesignPatternsLearn.git" target="_blank" rel="noopener">基于Unity的状态模式实现</a><br>如有侵权，请联系删除</p></blockquote></body></html>]]></content>
+    
+    <summary type="html">
+    
+      使用状态模式完成游戏场景之间的跳转
+    
+    </summary>
+    
+    
+      <category term="设计模式" scheme="https://fredlyu.github.io/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+    
+      <category term="状态模式" scheme="https://fredlyu.github.io/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E7%8A%B6%E6%80%81%E6%A8%A1%E5%BC%8F/"/>
+    
+    
+      <category term="设计模式" scheme="https://fredlyu.github.io/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+    
+      <category term="状态模式" scheme="https://fredlyu.github.io/tags/%E7%8A%B6%E6%80%81%E6%A8%A1%E5%BC%8F/"/>
+    
+      <category term="Unity3D" scheme="https://fredlyu.github.io/tags/Unity3D/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>设计模式与游戏完美开发学习--状态模式(概念篇)</title>
+    <link href="https://fredlyu.github.io/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B8%8E%E6%B8%B8%E6%88%8F%E5%AE%8C%E7%BE%8E%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0-%E7%8A%B6%E6%80%81%E6%A8%A1%E5%BC%8F.html"/>
+    <id>https://fredlyu.github.io/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B8%8E%E6%B8%B8%E6%88%8F%E5%AE%8C%E7%BE%8E%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0-%E7%8A%B6%E6%80%81%E6%A8%A1%E5%BC%8F.html</id>
+    <published>2019-08-08T14:30:56.000Z</published>
+    <updated>2019-08-10T13:55:40.346Z</updated>
+    
+    <content type="html"><![CDATA[<html><head></head><body><h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>  既然是要学习设计模式，肯定得知道啥是设计模式，又有啥用？设计模式是啥？笔者我也不是特别，只听同道中人天天说。笔者自己的理解就是为了解决某一个问题(软件问题)而归纳总结出来的一套解决方案(软件模式)，而这套方案对以后出现的同样或类似接近的问题同样适用。个人觉得只要理解就好。哈哈哈！！！咱们进入今天的正题：设计模式之状态模式。</p><h3 id="状态模式的概念"><a href="#状态模式的概念" class="headerlink" title="状态模式的概念"></a>状态模式的概念</h3><p>  又要解释概念，好烦哦！GoF定义：让一个对象的行为随着内部状态的改变而改变，而该对象就像换了一个类一样（怎么觉得好像C++的多态）。个人理解就是一个对象对不同的状态做出不同的行为。还请指教！！！</p><p>###状态模式的说明<br>  既然已经知道了什么是状态模式，那怎么去实现呢？在实现之前，我们来先了解一下状态模式的结构。既然是状态模式，那肯定要有一个描述状态的类(State)，而根据定义”…随着内部状态的改变…”，那肯定不止一个状态，因此我们需要将State类作为基类去具体定义不同具体的状态类(ConcreteState),再看定义”让一个对象…”,因此我们还需要一个状态拥有者的类(Context)，去对不同的状态做出不同的行为。具体结构图如下：</p><img src="/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B8%8E%E6%B8%B8%E6%88%8F%E5%AE%8C%E7%BE%8E%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0-%E7%8A%B6%E6%80%81%E6%A8%A1%E5%BC%8F/StateClassDiagram.png" class><h4 id="说明如下："><a href="#说明如下：" class="headerlink" title="说明如下："></a>说明如下：</h4><blockquote><p>Context: 状态拥有者，拥有状态属性，主要完成让外界得知状态的改变或者操作状态改变。<br>State: 状态的基类，指定状态的接口，负责规范状态拥有者要表现的行为。<br>ConcreteState: 具体的状态类，拥有特定状态下的行为，是状态的细化。</p></blockquote><h3 id="状态模式的实现"><a href="#状态模式的实现" class="headerlink" title="状态模式的实现"></a>状态模式的实现</h3><p>  根据以上对状态模式的分析，下面我们来做类的设计实现，首先是State基类：</p><pre><code>/// <summary>/// 状态接口类/// </summary>public abstract class State{    protected Context m_Context = null;    public State(Context theContext)    {        m_Context = theContext;    }    public abstract void Handle(int value);}</code></pre><p>  声明一个Context对象，并作为State生成对象时传入的参数，以便State拥有Context,可以后续操作Context对象。定义抽象方法Handle，便于子类呈现不同的行为。  </p><p>  再定义一个Context类：</p><pre><code>/// <summary>/// 状态拥有者/// </summary>public class Context{    private State m_State = null;    public void Request(int value)    {        m_State.Handle(value);    }    public void SetState(State theState)    {        Debug.Log("Context.SetState : " + theState);        m_State = theState;    }}</code></pre><p>  Context类拥有State属性，可以通过Request来呈现当前状态的行为，通过SetState方法设置当前状态。</p><p>  最后定义三个具体的状态：</p><pre><code>public class ConcreteStateA : State{    public ConcreteStateA(Context theContext) : base(theContext)    {    }    public override void Handle(int value)    {        Debug.Log("ConcreteStateA.Handle");        if(value > 10)        {            m_Context.SetState(new ConcreteStateB(m_Context));        }    }}public class ConcreteStateB : State{    public ConcreteStateB(Context theContext) : base(theContext)    {    }    public override void Handle(int value)    {        Debug.Log("ConcreteStateB.Handle");        if (value > 20)        {            m_Context.SetState(new ConcreteStateC(m_Context));        }    }}public class ConcreteStateC : State{    public ConcreteStateC(Context theContext) : base(theContext)    {    }    public override void Handle(int value)    {        Debug.Log("ConcreteStateC.Handle");        if (value > 30)        {            m_Context.SetState(new ConcreteStateA(m_Context));        }    }}</code></pre><p>  三个子类分别实现了Handle方法来表现各自的行为。然后根据判定条件来通知Context(状态拥有者)状态发生改变。</p><p>  下面我们来编写测试代码：</p><pre><code>public class TestState : MonoBehaviour{    void Start()    {        Context context = new Context();        context.SetState(new ConcreteStateA(context));        context.Request(5);        context.Request(15);        context.Request(25);        context.Request(35);    }}</code></pre><p>  首先生成一个Context对象，然后设置状态为ConcreteStateA，再调用Request来变现不同行为并转换状态。执行结果如下：  </p><img src="/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B8%8E%E6%B8%B8%E6%88%8F%E5%AE%8C%E7%BE%8E%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0-%E7%8A%B6%E6%80%81%E6%A8%A1%E5%BC%8F/StateTestResult.png" class><h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>  状态设计模式就介绍到这为止，下一篇我们做一个简单的应用案例。笔者也是刚刚学习，如有解释不到的地方还请见谅。对于编程这块，个人认为还是要多加应用才能理解更深。</p><h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><<设计模式与游戏完美开发>></p><blockquote><p>如有侵权，请联系删除！</p></blockquote></body></html>]]></content>
+    
+    <summary type="html">
+    
+      何为状态模式？状态模式如何应用？有哪些应用场景？
+    
+    </summary>
+    
+    
+      <category term="设计模式" scheme="https://fredlyu.github.io/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+    
+      <category term="状态模式" scheme="https://fredlyu.github.io/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E7%8A%B6%E6%80%81%E6%A8%A1%E5%BC%8F/"/>
+    
+    
+      <category term="设计模式" scheme="https://fredlyu.github.io/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+    
+      <category term="状态模式" scheme="https://fredlyu.github.io/tags/%E7%8A%B6%E6%80%81%E6%A8%A1%E5%BC%8F/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>基于Unity的A星算法实现</title>
+    <link href="https://fredlyu.github.io/%E5%9F%BA%E4%BA%8EUnity%E7%9A%84A%E6%98%9F%E7%AE%97%E6%B3%95%E5%AE%9E%E7%8E%B0-md.html"/>
+    <id>https://fredlyu.github.io/%E5%9F%BA%E4%BA%8EUnity%E7%9A%84A%E6%98%9F%E7%AE%97%E6%B3%95%E5%AE%9E%E7%8E%B0-md.html</id>
+    <published>2019-08-06T12:15:02.000Z</published>
+    <updated>2019-08-10T13:56:06.660Z</updated>
+    
+    <content type="html"><![CDATA[<html><head></head><body><p>  本篇实现的A星算法是基于贪婪优先算法实现的，由于贪婪优先算法得到的是次优路径，因此我们增加一个当前节点到起始节点的一个路径开销分量来提升路径的质量，筛选最优路径。具体实现如下：</p><h3 id="节点类的编写"><a href="#节点类的编写" class="headerlink" title="节点类的编写"></a>节点类的编写</h3><p>  节点主要用来存储当前节点在地图中的位置信息，如：行号，列号、父节点、到起始节点的路径开销量g，到目标节点的路径开销量h，总的开销量；并包含计算g和h的方法；具体实现代码如下：</p><pre><code>/// <summary>/// 节点类/// </summary>public class ANode : System.IComparable{    /// <summary>    /// 行    /// </summary>    public int Row { get; set; }    /// <summary>    /// 列    /// </summary>    public int Col { get; set; }    /// <summary>    /// 父节点    /// </summary>    public ANode parent = null;    /// <summary>    /// 相邻节点    /// </summary>    public List<ANode> adjacent = new List<ANode>();    /// <summary>    /// 曼哈顿距离    /// </summary>    public int h = 0;    public int g = 0;    public int f = 0;    public void H(ANode endNode)    {        h = Mathf.Abs(endNode.Row - Row) + Mathf.Abs(endNode.Col - Col);        f = g + h;    }    /// <summary>    /// 清除    /// </summary>    public void Clear()    {        parent = null;        h = 0;        g = 0;        f = 0;    }    public int CompareTo(object obj)    {        ANode node = obj as ANode;        if (f - node.f < 0)            return -1;        else if (f - node.f == 0)            return 0;        else            return 1;    }}</code></pre><h3 id="地图存储"><a href="#地图存储" class="headerlink" title="地图存储"></a>地图存储</h3><p>  地图存储与贪婪算法中的思路一样，代码逻辑一样，只是把节点变量换一下即可，这里不在描述，代码大家自行实现。</p><h3 id="寻路算法实现"><a href="#寻路算法实现" class="headerlink" title="寻路算法实现"></a>寻路算法实现</h3><p>  寻路算法与贪婪优先算法的实现相比只是增加了一个与起点的开销分量计算，然后根据f值来判断最优路径，具体实现代码如下：</p><pre><code>public class AStarAlgorithm{    private ANode startNode;    private ANode destNode;    private List<ANode> openSet = new List<ANode>();    private List<ANode> closedSet = new List<ANode>();    private AMap map;    /// <summary>    /// 初始化地图    /// </summary>    /// <param name="map"></param>    public AStarAlgorithm(AMap map)    {        this.map = map;    }    /// <summary>    /// 查找开放式集合中H值最小的节点    /// </summary>    /// <returns></returns>    private ANode FindLowest()    {        openSet.Sort();        return openSet[0];    }    /// <summary>    /// 将节点的相邻节点添加到开放集合中    /// </summary>    /// <param name="node"></param>    private void AddAdjacent(ANode node)    {        for (int i = 0; i < node.adjacent.Count; i++)        {            if (closedSet.Contains(node.adjacent[i]))                continue;            int newG = node.g + Mathf.Abs(node.Row - node.adjacent[i].Row) + Mathf.Abs(node.Col - node.adjacent[i].Col);            if(newG < node.adjacent[i].g || !openSet.Contains(node.adjacent[i]))            {                node.adjacent[i].parent = node;                node.adjacent[i].g = newG;                node.adjacent[i].H(destNode);                if (!openSet.Contains(node.adjacent[i]))                    openSet.Add(node.adjacent[i]);            }        }    }    /// <summary>    /// 更新地图    /// </summary>    /// <param name="map"></param>    public void UpdateMap(AMap map)    {        this.map = map;    }    public void Start(ANode startNode, ANode endNode)    {        openSet.Clear();        closedSet.Clear();        openSet.Add(startNode);        destNode = endNode;        this.startNode = startNode;        for (int i = 0; i < map.aNodes.Length; i++)        {            map.aNodes[i].Clear();        }    }    public Stack<ANode> Find()    {        Stack<ANode> path = new Stack<ANode>();        ANode currNode = openSet[0];        while (currNode != destNode)        {                          if (openSet.Count == 0)                break;            currNode = FindLowest();            openSet.Remove(currNode);            closedSet.Add(currNode);            AddAdjacent(currNode);        }        if (currNode == destNode)        {            ANode node = destNode;            while (node != null)            {                path.Push(node);                node = node.parent;            }        }        else            return null;        return path;    }}</code></pre><blockquote><p>对于节点类的优化可以继承贪婪优先算法的节点类，这样便于维护修改。</p></blockquote><h3 id="Unity实现效果如下"><a href="#Unity实现效果如下" class="headerlink" title="Unity实现效果如下"></a>Unity实现效果如下</h3><img src="/%E5%9F%BA%E4%BA%8EUnity%E7%9A%84A%E6%98%9F%E7%AE%97%E6%B3%95%E5%AE%9E%E7%8E%B0-md/A%E6%98%9F%E7%AE%97%E6%B3%95%E6%95%88%E6%9E%9C.png" class><blockquote><p>完整工程仓库地址：<a href="https://github.com/FredLyu/GameProgramingAlgorithmsAndTechniques.git" target="_blank" rel="noopener">A星算法</a> </p></blockquote><hr><h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p>《游戏编程算法与技巧》</p></body></html>]]></content>
+    
+    <summary type="html">
+    
+      基于Unity实现A星寻路算法，此算法的实现基于上一篇的贪婪优先算法
+    
+    </summary>
+    
+    
+      <category term="算法" scheme="https://fredlyu.github.io/categories/%E7%AE%97%E6%B3%95/"/>
+    
+      <category term="A星算法" scheme="https://fredlyu.github.io/categories/%E7%AE%97%E6%B3%95/A%E6%98%9F%E7%AE%97%E6%B3%95/"/>
+    
+    
+      <category term="寻路" scheme="https://fredlyu.github.io/tags/%E5%AF%BB%E8%B7%AF/"/>
+    
+      <category term="Unity" scheme="https://fredlyu.github.io/tags/Unity/"/>
+    
+      <category term="A星算法" scheme="https://fredlyu.github.io/tags/A%E6%98%9F%E7%AE%97%E6%B3%95/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>游戏寻路--基于Unity的贪婪最佳优先算法实现</title>
+    <link href="https://fredlyu.github.io/%E8%B4%AA%E5%A9%AA%E6%9C%80%E4%BD%B3%E4%BC%98%E5%85%88%E7%AE%97%E6%B3%95.html"/>
+    <id>https://fredlyu.github.io/%E8%B4%AA%E5%A9%AA%E6%9C%80%E4%BD%B3%E4%BC%98%E5%85%88%E7%AE%97%E6%B3%95.html</id>
+    <published>2019-03-01T14:23:48.000Z</published>
+    <updated>2019-08-10T13:53:36.423Z</updated>
+    
+    <content type="html"><![CDATA[<html><head></head><body><p>  贪婪最佳优先算法是一种没有做任何长期计划就马上选择最佳答案的算法。因此贪婪优先算法得到的寻路路径是一种次优路径。算法流程如下：<br><img src="https://i.imgur.com/rZVHfZT.png" alt="流程图"><br>  下面来根据流程图完成代码的编写。<a id="more"></a>   </p><h3 id="节点类的编写"><a href="#节点类的编写" class="headerlink" title="节点类的编写"></a>节点类的编写</h3><p>  节点主要用来存放当前地图中位置信息，包括当前位置的行号、列号、父节点、邻居节点集合和当前节点到目标节点的距离，代码如下: </p><pre><code>public class Node{    //行号    public int Row{ get; set; }    //列号    public int Col{ get; set; }    //父节点    public Node parent;    //邻居节点的集合    public List<Node> adjacent=new List<Node>();    //到目标节点的距离    public float h = 0;    public void Clear()    {        parent=null;        h=0;    }}</code></pre><p>  其中到目标节点的距离为曼哈顿距离，即当前节点到目标节点的向量的x、y的绝对值的和。</p><h3 id="地图的存储"><a href="#地图的存储" class="headerlink" title="地图的存储"></a>地图的存储</h3><p>  有了节点之后便可以构成一张二维地图，地图中有可行的节点和不可行的节点(障碍物),这里我们用0表示可通过，1表示不可通过。代码如下：    </p><pre><code>public class Map{    //行数    public int Rows;    //列数    public int Cols;    //地图中的节点，行优先排列    public Node[] nodes;    public Map(int[,] mapArray)    {        Rows = mapArray.GetLength(0);        Cols = mapArray.GetLength(1);        //分配地图节点        nodes=new Node[Rows * Cols];        for(int i = 0; i < nodes.Length; i++)        {            Node node = new Node();            node.Row = i / Cols;            node.Col = i % Cols;            nodes[i] = node;        }        int row , col;        //分配邻居节点        for (int j = 0; j < nodes.Length; j++)        {            row = nodes[j].Row;            col = nodes[j].Col;            //1表示有障碍物，不能通过            //0表示无障碍物，可以通过            if(mapArray[row,col] != 1)            {                //相邻上方的一个节点                if (row > 0 && mapArray[row - 1, col] != 1)                    nodes[j].adjacent.Add(nodes[(row - 1) * cols + col]);                //相邻右边的一个节点                if (col + 1 < cols && mapArray[row, col + 1] != 1)                    nodes[j].adjacent.Add(nodes[row * cols + col + 1]);                //相邻下方的一个节点                if (row + 1 < rows && mapArray[row + 1, col] != 1)                    nodes[j].adjacent.Add(nodes[(row + 1) * cols + col]);                //相邻左边的一个节点                if (col > 0 && mapArray[row, col - 1] != 1)                    nodes[j].adjacent.Add(nodes[row * cols + col - 1]);            }        }    }}</code></pre><p>  地图生成完之后，就可以根据起始点和目标点来寻找一条”最优”的到达路径了。</p><h3 id="寻路算法实现"><a href="#寻路算法实现" class="headerlink" title="寻路算法实现"></a>寻路算法实现</h3><p>  在有了地图信息之后，我们还不能立马去搜索地图寻找”最优”路径，因为我们还需要两个集合来存放地图搜索过程中以确定的节点和未确定但以估算h(x)值的节点，分别是封闭集合和开放集合。这样我们可以根据当前节点的邻居节点信息，算出所有邻居节点到目标点的曼哈顿距离h(x)，并将当前节点作为邻居节点的父节点。而在计算一个节点的h(x)之前，我们首先要判断此节点是否存在于封闭集合中，如果不存在则计算，否侧继续下一个节点的判断，并把此节点加入到开放集合中。<br>  在处理完邻居节点之后，此时我们还需要查看开放集合是否为空，如果为空则证明路径查找失败，退出路径查找。否则从开放集合中找出曼哈顿最小的节点加入到封闭集合从并从开放集合中一处，然后将此节点作为当前节点继续下一轮的查找，直至当前节点为目标节点。这样我们就可以得到一个链表，通过parent从终点指想起点，我们需要将其逆置得到我们想要的从起点到终点的路径。完整代码如下：  </p><pre><code>public class GreedBestPriorityAlgorithm{    //地图    private Map map;    //终点    private Node destNode;    //开放集合    private List<Node> openSet = new List<Node>();    //封闭集合    private List<Node> closedSet = new List<Node>();    //初始化地图    public GreedyBestPriorityAlgorithm(Map map)    {        this.map = map    }    //计算曼哈顿距离    private void H(Node node)    {        return Mathf.Abs(node.Row - destNode.Row) + Mathf.Abs(node.Col - destNode.Col);    }    //查找开放式集合中h(x)值最小的点    private Node FindLowestH()    {        Node node = openSet[0];        for(int i = 0; i < opencSet.Count; i++)        {            if(openSet[i].h < node.h)            {                node = openSet[i];            }        }        return node;    }    //计算当前节点邻居节点的h(x)    private void AddAdjacent(Node node)    {        for(int i = 0; i < node.adjacent.Count; i++)        {            if(closedSet.Contains(node.adjacent[i])                continue;            else            {                node.adjacent[i].parent = node;                if(!openSet.Contains(node.adjacent[i])                {                    node.adjacent[i].h = H(node.adjacent[i]);                    openSet.Add(node.adjacent[i]);                }            }        }    }    //更新地图    public UpdateMap(Map map)    {        this.map = map;    }    //设置起点、终点、清楚地图节点存放的信息    public void Start(Node startNode, Node endNode)    {        openSet.Clear();        closedSet.Clear();        closedSet.Add(startNode);        destNode = endNode;        for(int i = 0; i < map.nodes.Length; i++)        {            map.nodes[i].Clear();        }    }    //寻找路径    public Stack<Node> Find()    {        Stack<Node> path = new Stack<Node>();        Node currNode = closedSet[0];        while(currNode != destNode)        {            AddAdjacent(currNode);            if(openSet.Count == 0)                break;            currNode = FindLowestH();            closedSet.Add(currNode);            openSet.Remove(currNode);        }        if(currNode == destNode)        {            Node node = destNode;            while(node != null)            {                path.Push(node);                node = node.parent;            }        }        else            return null;        return path;    }}</code></pre><p>  对于最后的路径使用栈逆置，如果不想使用也可以直接计算起点到终点的路径，这样可以减少一定的计算开销。对于此算法还可以进行如下优化：   </p><blockquote><p>对于从开放集合中查找最小h(x)值的节点，我们可以使用二叉树最为开放集合(左边是比根节点小的值，右边是比根节点大的值)，这样查找速度就是O(1)；</p></blockquote><h3 id="Unity实现效果"><a href="#Unity实现效果" class="headerlink" title="Unity实现效果"></a>Unity实现效果</h3><p><img src="https://i.imgur.com/oIzyIur.png" alt>    </p><blockquote><p>完整工程仓库地址：<a href="https://github.com/FredLyu/GameProgramingAlgorithmsAndTechniques.git" target="_blank" rel="noopener">贪婪最佳优先算法</a><br>CSDND地址：<a href="https://blog.csdn.net/puraples/article/details/88071496" target="_blank" rel="noopener">基于Unity的贪婪最佳优先算法</a></p></blockquote><hr><h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p>《游戏编程算法与技巧》<br><a href="http://forum.china.unity3d.com/thread-29592-1-1.html" target="_blank" rel="noopener">寻路算法-贪婪最佳优先算法</a></p></body></html>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&amp;emsp;&amp;emsp;贪婪最佳优先算法是一种没有做任何长期计划就马上选择最佳答案的算法。因此贪婪优先算法得到的寻路路径是一种次优路径。算法流程如下：&lt;br&gt;&lt;img src=&quot;https://i.imgur.com/rZVHfZT.png&quot; alt=&quot;流程图&quot;&gt;&lt;br&gt;&amp;emsp;&amp;emsp;下面来根据流程图完成代码的编写。
+    
+    </summary>
+    
+    
+      <category term="算法" scheme="https://fredlyu.github.io/categories/%E7%AE%97%E6%B3%95/"/>
+    
+      <category term="贪婪最佳优先算法" scheme="https://fredlyu.github.io/categories/%E7%AE%97%E6%B3%95/%E8%B4%AA%E5%A9%AA%E6%9C%80%E4%BD%B3%E4%BC%98%E5%85%88%E7%AE%97%E6%B3%95/"/>
+    
+    
+      <category term="寻路" scheme="https://fredlyu.github.io/tags/%E5%AF%BB%E8%B7%AF/"/>
+    
+      <category term="Unity" scheme="https://fredlyu.github.io/tags/Unity/"/>
+    
+      <category term="贪婪最佳优先算法" scheme="https://fredlyu.github.io/tags/%E8%B4%AA%E5%A9%AA%E6%9C%80%E4%BD%B3%E4%BC%98%E5%85%88%E7%AE%97%E6%B3%95/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>基于Hexo的GitHub个人博客搭建</title>
+    <link href="https://fredlyu.github.io/%E5%9F%BA%E4%BA%8EHexo%E7%9A%84GitHub%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA-md.html"/>
+    <id>https://fredlyu.github.io/%E5%9F%BA%E4%BA%8EHexo%E7%9A%84GitHub%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA-md.html</id>
+    <published>2019-02-26T13:35:53.000Z</published>
+    <updated>2019-02-27T12:04:45.786Z</updated>
+    
+    <content type="html"><![CDATA[<html><head></head><body><pre><code>凌晨两点半，记录一下搭建Github博客踩的坑吧！！！</code></pre><h2 id="1-权限不够"><a href="#1-权限不够" class="headerlink" title="1.权限不够"></a>1.权限不够</h2><p>在window下要以管理员的权限运行Git Bash。害得我浪费时间熬夜到现在，都是泪。<br>2.空格问题<br>–<br>记住编辑的.yml文件，每项后面都跟一个英文空格符，否则执行hexo命令会报错，如下：<br><strong>FATAL can not read a block mapping entry; a multiline key may not be an implicit key at line 12, column 9:<br>    timezone:</strong></p><hr><h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="https://zhuanlan.zhihu.com/p/38122668" target="_blank" rel="noopener">小白搭建Hexo+github博客（win 10）</a></p></body></html>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;html&gt;&lt;head&gt;&lt;/head&gt;&lt;body&gt;&lt;pre&gt;&lt;code&gt;凌晨两点半，记录一下搭建Github博客踩的坑吧！！！&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&quot;1-权限不够&quot;&gt;&lt;a href=&quot;#1-权限不够&quot; class=&quot;headerlink&quot; title=&quot;1.权限
+      
+    
+    </summary>
+    
+    
+      <category term="hexo" scheme="https://fredlyu.github.io/categories/hexo/"/>
+    
+      <category term="GitHub" scheme="https://fredlyu.github.io/categories/hexo/GitHub/"/>
+    
+    
+      <category term="Hexo" scheme="https://fredlyu.github.io/tags/Hexo/"/>
+    
+      <category term="Github" scheme="https://fredlyu.github.io/tags/Github/"/>
+    
+  </entry>
+  
+</feed>

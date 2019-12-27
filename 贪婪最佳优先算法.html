@@ -1,0 +1,979 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-corner-indicator.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    hostname: new URL('https://fredlyu.github.io').hostname,
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.6.0',
+    exturl: false,
+    sidebar: {"position":"left","width":300,"display":"always","padding":18,"offset":12,"onmobile":false},
+    copycode: {"enable":true,"show_result":true,"style":"default"},
+    back2top: {"enable":true,"sidebar":true,"scrollpercent":true},
+    bookmark: {"enable":true,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    comments: {"style":"tabs","active":"disqus","storage":true,"lazyload":false,"nav":null},
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}
+  };
+</script>
+
+  <meta name="description" content="&emsp;&emsp;贪婪最佳优先算法是一种没有做任何长期计划就马上选择最佳答案的算法。因此贪婪优先算法得到的寻路路径是一种次优路径。算法流程如下：&emsp;&emsp;下面来根据流程图完成代码的编写。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="游戏寻路--基于Unity的贪婪最佳优先算法实现">
+<meta property="og:url" content="https://fredlyu.github.io/%E8%B4%AA%E5%A9%AA%E6%9C%80%E4%BD%B3%E4%BC%98%E5%85%88%E7%AE%97%E6%B3%95.html">
+<meta property="og:site_name" content="新媒体开发">
+<meta property="og:description" content="&emsp;&emsp;贪婪最佳优先算法是一种没有做任何长期计划就马上选择最佳答案的算法。因此贪婪优先算法得到的寻路路径是一种次优路径。算法流程如下：&emsp;&emsp;下面来根据流程图完成代码的编写。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://i.imgur.com/rZVHfZT.png">
+<meta property="og:image" content="https://i.imgur.com/oIzyIur.png">
+<meta property="article:published_time" content="2019-03-01T14:23:48.000Z">
+<meta property="article:modified_time" content="2019-08-10T13:53:36.423Z">
+<meta property="article:author" content="柒月">
+<meta property="article:tag" content="寻路">
+<meta property="article:tag" content="Unity">
+<meta property="article:tag" content="贪婪最佳优先算法">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.imgur.com/rZVHfZT.png">
+
+<link rel="canonical" href="https://fredlyu.github.io/%E8%B4%AA%E5%A9%AA%E6%9C%80%E4%BD%B3%E4%BC%98%E5%85%88%E7%AE%97%E6%B3%95.html">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true
+  };
+</script>
+
+  <title>游戏寻路--基于Unity的贪婪最佳优先算法实现 | 新媒体开发</title>
+  
+
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?e371bfdde31e1d09edc874d482e1d6b7";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="新媒体开发" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">新媒体开发</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <h1 class="site-subtitle" itemprop="description">Unity多媒体互动开发，Unity最新技术学习</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-commonweal">
+
+    <a href="/404/" rel="section"><i class="fa fa-fw fa-heartbeat"></i>公益 404</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none" placeholder="搜索..." spellcheck="false" type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+  <a href="https://github.com/FredLyu" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://fredlyu.github.io/%E8%B4%AA%E5%A9%AA%E6%9C%80%E4%BD%B3%E4%BC%98%E5%85%88%E7%AE%97%E6%B3%95.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/headimage.jpg">
+      <meta itemprop="name" content="柒月">
+      <meta itemprop="description" content="目前主要从事新媒体开发，用软件表达艺术">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="新媒体开发">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          游戏寻路--基于Unity的贪婪最佳优先算法实现
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-03-01 22:23:48" itemprop="dateCreated datePublished" datetime="2019-03-01T22:23:48+08:00">2019-03-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-08-10 21:53:36" itemprop="dateModified" datetime="2019-08-10T21:53:36+08:00">2019-08-10</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index">
+                    <span itemprop="name">算法</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AE%97%E6%B3%95/%E8%B4%AA%E5%A9%AA%E6%9C%80%E4%BD%B3%E4%BC%98%E5%85%88%E7%AE%97%E6%B3%95/" itemprop="url" rel="index">
+                    <span itemprop="name">贪婪最佳优先算法</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/%E8%B4%AA%E5%A9%AA%E6%9C%80%E4%BD%B3%E4%BC%98%E5%85%88%E7%AE%97%E6%B3%95.html" class="post-meta-item leancloud_visitors" data-flag-title="游戏寻路--基于Unity的贪婪最佳优先算法实现" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/%E8%B4%AA%E5%A9%AA%E6%9C%80%E4%BD%B3%E4%BC%98%E5%85%88%E7%AE%97%E6%B3%95.html#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/%E8%B4%AA%E5%A9%AA%E6%9C%80%E4%BD%B3%E4%BC%98%E5%85%88%E7%AE%97%E6%B3%95.html" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>3.5k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 ≈</span>
+              <span>3 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>  贪婪最佳优先算法是一种没有做任何长期计划就马上选择最佳答案的算法。因此贪婪优先算法得到的寻路路径是一种次优路径。算法流程如下：<br><img src="https://i.imgur.com/rZVHfZT.png" alt="流程图"><br>  下面来根据流程图完成代码的编写。<a id="more"></a>   </p>
+<h3 id="节点类的编写"><a href="#节点类的编写" class="headerlink" title="节点类的编写"></a>节点类的编写</h3><p>  节点主要用来存放当前地图中位置信息，包括当前位置的行号、列号、父节点、邻居节点集合和当前节点到目标节点的距离，代码如下: </p>
+<pre><code>public class Node
+{
+    //行号
+    public int Row{ get; set; }
+    //列号
+    public int Col{ get; set; }
+    //父节点
+    public Node parent;
+    //邻居节点的集合
+    public List<node> adjacent=new List<node>();
+    //到目标节点的距离
+    public float h = 0;
+
+    public void Clear()
+    {
+        parent=null;
+        h=0;
+    }
+}</node></node></code></pre><p>  其中到目标节点的距离为曼哈顿距离，即当前节点到目标节点的向量的x、y的绝对值的和。</p>
+<h3 id="地图的存储"><a href="#地图的存储" class="headerlink" title="地图的存储"></a>地图的存储</h3><p>  有了节点之后便可以构成一张二维地图，地图中有可行的节点和不可行的节点(障碍物),这里我们用0表示可通过，1表示不可通过。代码如下：    </p>
+<pre><code>public class Map
+{
+    //行数
+    public int Rows;
+    //列数
+    public int Cols;
+    //地图中的节点，行优先排列
+    public Node[] nodes;
+
+    public Map(int[,] mapArray)
+    {
+        Rows = mapArray.GetLength(0);
+        Cols = mapArray.GetLength(1);
+
+        //分配地图节点
+        nodes=new Node[Rows * Cols];
+        for(int i = 0; i < nodes.Length; i++)
+        {
+            Node node = new Node();
+            node.Row = i / Cols;
+            node.Col = i % Cols;
+
+            nodes[i] = node;
+        }
+
+        int row , col;
+        //分配邻居节点
+        for (int j = 0; j < nodes.Length; j++)
+        {
+            row = nodes[j].Row;
+            col = nodes[j].Col;
+
+            //1表示有障碍物，不能通过
+            //0表示无障碍物，可以通过
+            if(mapArray[row,col] != 1)
+            {
+                //相邻上方的一个节点
+                if (row > 0 && mapArray[row - 1, col] != 1)
+                    nodes[j].adjacent.Add(nodes[(row - 1) * cols + col]);
+                //相邻右边的一个节点
+                if (col + 1 < cols && mapArray[row, col + 1] != 1)
+                    nodes[j].adjacent.Add(nodes[row * cols + col + 1]);
+                //相邻下方的一个节点
+                if (row + 1 < rows && mapArray[row + 1, col] != 1)
+                    nodes[j].adjacent.Add(nodes[(row + 1) * cols + col]);
+                //相邻左边的一个节点
+                if (col > 0 && mapArray[row, col - 1] != 1)
+                    nodes[j].adjacent.Add(nodes[row * cols + col - 1]);
+            }
+        }
+    }
+}</code></pre><p>  地图生成完之后，就可以根据起始点和目标点来寻找一条”最优”的到达路径了。</p>
+<h3 id="寻路算法实现"><a href="#寻路算法实现" class="headerlink" title="寻路算法实现"></a>寻路算法实现</h3><p>  在有了地图信息之后，我们还不能立马去搜索地图寻找”最优”路径，因为我们还需要两个集合来存放地图搜索过程中以确定的节点和未确定但以估算h(x)值的节点，分别是封闭集合和开放集合。这样我们可以根据当前节点的邻居节点信息，算出所有邻居节点到目标点的曼哈顿距离h(x)，并将当前节点作为邻居节点的父节点。而在计算一个节点的h(x)之前，我们首先要判断此节点是否存在于封闭集合中，如果不存在则计算，否侧继续下一个节点的判断，并把此节点加入到开放集合中。<br>  在处理完邻居节点之后，此时我们还需要查看开放集合是否为空，如果为空则证明路径查找失败，退出路径查找。否则从开放集合中找出曼哈顿最小的节点加入到封闭集合从并从开放集合中一处，然后将此节点作为当前节点继续下一轮的查找，直至当前节点为目标节点。这样我们就可以得到一个链表，通过parent从终点指想起点，我们需要将其逆置得到我们想要的从起点到终点的路径。完整代码如下：  </p>
+<pre><code>public class GreedBestPriorityAlgorithm
+{
+    //地图
+    private Map map;
+    //终点
+    private Node destNode;
+    //开放集合
+    private List<node> openSet = new List<node>();
+    //封闭集合
+    private List<node> closedSet = new List<node>();
+
+    //初始化地图
+    public GreedyBestPriorityAlgorithm(Map map)
+    {
+        this.map = map
+    }
+
+    //计算曼哈顿距离
+    private void H(Node node)
+    {
+        return Mathf.Abs(node.Row - destNode.Row) + Mathf.Abs(node.Col - destNode.Col);
+    }
+
+    //查找开放式集合中h(x)值最小的点
+    private Node FindLowestH()
+    {
+        Node node = openSet[0];
+
+        for(int i = 0; i < opencSet.Count; i++)
+        {
+            if(openSet[i].h < node.h)
+            {
+                node = openSet[i];
+            }
+        }
+
+        return node;
+    }
+
+    //计算当前节点邻居节点的h(x)
+    private void AddAdjacent(Node node)
+    {
+        for(int i = 0; i < node.adjacent.Count; i++)
+        {
+            if(closedSet.Contains(node.adjacent[i])
+                continue;
+            else
+            {
+                node.adjacent[i].parent = node;
+                if(!openSet.Contains(node.adjacent[i])
+                {
+                    node.adjacent[i].h = H(node.adjacent[i]);
+                    openSet.Add(node.adjacent[i]);
+                }
+            }
+        }
+    }
+
+    //更新地图
+    public UpdateMap(Map map)
+    {
+        this.map = map;
+    }
+
+    //设置起点、终点、清楚地图节点存放的信息
+    public void Start(Node startNode, Node endNode)
+    {
+        openSet.Clear();
+        closedSet.Clear();
+
+        closedSet.Add(startNode);
+        destNode = endNode;
+
+        for(int i = 0; i < map.nodes.Length; i++)
+        {
+            map.nodes[i].Clear();
+        }
+    }
+
+    //寻找路径
+    public Stack<node> Find()
+    {
+        Stack<node> path = new Stack<node>();
+        Node currNode = closedSet[0];
+
+        while(currNode != destNode)
+        {
+            AddAdjacent(currNode);
+            if(openSet.Count == 0)
+                break;
+
+            currNode = FindLowestH();
+            closedSet.Add(currNode);
+            openSet.Remove(currNode);
+        }
+
+        if(currNode == destNode)
+        {
+            Node node = destNode;
+            while(node != null)
+            {
+                path.Push(node);
+
+                node = node.parent;
+            }
+        }
+        else
+            return null;
+
+        return path;
+    }
+}</node></node></node></node></node></node></node></code></pre><p>  对于最后的路径使用栈逆置，如果不想使用也可以直接计算起点到终点的路径，这样可以减少一定的计算开销。对于此算法还可以进行如下优化：   </p>
+<blockquote>
+<p>对于从开放集合中查找最小h(x)值的节点，我们可以使用二叉树最为开放集合(左边是比根节点小的值，右边是比根节点大的值)，这样查找速度就是O(1)；</p>
+</blockquote>
+<h3 id="Unity实现效果"><a href="#Unity实现效果" class="headerlink" title="Unity实现效果"></a>Unity实现效果</h3><p><img src="https://i.imgur.com/oIzyIur.png" alt>    </p>
+<blockquote>
+<p>完整工程仓库地址：<a href="https://github.com/FredLyu/GameProgramingAlgorithmsAndTechniques.git" target="_blank" rel="noopener">贪婪最佳优先算法</a><br>CSDND地址：<a href="https://blog.csdn.net/puraples/article/details/88071496" target="_blank" rel="noopener">基于Unity的贪婪最佳优先算法</a></p>
+</blockquote>
+<hr>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p>《游戏编程算法与技巧》<br><a href="http://forum.china.unity3d.com/thread-29592-1-1.html" target="_blank" rel="noopener">寻路算法-贪婪最佳优先算法</a></p>
+
+    </div>
+
+    
+    
+    
+
+
+	  <div>
+		
+			<div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+		
+	  </div>
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>柒月
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://fredlyu.github.io/%E8%B4%AA%E5%A9%AA%E6%9C%80%E4%BD%B3%E4%BC%98%E5%85%88%E7%AE%97%E6%B3%95.html" title="游戏寻路--基于Unity的贪婪最佳优先算法实现">https://fredlyu.github.io/贪婪最佳优先算法.html</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-CN" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/%E5%AF%BB%E8%B7%AF/" rel="tag"><i class="fa fa-tag"></i> 寻路</a>
+              <a href="/tags/Unity/" rel="tag"><i class="fa fa-tag"></i> Unity</a>
+              <a href="/tags/%E8%B4%AA%E5%A9%AA%E6%9C%80%E4%BD%B3%E4%BC%98%E5%85%88%E7%AE%97%E6%B3%95/" rel="tag"><i class="fa fa-tag"></i> 贪婪最佳优先算法</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/%E5%9F%BA%E4%BA%8EHexo%E7%9A%84GitHub%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA-md.html" rel="prev" title="基于Hexo的GitHub个人博客搭建">
+      <i class="fa fa-chevron-left"></i> 基于Hexo的GitHub个人博客搭建
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/%E5%9F%BA%E4%BA%8EUnity%E7%9A%84A%E6%98%9F%E7%AE%97%E6%B3%95%E5%AE%9E%E7%8E%B0-md.html" rel="next" title="基于Unity的A星算法实现">
+      基于Unity的A星算法实现 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#节点类的编写"><span class="nav-number">1.</span> <span class="nav-text">节点类的编写</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#地图的存储"><span class="nav-number">2.</span> <span class="nav-text">地图的存储</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#寻路算法实现"><span class="nav-number">3.</span> <span class="nav-text">寻路算法实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Unity实现效果"><span class="nav-number">4.</span> <span class="nav-text">Unity实现效果</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考"><span class="nav-number">5.</span> <span class="nav-text">参考</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="柒月" src="/images/headimage.jpg">
+  <p class="site-author-name" itemprop="name">柒月</p>
+  <div class="site-description" itemprop="description">目前主要从事新媒体开发，用软件表达艺术</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">5</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/FredLyu" title="GitHub → https://github.com/FredLyu" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://blog.csdn.net/puraples" title="CSDN → https://blog.csdn.net/puraples" rel="noopener" target="_blank"><i class="fa fa-fw fa-csdn"></i>CSDN</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:fred.lyu@foxmail.com" title="E-Mail → mailto:fred.lyu@foxmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-CN" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  © 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">FredLyu</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    <span title="站点总字数">15k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">13 分钟</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+  <script>
+  function leancloudSelector(url) {
+    return document.getElementById(url).querySelector('.leancloud-visitors-count');
+  }
+  if (CONFIG.page.isPost) {
+    function addCount(Counter) {
+      var visitors = document.querySelector('.leancloud_visitors');
+      var url = visitors.getAttribute('id').trim();
+      var title = visitors.getAttribute('data-flag-title').trim();
+
+      Counter('get', `/classes/Counter?where=${JSON.stringify({ url })}`)
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length > 0) {
+            var counter = results[0];
+            Counter('put', '/classes/Counter/' + counter.objectId, { time: { '__op': 'Increment', 'amount': 1 } })
+              .then(response => response.json())
+              .then(() => {
+                leancloudSelector(url).innerText = counter.time + 1;
+              })
+              .catch(error => {
+                console.log('Failed to save visitor count', error);
+              })
+          } else {
+              leancloudSelector(url).innerText = 'Counter not initialized! More info at console err msg.';
+              console.error('ATTENTION! LeanCloud counter has security bug, see how to solve it here: https://github.com/theme-next/hexo-leancloud-counter-security. \n However, you can still use LeanCloud without security, by setting `security` option to `false`.');
+            
+          }
+        })
+        .catch(error => {
+          console.log('LeanCloud Counter Error', error);
+        });
+    }
+  } else {
+    function showTime(Counter) {
+      var visitors = document.querySelectorAll('.leancloud_visitors');
+      var entries = [...visitors].map(element => {
+        return element.getAttribute('id').trim();
+      });
+
+      Counter('get', `/classes/Counter?where=${JSON.stringify({ url: { '$in': entries } })}`)
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length === 0) {
+            document.querySelectorAll('.leancloud_visitors .leancloud-visitors-count').forEach(element => {
+              element.innerText = 0;
+            });
+            return;
+          }
+          for (let item of results) {
+            let { url, time } = item;
+            leancloudSelector(url).innerText = time;
+          }
+          for (let url of entries) {
+            var element = leancloudSelector(url);
+            if (element.innerText == '') {
+              element.innerText = 0;
+            }
+          }
+        })
+        .catch(error => {
+          console.log('LeanCloud Counter Error', error);
+        });
+    }
+  }
+
+  fetch('https://app-router.leancloud.cn/2/route?appId=5oFcec7jMoKNWLUHsz9k8hau-gzGzoHsz')
+    .then(response => response.json())
+    .then(({ api_server }) => {
+      var Counter = (method, url, data) => {
+        return fetch(`https://${api_server}/1.1${url}`, {
+          method: method,
+          headers: {
+            'X-LC-Id': '5oFcec7jMoKNWLUHsz9k8hau-gzGzoHsz',
+            'X-LC-Key': 'VGbQziQQIh0WTK5yK8LhYPak',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data)
+        });
+      };
+      if (CONFIG.page.isPost) {
+        if (CONFIG.hostname !== location.hostname) return;
+        addCount(Counter);
+      } else if (document.querySelectorAll('.post-title-link').length >= 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+  <script defer src="/lib/three/three.min.js"></script>
+    <script defer src="/lib/three/three-waves.min.js"></script>
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+<script type="text/x-mathjax-config">
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      equationNumbers: {
+        autoNumber: 'AMS'
+      }
+    }
+  });
+
+  MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
+    MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
+      if (data.display) {
+        var next = data.script.nextSibling;
+        while (next && next.nodeName.toLowerCase() === '#text') {
+          next = next.nextSibling;
+        }
+        if (next && next.nodeName.toLowerCase() === 'br') {
+          next.parentNode.removeChild(next);
+        }
+      }
+    });
+  });
+
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i = 0; i < all.length; i += 1) {
+      element = document.getElementById(all[i].inputID + '-Frame').parentNode;
+      if (element.nodeName.toLowerCase() == 'li') {
+        element = element.parentNode;
+      }
+      element.classList.add('has-jax');
+    }
+  });
+</script>
+<script>
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML', () => {
+    MathJax.Hub.Typeset();
+  }, window.MathJax);
+</script>
+
+    
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el: '#valine-comments',
+      verify: false,
+      notify: true,
+      appId: '06Q4VfTAzWbkiO4CGJwCu0Cr-gzGzoHsz',
+      appKey: 'Vr9BE7XVAxIavhd3ssLeupQD',
+      placeholder: "Just go go",
+      avatar: 'mm',
+      meta: guest,
+      pageSize: '10' || 10,
+      visitor: false,
+      lang: 'zh-cn' || 'zh-cn',
+      path: location.pathname,
+      recordIP: false,
+      serverURLs: ''
+    });
+  }, window.Valine);
+});
+</script>
+
+
+
+<script type="text/javascript" charset="utf-8" src="/js/lazyload-plugin/lazyload.intersectionObserver.min.js"></script></body></html>
