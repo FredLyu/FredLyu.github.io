@@ -5,13 +5,13 @@
 <meta name="generator" content="Hexo 4.2.0">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
   <link rel="mask-icon" href="/images/logo.svg" color="#222">
 
 <link rel="stylesheet" href="/css/main.css">
 
 
 <link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
   <link rel="stylesheet" href="/lib/pace/pace-theme-corner-indicator.min.css">
   <script src="/lib/pace/pace.min.js"></script>
 
@@ -25,14 +25,14 @@
     version: '7.6.0',
     exturl: false,
     sidebar: {"position":"left","width":300,"display":"always","padding":18,"offset":12,"onmobile":false},
-    copycode: {"enable":true,"show_result":true,"style":"default"},
+    copycode: {"enable":true,"show_result":true,"style":null},
     back2top: {"enable":true,"sidebar":true,"scrollpercent":true},
     bookmark: {"enable":true,"color":"#222","save":"auto"},
-    fancybox: false,
+    fancybox: true,
     mediumzoom: false,
     lazyload: false,
     pangu: false,
-    comments: {"style":"tabs","active":"disqus","storage":true,"lazyload":false,"nav":null},
+    comments: {"style":"tabs","active":"valine","storage":true,"lazyload":false,"nav":null,"activeClass":"valine"},
     algolia: {
       appID: '',
       apiKey: '',
@@ -55,7 +55,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://fredlyu.github.io/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B8%8E%E6%B8%B8%E6%88%8F%E5%AE%8C%E7%BE%8E%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0-%E7%8A%B6%E6%80%81%E6%A8%A1%E5%BC%8F-%E5%BA%94%E7%94%A8%E7%AF%87/SceneState.png">
 <meta property="article:published_time" content="2019-08-10T13:40:48.000Z">
-<meta property="article:modified_time" content="2019-08-10T15:27:24.894Z">
+<meta property="article:modified_time" content="2019-12-28T16:46:30.204Z">
 <meta property="article:author" content="柒月">
 <meta property="article:tag" content="状态模式">
 <meta property="article:tag" content="Unity3D">
@@ -115,7 +115,6 @@
   </style>
 </noscript>
 
-<link rel="alternate" href="/atom.xml" title="新媒体开发" type="application/atom+xml">
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
@@ -229,7 +228,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/headimage.jpg">
       <meta itemprop="name" content="柒月">
-      <meta itemprop="description" content="目前主要从事新媒体开发，用软件表达艺术">
+      <meta itemprop="description" content="Just do it!!!">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -246,10 +245,16 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2019-08-10 21:40:48 / 修改时间：23:27:24" itemprop="dateCreated datePublished" datetime="2019-08-10T21:40:48+08:00">2019-08-10</time>
+              <time title="创建时间：2019-08-10 21:40:48" itemprop="dateCreated datePublished" datetime="2019-08-10T21:40:48+08:00">2019-08-10</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-12-29 00:46:30" itemprop="dateModified" datetime="2019-12-29T00:46:30+08:00">2019-12-29</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
@@ -276,20 +281,13 @@
               <span class="post-meta-item-text">阅读次数：</span>
               <span class="leancloud-visitors-count"></span>
             </span>
-            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span id="busuanzi_value_page_pv"></span>
-            </span>
   
   <span class="post-meta-item">
     
       <span class="post-meta-item-icon">
         <i class="fa fa-comment-o"></i>
       </span>
-      <span class="post-meta-item-text">Valine：</span>
+      <span class="post-meta-item-text">评论次数：</span>
     
     <a title="valine" href="/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B8%8E%E6%B8%B8%E6%88%8F%E5%AE%8C%E7%BE%8E%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0-%E7%8A%B6%E6%80%81%E6%A8%A1%E5%BC%8F-%E5%BA%94%E7%94%A8%E7%AF%87.html#comments" itemprop="discussionUrl">
       <span class="post-comments-count valine-comment-count" data-xid="/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B8%8E%E6%B8%B8%E6%88%8F%E5%AE%8C%E7%BE%8E%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0-%E7%8A%B6%E6%80%81%E6%A8%A1%E5%BC%8F-%E5%BA%94%E7%94%A8%E7%AF%87.html" itemprop="commentCount"></span>
@@ -302,7 +300,7 @@
                 <i class="fa fa-file-word-o"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>5.5k</span>
+              <span>5.3k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -324,237 +322,30 @@
       
         <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>  上一个章节，我们已经了解了什么是状态模式，并设计实现了状态模式。本节我们主要来完成状态模式的实际应用。<br>  我们知道，基于Unity3D开发的游戏都只会再一个场景中运行，因此我们可以把每一个场景都当作一个状态类，并维护这个类。这样场景之间的跳转就可以看作是状态之间的跳转；而且同一时间只会有一个状态存在，也符合游戏执行时只有一个场景存在的实际情况。</p>
 <h3 id="场景状态类SceneState的设计"><a href="#场景状态类SceneState的设计" class="headerlink" title="场景状态类SceneState的设计"></a>场景状态类SceneState的设计</h3><p>对于游戏大致可分为开始场景、主画面场景和打斗场景，因此可分别对于三个不同的状态。让三个场景类都继承ISceneState，然后再设计一个拥有者SceneStateController,而我们此次主要基于Unity3D来学习设计模式，因此我们还需要一个GameLoop类，让其拥有SceneStateController，以便完成与Unity3D的互动对接，结构如下图所示：  </p>
-<img src="/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B8%8E%E6%B8%B8%E6%88%8F%E5%AE%8C%E7%BE%8E%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0-%E7%8A%B6%E6%80%81%E6%A8%A1%E5%BC%8F-%E5%BA%94%E7%94%A8%E7%AF%87/SceneState.png" class>  
+<img src="/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B8%8E%E6%B8%B8%E6%88%8F%E5%AE%8C%E7%BE%8E%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0-%E7%8A%B6%E6%80%81%E6%A8%A1%E5%BC%8F-%E5%BA%94%E7%94%A8%E7%AF%87/SceneState.png" class>
+
 <h4 id="说明如下："><a href="#说明如下：" class="headerlink" title="说明如下："></a>说明如下：</h4><blockquote>
-<p>ISceneSate：场景类的接口，主要用于规范场景状态的行为；<br>StartState、MainMenuState、BattleState：分别对应开始场景、主画面场景和打斗场景；<br>SceneStateController：场景状态的拥有者，保持当前游戏状态，并控制场景状态的转变，而且负责与GameLoop互动操作；<br>GameLoop：游戏的主循环，负责与Unity3D互动，并且可以初始化游戏和定期更新游戏。  </p>
+<p>ISceneSate：场景类的接口，主要用于规范场景状态的行为；<br>StartState、MainMenuState、BattleState：分别对应开始场景、主画面场景和打斗场景；<br>SceneStateController：场景状态的拥有者，保持当前游戏状态，并控制场景状态的转变，而且负责与GameLoop互动操作；<br>GameLoop：游戏的主循环，负责与Unity3D互动，并且可以初始化游戏和定期更新游戏。</p>
 </blockquote>
-<h3 id="场景状态模式的实现"><a href="#场景状态模式的实现" class="headerlink" title="场景状态模式的实现"></a>场景状态模式的实现</h3><h4 id="ISceneState接口类实现"><a href="#ISceneState接口类实现" class="headerlink" title="ISceneState接口类实现"></a>ISceneState接口类实现</h4><pre><code>public class ISceneState
-{
-    /// <summary>
-    /// 状态名称
-    /// </summary>
-    private string m_StateName = "ISceneState";
-    public string StateName
-    {
-        get
-        {
-            return m_StateName;
-        }
-        set
-        {
-            m_StateName = value;
-        }
-    }
+<h3 id="场景状态模式的实现"><a href="#场景状态模式的实现" class="headerlink" title="场景状态模式的实现"></a>场景状态模式的实现</h3><h4 id="ISceneState接口类实现"><a href="#ISceneState接口类实现" class="headerlink" title="ISceneState接口类实现"></a>ISceneState接口类实现</h4><figure class="highlight c#"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">ISceneState</span></span><br><span class="line">{</span><br><span class="line">    <span class="comment">// 状态名称</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">string</span> m_StateName = <span class="string">"ISceneState"</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">string</span> StateName</span><br><span class="line">    {</span><br><span class="line">        <span class="keyword">get</span></span><br><span class="line">        {</span><br><span class="line">            <span class="keyword">return</span> m_StateName;</span><br><span class="line">        }</span><br><span class="line">        <span class="keyword">set</span></span><br><span class="line">        {</span><br><span class="line">            m_StateName = <span class="keyword">value</span>;</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 状态控制者</span></span><br><span class="line">    <span class="keyword">protected</span> SceneStateController m_Controller = <span class="literal">null</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">ISceneState</span>(<span class="params">SceneStateController controller</span>)</span></span><br><span class="line"><span class="function"></span>    {</span><br><span class="line">        m_Controller = controller;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 状态开始，可初始化一些数据</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">StateBegin</span>(<span class="params"></span>)</span> { }</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 状态更新，可以做游戏定时更新输入等</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">StateUpdate</span>(<span class="params"></span>)</span> { }</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 状态结束，可做资源释放</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">StateEnd</span>(<span class="params"></span>)</span> { }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 
-    /// <summary>
-    /// 状态控制者
-    /// </summary>
-    protected SceneStateController m_Controller = null;
+<p>  StateBegin、StateUpdate和StateEnd三个方法分别完成每个场景状态的初始化、更新和结束场景状态时一些释放操作。</p>
+<h4 id="开始状态类StartState的实现"><a href="#开始状态类StartState的实现" class="headerlink" title="开始状态类StartState的实现"></a>开始状态类StartState的实现</h4><figure class="highlight c#"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">StartState</span> : <span class="title">ISceneState</span></span><br><span class="line">{</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">StartState</span>(<span class="params">SceneStateController controller</span>) : <span class="title">base</span>(<span class="params">controller</span>)</span></span><br><span class="line"><span class="function"></span>    {</span><br><span class="line">        StateName = <span class="string">"StartState"</span>;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 开始</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="keyword">void</span> <span class="title">StateBegin</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>    {</span><br><span class="line">        <span class="comment">//可以在此进行游戏数据加载和初始化等</span></span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 更新</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="keyword">void</span> <span class="title">StateUpdate</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>    {</span><br><span class="line">        <span class="comment">//更新状态</span></span><br><span class="line">        m_Controller.SetState(<span class="keyword">new</span> MainMenuState(m_Controller), <span class="string">"MainMenuScene"</span>);</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 
-    public ISceneState(SceneStateController controller)
-    {
-        m_Controller = controller;
-    }
+<p>  开始场景主要完成一些游戏数据的加载，因此可以放在StateBegin方法中执行，而在StateUpdate方法中数据加载完成之后来切换游戏的状态，进入MainMenuState主画面场景。</p>
+<h4 id="主画面场景类MainMenuState的实现"><a href="#主画面场景类MainMenuState的实现" class="headerlink" title="主画面场景类MainMenuState的实现"></a>主画面场景类MainMenuState的实现</h4><figure class="highlight csharp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">MainMenuState</span> : <span class="title">ISceneState</span></span><br><span class="line">{</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">MainMenuState</span>(<span class="params">SceneStateController controller</span>) : <span class="title">base</span>(<span class="params">controller</span>)</span></span><br><span class="line"><span class="function"></span>    {</span><br><span class="line">        StateName = <span class="string">"MainMenuState"</span>;</span><br><span class="line">    }</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 开始</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="keyword">void</span> <span class="title">StateBegin</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>    {</span><br><span class="line">        Button tempBtn = GameObject.Find(<span class="string">"StartGameBtn"</span>).GetComponent< Button >();</span><br><span class="line">        <span class="keyword">if</span> (tempBtn)</span><br><span class="line">            tempBtn.onClick.AddListener(() => OnStartGameBtnClick(tempBtn));</span><br><span class="line">    }</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 开始游戏按键的响应事件</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">OnStartGameBtnClick</span>(<span class="params">Button button</span>)</span></span><br><span class="line"><span class="function"></span>    {</span><br><span class="line">        m_Controller.SetState(<span class="keyword">new</span> BattleState(m_Controller), <span class="string">"BattleScene"</span>);</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 
-    /// <summary>
-    /// 状态开始，可初始化一些数据
-    /// </summary>
-    public virtual void StateBegin() { }
+<p>  主画面场景主要用来展示玩家的UI一些操作，本次只是简单的应用案例，因此我们在此场景主要时一个“开始”按钮，用来切换进入打斗场景。因此在StateBegin方法中完成开始按钮的查找和点击事件的初始化，当玩家点击按钮时，状态就会被切换为打斗状态，从而进入打斗场景。</p>
+<h4 id="打斗场景BattleState的实现"><a href="#打斗场景BattleState的实现" class="headerlink" title="打斗场景BattleState的实现"></a>打斗场景BattleState的实现</h4><figure class="highlight c#"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">BattleState</span> : <span class="title">ISceneState</span></span><br><span class="line">{</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">BattleState</span>(<span class="params">SceneStateController controller</span>) : <span class="title">base</span>(<span class="params">controller</span>)</span></span><br><span class="line"><span class="function"></span>    {</span><br><span class="line">        StateName = <span class="string">"BattleState"</span>;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="keyword">void</span> <span class="title">StateBegin</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>    {</span><br><span class="line">        <span class="comment">//游戏初始化等</span></span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="keyword">void</span> <span class="title">StateEnd</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>    {</span><br><span class="line">        <span class="comment">//状态的释放或其他资源的释放</span></span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="keyword">void</span> <span class="title">StateUpdate</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>    {</span><br><span class="line">        <span class="comment">//输入</span></span><br><span class="line">        InputProcess();</span><br><span class="line"></span><br><span class="line">        <span class="comment">//游戏逻辑更新</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">//游戏是否结束</span></span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 游戏输入</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">InputProcess</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>    {</span><br><span class="line">        <span class="comment">//玩家输入程序判断代码......</span></span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 
-    /// <summary>
-    /// 状态更新，可以做游戏定时更新输入等
-    /// </summary>
-    public virtual void StateUpdate() { }
+<p>  在刚开始的StateBegin方法中完成游戏画面等一些的初始化，然后在StateUpdate方法中完成游戏的输入、游戏逻辑、游戏状态的一些更新，最后如果状态结束就在StateEnd方法中完成一些资源的释放等操作。</p>
+<h4 id="状态拥有者SceneStateController的实现"><a href="#状态拥有者SceneStateController的实现" class="headerlink" title="状态拥有者SceneStateController的实现"></a>状态拥有者SceneStateController的实现</h4><figure class="highlight c#"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">SceneStateController</span></span><br><span class="line">{</span><br><span class="line">    <span class="comment">// 状态</span></span><br><span class="line">    <span class="keyword">private</span> ISceneState m_State = <span class="literal">null</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 状态是不是刚启动</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">bool</span> m_bRunBegin = <span class="literal">false</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 场景加载的进度</span></span><br><span class="line">    <span class="keyword">private</span> AsyncOperation asyncOperation;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">SceneStateController</span>(<span class="params"></span>)</span> { }</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 设置状态</span></span><br><span class="line">    <span class="comment">// <param name="state">具体状态的实例</span></span><br><span class="line">    <span class="comment">// <param name="loadSceneName">场景名称</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">SetState</span>(<span class="params">ISceneState state,<span class="keyword">string</span> loadSceneName</span>)</span></span><br><span class="line"><span class="function"></span>    {</span><br><span class="line">        m_bRunBegin = <span class="literal">false</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//加载场景</span></span><br><span class="line">        LoadScene(loadSceneName);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//释放前一个状态</span></span><br><span class="line">        <span class="keyword">if</span> (m_State != <span class="literal">null</span>)</span><br><span class="line">            m_State.StateEnd();</span><br><span class="line"></span><br><span class="line">        <span class="comment">//更新状态</span></span><br><span class="line">        m_State = state;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 载入场景</span></span><br><span class="line">    <span class="comment">// <param name="sceneName">场景名称</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">LoadScene</span>(<span class="params"><span class="keyword">string</span> sceneName</span>)</span></span><br><span class="line"><span class="function"></span>    {</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">string</span>.IsNullOrEmpty(sceneName))</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        <span class="comment">//异步加载场景</span></span><br><span class="line">        asyncOperation = SceneManager.LoadSceneAsync(sceneName);</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 更新</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">StateUpdate</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>    {</span><br><span class="line">        <span class="comment">//Debug.Log(asyncOperation.progress);</span></span><br><span class="line">        <span class="comment">//场景是否加载完成</span></span><br><span class="line">        <span class="keyword">if</span> (asyncOperation != <span class="literal">null</span> && !asyncOperation.isDone)</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//通知新的State开始</span></span><br><span class="line">        <span class="keyword">if</span>(m_State != <span class="literal">null</span> && m_bRunBegin == <span class="literal">false</span>)</span><br><span class="line">        {</span><br><span class="line">            m_bRunBegin = <span class="literal">true</span>;</span><br><span class="line">            m_State.StateBegin();</span><br><span class="line">        }</span><br><span class="line"></span><br><span class="line">        <span class="comment">//更新</span></span><br><span class="line">        <span class="keyword">if</span> (m_State != <span class="literal">null</span>)</span><br><span class="line">            m_State.StateUpdate();</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 
-    /// <summary>
-    /// 状态结束，可做资源释放
-    /// </summary>
-    public virtual void StateEnd() { }
-}</code></pre><p>  StateBegin、StateUpdate和StateEnd三个方法分别完成每个场景状态的初始化、更新和结束场景状态时一些释放操作。</p>
-<h4 id="开始状态类StartState的实现"><a href="#开始状态类StartState的实现" class="headerlink" title="开始状态类StartState的实现"></a>开始状态类StartState的实现</h4><pre><code>public class StartState : ISceneState
-{
-    public StartState(SceneStateController controller) : base(controller)
-    {
-        StateName = "StartState";
-    }
+<p>  SceneStateController拥有一个IScneState字段，用来存储当前的游戏状态；SetState实现场景之间的相互转换，首先加载新场景，然后释放前一个场景并把当前场景设置为新的场景，由于加载场景使用了异步加载，因此在StateUpdate方法中先判断场景是否加载完毕，如果加载完毕则初始化新的场景并更新场景。</p>
+<h4 id="游戏主循环GameLoop的实现"><a href="#游戏主循环GameLoop的实现" class="headerlink" title="游戏主循环GameLoop的实现"></a>游戏主循环GameLoop的实现</h4><figure class="highlight c#"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">GameLoop</span> : <span class="title">MonoBehaviour</span></span><br><span class="line">{</span><br><span class="line">    <span class="keyword">private</span> SceneStateController sceneStateController = <span class="keyword">new</span> SceneStateController();</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">Awake</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>    {</span><br><span class="line">        <span class="comment">//切换场景时不销毁</span></span><br><span class="line">        DontDestroyOnLoad(<span class="keyword">this</span>.gameObject);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//随机数种子</span></span><br><span class="line">        Random.InitState((<span class="keyword">int</span>)System.DateTime.Now.Ticks);</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">Start</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>    {</span><br><span class="line">        <span class="comment">//设置起始场景</span></span><br><span class="line">        sceneStateController.SetState(<span class="keyword">new</span> StartState(sceneStateController), <span class="string">""</span>);</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Update is called once per frame</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">Update</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>    {</span><br><span class="line">        <span class="comment">//更新</span></span><br><span class="line">        sceneStateController.StateUpdate();</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 
-    /// <summary>
-    /// 开始
-    /// </summary>
-    public override void StateBegin()
-    {
-        //可以在此进行游戏数据加载和初始化等
-    }
-
-    /// <summary>
-    /// 更新
-    /// </summary>
-    public override void StateUpdate()
-    {
-        //更新状态
-        m_Controller.SetState(new MainMenuState(m_Controller), "MainMenuScene");
-    }
-}</code></pre><p>  开始场景主要完成一些游戏数据的加载，因此可以放在StateBegin方法中执行，而在StateUpdate方法中数据加载完成之后来切换游戏的状态，进入MainMenuState主画面场景。</p>
-<h4 id="主画面场景类MainMenuState的实现"><a href="#主画面场景类MainMenuState的实现" class="headerlink" title="主画面场景类MainMenuState的实现"></a>主画面场景类MainMenuState的实现</h4><pre><code>public class MainMenuState : ISceneState
-{
-    public MainMenuState(SceneStateController controller) : base(controller)
-    {
-        StateName = "MainMenuState";
-    }
-
-    /// <summary>
-    /// 开始
-    /// </summary>
-    public override void StateBegin()
-    {
-        Button tempBtn = GameObject.Find("StartGameBtn").GetComponent</code><button><code>();
-        if (tempBtn)
-            tempBtn.onClick.AddListener(() => OnStartGameBtnClick(tempBtn));
-    }
-
-    /// <summary>
-    /// 开始游戏按键的响应事件
-    /// </summary>
-    /// <param name="button">
-    private void OnStartGameBtnClick(Button button)
-    {
-        m_Controller.SetState(new BattleState(m_Controller), "BattleScene");
-    }
-}</code><p>  主画面场景主要用来展示玩家的UI一些操作，本次只是简单的应用案例，因此我们在此场景主要时一个“开始”按钮，用来切换进入打斗场景。因此在StateBegin方法中完成开始按钮的查找和点击事件的初始化，当玩家点击按钮时，状态就会被切换为打斗状态，从而进入打斗场景。</p>
-<h4 id="打斗场景BattleState的实现"><a href="#打斗场景BattleState的实现" class="headerlink" title="打斗场景BattleState的实现"></a>打斗场景BattleState的实现</h4><pre><code>public class BattleState : ISceneState
-{
-    public BattleState(SceneStateController controller) : base(controller)
-    {
-        StateName = "BattleState";
-    }
-
-    public override void StateBegin()
-    {
-        //游戏初始化等
-    }
-
-    public override void StateEnd()
-    {
-        //状态的释放或其他资源的释放
-    }
-
-    public override void StateUpdate()
-    {
-        //输入
-        InputProcess();
-
-        //游戏逻辑更新
-
-        //游戏是否结束
-    }
-
-    /// <summary>
-    /// 游戏输入
-    /// </summary>
-    private void InputProcess()
-    {
-        //玩家输入程序判断代码......
-    }
-}</code></pre><p>  在刚开始的StateBegin方法中完成游戏画面等一些的初始化，然后在StateUpdate方法中完成游戏的输入、游戏逻辑、游戏状态的一些更新，最后如果状态结束就在StateEnd方法中完成一些资源的释放等操作。</p>
-<h4 id="状态拥有者SceneStateController的实现"><a href="#状态拥有者SceneStateController的实现" class="headerlink" title="状态拥有者SceneStateController的实现"></a>状态拥有者SceneStateController的实现</h4><pre><code>public class SceneStateController
-{
-    /// <summary>
-    /// 状态
-    /// </summary>
-    private ISceneState m_State = null;
-
-    /// <summary>
-    /// 状态是不是刚启动
-    /// </summary>
-    private bool m_bRunBegin = false;
-
-    /// <summary>
-    /// 场景加载的进度
-    /// </summary>
-    private AsyncOperation asyncOperation;
-
-    public SceneStateController() { }
-
-    /// <summary>
-    /// 设置状态
-    /// </summary>
-    /// <param name="state">具体状态的实例
-    /// <param name="loadSceneName">场景名称
-    public void SetState(ISceneState state,string loadSceneName)
-    {
-        m_bRunBegin = false;
-
-        //加载场景
-        LoadScene(loadSceneName);
-
-        //释放前一个状态
-        if (m_State != null)
-            m_State.StateEnd();
-
-        //更新状态
-        m_State = state;
-    }
-
-    /// <summary>
-    /// 载入场景
-    /// </summary>
-    /// <param name="sceneName">场景名称
-    private void LoadScene(string sceneName)
-    {
-        if (string.IsNullOrEmpty(sceneName))
-            return;
-        //异步加载场景
-        asyncOperation = SceneManager.LoadSceneAsync(sceneName);
-    }
-
-    /// <summary>
-    /// 更新
-    /// </summary>
-    public void StateUpdate()
-    {
-        //Debug.Log(asyncOperation.progress);
-        //场景是否加载完成
-        if (asyncOperation != null && !asyncOperation.isDone)
-            return;
-
-        //通知新的State开始
-        if(m_State != null && m_bRunBegin == false)
-        {
-            m_bRunBegin = true;
-            m_State.StateBegin();
-        }
-
-        //更新
-        if (m_State != null)
-            m_State.StateUpdate();
-    }
-}</code></pre><p>  SceneStateController拥有一个IScneState字段，用来存储当前的游戏状态；SetState实现场景之间的相互转换，首先加载新场景，然后释放前一个场景并把当前场景设置为新的场景，由于加载场景使用了异步加载，因此在StateUpdate方法中先判断场景是否加载完毕，如果加载完毕则初始化新的场景并更新场景。</p>
-<h4 id="游戏主循环GameLoop的实现"><a href="#游戏主循环GameLoop的实现" class="headerlink" title="游戏主循环GameLoop的实现"></a>游戏主循环GameLoop的实现</h4><pre><code>public class GameLoop : MonoBehaviour
-{
-    private SceneStateController sceneStateController = new SceneStateController();
-
-    private void Awake()
-    {
-        //切换场景时不销毁
-        DontDestroyOnLoad(this.gameObject);
-
-        //随机数种子
-        Random.InitState((int)System.DateTime.Now.Ticks);
-    }
-
-    private void Start()
-    {
-        //设置起始场景
-        sceneStateController.SetState(new StartState(sceneStateController), "");
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        //更新
-        sceneStateController.StateUpdate();
-    }
-}</code></pre><p>  GameLoop中定义并初始化SceneStateController对象，在Start方法中初始化游戏场景状态，在Update方法中定时更新游戏状态。<br>  游戏结果在此就不放出了，有兴趣的可自行实现并体验，下面会给出具体的项目工程地址。</p>
+<p>  GameLoop中定义并初始化SceneStateController对象，在Start方法中初始化游戏场景状态，在Update方法中定时更新游戏状态。</p>
+<p>  游戏结果在此就不放出了，有兴趣的可自行实现并体验，下面会给出具体的项目工程地址。</p>
 <h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>  在此状态模式的应用也就讲完了，但为什么我们要使用状态模式呢？<br>  首先，状态模式可以降低维护的难度：当有新的状态增加时，我们只要实现具体的状态，并完成状态的调用就好；也可以减少switch的使用。<br>  其次，状态执行环境单一化：因为每一个场景状态类已经完成了对一个状态的操作相关工作，因此可以清晰了解一个状态执行所需要的资源。<br>  最后我们再回到设计模式的最初目的，就是减少代码的重写，提高复用；因此使用状态模式可以在项目之间共享场景。<br>  那么状态模式还有哪些应用场景？动画有限状态机、NPC角色AI和服务器连接状态等。</p>
 <h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><<设计模式与游戏完美开发>></p>
 <hr>
@@ -562,7 +353,7 @@
 <p>项目工程地址：<a href="https://github.com/FredLyu/DesignPatternsLearn.git" target="_blank" rel="noopener">基于Unity的状态模式实现</a><br>如有侵权，请联系删除</p>
 </blockquote>
 
-    </button></pre></div>
+    </div>
 
     
     
@@ -682,7 +473,7 @@
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <img class="site-author-image" itemprop="image" alt="柒月" src="/images/headimage.jpg">
   <p class="site-author-name" itemprop="name">柒月</p>
-  <div class="site-description" itemprop="description">目前主要从事新媒体开发，用软件表达艺术</div>
+  <div class="site-description" itemprop="description">Just do it!!!</div>
 </div>
 <div class="site-state-wrap motion-element">
   <nav class="site-state">
@@ -754,35 +545,17 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
+      <span class="post-meta-item-text">站点总字数：</span>
     <span title="站点总字数">15k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">13 分钟</span>
+      <span class="post-meta-item-text">站点阅读时长 ≈</span>
+    <span title="站点阅读时长">14 分钟</span>
 </div>
 
         
-<div class="busuanzi-count">
-  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-user"></i>
-      </span>
-      <span class="site-uv" title="总访客量">
-        <span id="busuanzi_value_site_uv"></span>
-      </span>
-    </span>
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-eye"></i>
-      </span>
-      <span class="site-pv" title="总访问量">
-        <span id="busuanzi_value_site_pv"></span>
-      </span>
-    </span>
-</div>
 
 
 
@@ -813,9 +586,14 @@
                 console.log('Failed to save visitor count', error);
               })
           } else {
-              leancloudSelector(url).innerText = 'Counter not initialized! More info at console err msg.';
-              console.error('ATTENTION! LeanCloud counter has security bug, see how to solve it here: https://github.com/theme-next/hexo-leancloud-counter-security. \n However, you can still use LeanCloud without security, by setting `security` option to `false`.');
-            
+              Counter('post', '/classes/Counter', { title: title, url: url, time: 1 })
+                .then(response => response.json())
+                .then(() => {
+                  leancloudSelector(url).innerText = 1;
+                })
+                .catch(error => {
+                  console.log('Failed to create', error);
+                });
           }
         })
         .catch(error => {
@@ -885,6 +663,8 @@
 
   
   <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
 
@@ -902,7 +682,7 @@
 
 
   <script defer src="/lib/three/three.min.js"></script>
-    <script defer src="/lib/three/three-waves.min.js"></script>
+    <script defer src="/lib/three/canvas_lines.min.js"></script>
 
 
   
@@ -934,7 +714,7 @@
 
 <script>
 NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
-  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+  NexT.utils.getScript('https://cdn.jsdelivr.net/npm/valine@1.3.10/dist/Valine.min.js', () => {
     var GUEST = ['nick', 'mail', 'link'];
     var guest = 'nick,mail,link';
     guest = guest.split(',').filter(item => {
@@ -942,7 +722,7 @@ NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
     });
     new Valine({
       el: '#valine-comments',
-      verify: false,
+      verify: true,
       notify: true,
       appId: '06Q4VfTAzWbkiO4CGJwCu0Cr-gzGzoHsz',
       appKey: 'Vr9BE7XVAxIavhd3ssLeupQD',

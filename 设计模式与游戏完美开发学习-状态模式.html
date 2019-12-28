@@ -5,13 +5,13 @@
 <meta name="generator" content="Hexo 4.2.0">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
   <link rel="mask-icon" href="/images/logo.svg" color="#222">
 
 <link rel="stylesheet" href="/css/main.css">
 
 
 <link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
   <link rel="stylesheet" href="/lib/pace/pace-theme-corner-indicator.min.css">
   <script src="/lib/pace/pace.min.js"></script>
 
@@ -25,14 +25,14 @@
     version: '7.6.0',
     exturl: false,
     sidebar: {"position":"left","width":300,"display":"always","padding":18,"offset":12,"onmobile":false},
-    copycode: {"enable":true,"show_result":true,"style":"default"},
+    copycode: {"enable":true,"show_result":true,"style":null},
     back2top: {"enable":true,"sidebar":true,"scrollpercent":true},
     bookmark: {"enable":true,"color":"#222","save":"auto"},
-    fancybox: false,
+    fancybox: true,
     mediumzoom: false,
     lazyload: false,
     pangu: false,
-    comments: {"style":"tabs","active":"disqus","storage":true,"lazyload":false,"nav":null},
+    comments: {"style":"tabs","active":"valine","storage":true,"lazyload":false,"nav":null,"activeClass":"valine"},
     algolia: {
       appID: '',
       apiKey: '',
@@ -56,7 +56,7 @@
 <meta property="og:image" content="https://fredlyu.github.io/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B8%8E%E6%B8%B8%E6%88%8F%E5%AE%8C%E7%BE%8E%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0-%E7%8A%B6%E6%80%81%E6%A8%A1%E5%BC%8F/StateClassDiagram.png">
 <meta property="og:image" content="https://fredlyu.github.io/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B8%8E%E6%B8%B8%E6%88%8F%E5%AE%8C%E7%BE%8E%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0-%E7%8A%B6%E6%80%81%E6%A8%A1%E5%BC%8F/StateTestResult.png">
 <meta property="article:published_time" content="2019-08-08T14:30:56.000Z">
-<meta property="article:modified_time" content="2019-08-10T13:55:40.346Z">
+<meta property="article:modified_time" content="2019-12-28T15:05:37.494Z">
 <meta property="article:author" content="柒月">
 <meta property="article:tag" content="状态模式">
 <meta name="twitter:card" content="summary">
@@ -114,7 +114,6 @@
   </style>
 </noscript>
 
-<link rel="alternate" href="/atom.xml" title="新媒体开发" type="application/atom+xml">
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
@@ -228,7 +227,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/headimage.jpg">
       <meta itemprop="name" content="柒月">
-      <meta itemprop="description" content="目前主要从事新媒体开发，用软件表达艺术">
+      <meta itemprop="description" content="Just do it!!!">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -253,7 +252,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-08-10 21:55:40" itemprop="dateModified" datetime="2019-08-10T21:55:40+08:00">2019-08-10</time>
+                <time title="修改时间：2019-12-28 23:05:37" itemprop="dateModified" datetime="2019-12-28T23:05:37+08:00">2019-12-28</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -281,20 +280,13 @@
               <span class="post-meta-item-text">阅读次数：</span>
               <span class="leancloud-visitors-count"></span>
             </span>
-            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span id="busuanzi_value_page_pv"></span>
-            </span>
   
   <span class="post-meta-item">
     
       <span class="post-meta-item-icon">
         <i class="fa fa-comment-o"></i>
       </span>
-      <span class="post-meta-item-text">Valine：</span>
+      <span class="post-meta-item-text">评论次数：</span>
     
     <a title="valine" href="/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B8%8E%E6%B8%B8%E6%88%8F%E5%AE%8C%E7%BE%8E%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0-%E7%8A%B6%E6%80%81%E6%A8%A1%E5%BC%8F.html#comments" itemprop="discussionUrl">
       <span class="post-comments-count valine-comment-count" data-xid="/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B8%8E%E6%B8%B8%E6%88%8F%E5%AE%8C%E7%BE%8E%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0-%E7%8A%B6%E6%80%81%E6%A8%A1%E5%BC%8F.html" itemprop="commentCount"></span>
@@ -307,14 +299,14 @@
                 <i class="fa fa-file-word-o"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>2.6k</span>
+              <span>2.8k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="fa fa-clock-o"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 ≈</span>
-              <span>2 分钟</span>
+              <span>3 分钟</span>
             </span>
             <div class="post-description">何为状态模式？状态模式如何应用？有哪些应用场景？</div>
 
@@ -336,99 +328,21 @@
 <p>Context: 状态拥有者，拥有状态属性，主要完成让外界得知状态的改变或者操作状态改变。<br>State: 状态的基类，指定状态的接口，负责规范状态拥有者要表现的行为。<br>ConcreteState: 具体的状态类，拥有特定状态下的行为，是状态的细化。</p>
 </blockquote>
 <h3 id="状态模式的实现"><a href="#状态模式的实现" class="headerlink" title="状态模式的实现"></a>状态模式的实现</h3><p>  根据以上对状态模式的分析，下面我们来做类的设计实现，首先是State基类：</p>
-<pre><code>/// <summary>
-/// 状态接口类
-/// </summary>
-public abstract class State
-{
-    protected Context m_Context = null;
-    public State(Context theContext)
-    {
-        m_Context = theContext;
-    }
+<figure class="highlight c#"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">// 状态接口类</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">class</span> <span class="title">State</span></span><br><span class="line">{</span><br><span class="line">    <span class="keyword">protected</span> Context m_Context = <span class="literal">null</span>;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">State</span>(<span class="params">Context theContext</span>)</span></span><br><span class="line"><span class="function"></span>    {</span><br><span class="line">        m_Context = theContext;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">Handle</span>(<span class="params"><span class="keyword">int</span> <span class="keyword">value</span></span>)</span>;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 
-    public abstract void Handle(int value);
-}</code></pre><p>  声明一个Context对象，并作为State生成对象时传入的参数，以便State拥有Context,可以后续操作Context对象。定义抽象方法Handle，便于子类呈现不同的行为。  </p>
+<p>  声明一个Context对象，并作为State生成对象时传入的参数，以便State拥有Context,可以后续操作Context对象。定义抽象方法Handle，便于子类呈现不同的行为。  </p>
 <p>  再定义一个Context类：</p>
-<pre><code>/// <summary>
-/// 状态拥有者
-/// </summary>
-public class Context
-{
-    private State m_State = null;
+<figure class="highlight c#"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">// 状态拥有者</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Context</span></span><br><span class="line">{</span><br><span class="line">    <span class="keyword">private</span> State m_State = <span class="literal">null</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Request</span>(<span class="params"><span class="keyword">int</span> <span class="keyword">value</span></span>)</span></span><br><span class="line"><span class="function"></span>    {</span><br><span class="line">        m_State.Handle(<span class="keyword">value</span>);</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">SetState</span>(<span class="params">State theState</span>)</span></span><br><span class="line"><span class="function"></span>    {</span><br><span class="line">        Debug.Log(<span class="string">"Context.SetState : "</span> + theState);</span><br><span class="line">        m_State = theState;</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 
-    public void Request(int value)
-    {
-        m_State.Handle(value);
-    }
-
-    public void SetState(State theState)
-    {
-        Debug.Log("Context.SetState : " + theState);
-        m_State = theState;
-    }
-}</code></pre><p>  Context类拥有State属性，可以通过Request来呈现当前状态的行为，通过SetState方法设置当前状态。</p>
+<p>  Context类拥有State属性，可以通过Request来呈现当前状态的行为，通过SetState方法设置当前状态。</p>
 <p>  最后定义三个具体的状态：</p>
-<pre><code>public class ConcreteStateA : State
-{
-    public ConcreteStateA(Context theContext) : base(theContext)
-    {
-    }
+<figure class="highlight c#"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">ConcreteStateA</span> : <span class="title">State</span></span><br><span class="line">{</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">ConcreteStateA</span>(<span class="params">Context theContext</span>) : <span class="title">base</span>(<span class="params">theContext</span>)</span></span><br><span class="line"><span class="function"></span>    {</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="keyword">void</span> <span class="title">Handle</span>(<span class="params"><span class="keyword">int</span> <span class="keyword">value</span></span>)</span></span><br><span class="line"><span class="function"></span>    {</span><br><span class="line">        Debug.Log(<span class="string">"ConcreteStateA.Handle"</span>);</span><br><span class="line">        <span class="keyword">if</span>(<span class="keyword">value</span> > <span class="number">10</span>)</span><br><span class="line">        {</span><br><span class="line">            m_Context.SetState(<span class="keyword">new</span> ConcreteStateB(m_Context));</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">ConcreteStateB</span> : <span class="title">State</span></span><br><span class="line">{</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">ConcreteStateB</span>(<span class="params">Context theContext</span>) : <span class="title">base</span>(<span class="params">theContext</span>)</span></span><br><span class="line"><span class="function"></span>    {</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="keyword">void</span> <span class="title">Handle</span>(<span class="params"><span class="keyword">int</span> <span class="keyword">value</span></span>)</span></span><br><span class="line"><span class="function"></span>    {</span><br><span class="line">        Debug.Log(<span class="string">"ConcreteStateB.Handle"</span>);</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">value</span> > <span class="number">20</span>)</span><br><span class="line">        {</span><br><span class="line">            m_Context.SetState(<span class="keyword">new</span> ConcreteStateC(m_Context));</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">ConcreteStateC</span> : <span class="title">State</span></span><br><span class="line">{</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">ConcreteStateC</span>(<span class="params">Context theContext</span>) : <span class="title">base</span>(<span class="params">theContext</span>)</span></span><br><span class="line"><span class="function"></span>    {</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="keyword">void</span> <span class="title">Handle</span>(<span class="params"><span class="keyword">int</span> <span class="keyword">value</span></span>)</span></span><br><span class="line"><span class="function"></span>    {</span><br><span class="line">        Debug.Log(<span class="string">"ConcreteStateC.Handle"</span>);</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">value</span> > <span class="number">30</span>)</span><br><span class="line">        {</span><br><span class="line">            m_Context.SetState(<span class="keyword">new</span> ConcreteStateA(m_Context));</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 
-    public override void Handle(int value)
-    {
-        Debug.Log("ConcreteStateA.Handle");
-        if(value > 10)
-        {
-            m_Context.SetState(new ConcreteStateB(m_Context));
-        }
-    }
-}
-
-public class ConcreteStateB : State
-{
-    public ConcreteStateB(Context theContext) : base(theContext)
-    {
-    }
-
-    public override void Handle(int value)
-    {
-        Debug.Log("ConcreteStateB.Handle");
-        if (value > 20)
-        {
-            m_Context.SetState(new ConcreteStateC(m_Context));
-        }
-    }
-}
-
-public class ConcreteStateC : State
-{
-    public ConcreteStateC(Context theContext) : base(theContext)
-    {
-    }
-
-    public override void Handle(int value)
-    {
-        Debug.Log("ConcreteStateC.Handle");
-        if (value > 30)
-        {
-            m_Context.SetState(new ConcreteStateA(m_Context));
-        }
-    }
-}</code></pre><p>  三个子类分别实现了Handle方法来表现各自的行为。然后根据判定条件来通知Context(状态拥有者)状态发生改变。</p>
+<p>  三个子类分别实现了Handle方法来表现各自的行为。然后根据判定条件来通知Context(状态拥有者)状态发生改变。</p>
 <p>  下面我们来编写测试代码：</p>
-<pre><code>public class TestState : MonoBehaviour
-{
-    void Start()
-    {
-        Context context = new Context();
-        context.SetState(new ConcreteStateA(context));
-        context.Request(5);
-        context.Request(15);
-        context.Request(25);
-        context.Request(35);
-    }
-}</code></pre><p>  首先生成一个Context对象，然后设置状态为ConcreteStateA，再调用Request来变现不同行为并转换状态。执行结果如下：  </p>
+<figure class="highlight c#"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">TestState</span> : <span class="title">MonoBehaviour</span></span><br><span class="line">{</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">Start</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>    {</span><br><span class="line">        Context context = <span class="keyword">new</span> Context();</span><br><span class="line">        context.SetState(<span class="keyword">new</span> ConcreteStateA(context));</span><br><span class="line">        context.Request(<span class="number">5</span>);</span><br><span class="line">        context.Request(<span class="number">15</span>);</span><br><span class="line">        context.Request(<span class="number">25</span>);</span><br><span class="line">        context.Request(<span class="number">35</span>);</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>  首先生成一个Context对象，然后设置状态为ConcreteStateA，再调用Request来变现不同行为并转换状态。执行结果如下：  </p>
 <img src="/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B8%8E%E6%B8%B8%E6%88%8F%E5%AE%8C%E7%BE%8E%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0-%E7%8A%B6%E6%80%81%E6%A8%A1%E5%BC%8F/StateTestResult.png" class>
 
 <h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>  状态设计模式就介绍到这为止，下一篇我们做一个简单的应用案例。笔者也是刚刚学习，如有解释不到的地方还请见谅。对于编程这块，个人认为还是要多加应用才能理解更深。</p>
@@ -559,7 +473,7 @@ public class ConcreteStateC : State
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <img class="site-author-image" itemprop="image" alt="柒月" src="/images/headimage.jpg">
   <p class="site-author-name" itemprop="name">柒月</p>
-  <div class="site-description" itemprop="description">目前主要从事新媒体开发，用软件表达艺术</div>
+  <div class="site-description" itemprop="description">Just do it!!!</div>
 </div>
 <div class="site-state-wrap motion-element">
   <nav class="site-state">
@@ -631,35 +545,17 @@ public class ConcreteStateC : State
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
+      <span class="post-meta-item-text">站点总字数：</span>
     <span title="站点总字数">15k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">13 分钟</span>
+      <span class="post-meta-item-text">站点阅读时长 ≈</span>
+    <span title="站点阅读时长">14 分钟</span>
 </div>
 
         
-<div class="busuanzi-count">
-  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-user"></i>
-      </span>
-      <span class="site-uv" title="总访客量">
-        <span id="busuanzi_value_site_uv"></span>
-      </span>
-    </span>
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-eye"></i>
-      </span>
-      <span class="site-pv" title="总访问量">
-        <span id="busuanzi_value_site_pv"></span>
-      </span>
-    </span>
-</div>
 
 
 
@@ -690,9 +586,14 @@ public class ConcreteStateC : State
                 console.log('Failed to save visitor count', error);
               })
           } else {
-              leancloudSelector(url).innerText = 'Counter not initialized! More info at console err msg.';
-              console.error('ATTENTION! LeanCloud counter has security bug, see how to solve it here: https://github.com/theme-next/hexo-leancloud-counter-security. \n However, you can still use LeanCloud without security, by setting `security` option to `false`.');
-            
+              Counter('post', '/classes/Counter', { title: title, url: url, time: 1 })
+                .then(response => response.json())
+                .then(() => {
+                  leancloudSelector(url).innerText = 1;
+                })
+                .catch(error => {
+                  console.log('Failed to create', error);
+                });
           }
         })
         .catch(error => {
@@ -762,6 +663,8 @@ public class ConcreteStateC : State
 
   
   <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
 
@@ -779,7 +682,7 @@ public class ConcreteStateC : State
 
 
   <script defer src="/lib/three/three.min.js"></script>
-    <script defer src="/lib/three/three-waves.min.js"></script>
+    <script defer src="/lib/three/canvas_lines.min.js"></script>
 
 
   
@@ -811,7 +714,7 @@ public class ConcreteStateC : State
 
 <script>
 NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
-  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+  NexT.utils.getScript('https://cdn.jsdelivr.net/npm/valine@1.3.10/dist/Valine.min.js', () => {
     var GUEST = ['nick', 'mail', 'link'];
     var guest = 'nick,mail,link';
     guest = guest.split(',').filter(item => {
@@ -819,7 +722,7 @@ NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
     });
     new Valine({
       el: '#valine-comments',
-      verify: false,
+      verify: true,
       notify: true,
       appId: '06Q4VfTAzWbkiO4CGJwCu0Cr-gzGzoHsz',
       appKey: 'Vr9BE7XVAxIavhd3ssLeupQD',

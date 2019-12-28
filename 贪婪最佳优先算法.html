@@ -5,13 +5,13 @@
 <meta name="generator" content="Hexo 4.2.0">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
   <link rel="mask-icon" href="/images/logo.svg" color="#222">
 
 <link rel="stylesheet" href="/css/main.css">
 
 
 <link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
   <link rel="stylesheet" href="/lib/pace/pace-theme-corner-indicator.min.css">
   <script src="/lib/pace/pace.min.js"></script>
 
@@ -25,14 +25,14 @@
     version: '7.6.0',
     exturl: false,
     sidebar: {"position":"left","width":300,"display":"always","padding":18,"offset":12,"onmobile":false},
-    copycode: {"enable":true,"show_result":true,"style":"default"},
+    copycode: {"enable":true,"show_result":true,"style":null},
     back2top: {"enable":true,"sidebar":true,"scrollpercent":true},
     bookmark: {"enable":true,"color":"#222","save":"auto"},
-    fancybox: false,
+    fancybox: true,
     mediumzoom: false,
     lazyload: false,
     pangu: false,
-    comments: {"style":"tabs","active":"disqus","storage":true,"lazyload":false,"nav":null},
+    comments: {"style":"tabs","active":"valine","storage":true,"lazyload":false,"nav":null,"activeClass":"valine"},
     algolia: {
       appID: '',
       apiKey: '',
@@ -56,7 +56,7 @@
 <meta property="og:image" content="https://i.imgur.com/rZVHfZT.png">
 <meta property="og:image" content="https://i.imgur.com/oIzyIur.png">
 <meta property="article:published_time" content="2019-03-01T14:23:48.000Z">
-<meta property="article:modified_time" content="2019-08-10T13:53:36.423Z">
+<meta property="article:modified_time" content="2019-12-28T15:03:23.289Z">
 <meta property="article:author" content="柒月">
 <meta property="article:tag" content="寻路">
 <meta property="article:tag" content="Unity">
@@ -116,7 +116,6 @@
   </style>
 </noscript>
 
-<link rel="alternate" href="/atom.xml" title="新媒体开发" type="application/atom+xml">
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
@@ -230,7 +229,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/headimage.jpg">
       <meta itemprop="name" content="柒月">
-      <meta itemprop="description" content="目前主要从事新媒体开发，用软件表达艺术">
+      <meta itemprop="description" content="Just do it!!!">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -255,7 +254,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-08-10 21:53:36" itemprop="dateModified" datetime="2019-08-10T21:53:36+08:00">2019-08-10</time>
+                <time title="修改时间：2019-12-28 23:03:23" itemprop="dateModified" datetime="2019-12-28T23:03:23+08:00">2019-12-28</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -283,20 +282,13 @@
               <span class="post-meta-item-text">阅读次数：</span>
               <span class="leancloud-visitors-count"></span>
             </span>
-            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span id="busuanzi_value_page_pv"></span>
-            </span>
   
   <span class="post-meta-item">
     
       <span class="post-meta-item-icon">
         <i class="fa fa-comment-o"></i>
       </span>
-      <span class="post-meta-item-text">Valine：</span>
+      <span class="post-meta-item-text">评论次数：</span>
     
     <a title="valine" href="/%E8%B4%AA%E5%A9%AA%E6%9C%80%E4%BD%B3%E4%BC%98%E5%85%88%E7%AE%97%E6%B3%95.html#comments" itemprop="discussionUrl">
       <span class="post-comments-count valine-comment-count" data-xid="/%E8%B4%AA%E5%A9%AA%E6%9C%80%E4%BD%B3%E4%BC%98%E5%85%88%E7%AE%97%E6%B3%95.html" itemprop="commentCount"></span>
@@ -309,14 +301,14 @@
                 <i class="fa fa-file-word-o"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>3.5k</span>
+              <span>4.1k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="fa fa-clock-o"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 ≈</span>
-              <span>3 分钟</span>
+              <span>4 分钟</span>
             </span>
 
         </div>
@@ -328,193 +320,19 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>  贪婪最佳优先算法是一种没有做任何长期计划就马上选择最佳答案的算法。因此贪婪优先算法得到的寻路路径是一种次优路径。算法流程如下：<br><img src="https://i.imgur.com/rZVHfZT.png" alt="流程图"><br>  下面来根据流程图完成代码的编写。<a id="more"></a>   </p>
-<h3 id="节点类的编写"><a href="#节点类的编写" class="headerlink" title="节点类的编写"></a>节点类的编写</h3><p>  节点主要用来存放当前地图中位置信息，包括当前位置的行号、列号、父节点、邻居节点集合和当前节点到目标节点的距离，代码如下: </p>
-<pre><code>public class Node
-{
-    //行号
-    public int Row{ get; set; }
-    //列号
-    public int Col{ get; set; }
-    //父节点
-    public Node parent;
-    //邻居节点的集合
-    public List<node> adjacent=new List<node>();
-    //到目标节点的距离
-    public float h = 0;
+        <p>  贪婪最佳优先算法是一种没有做任何长期计划就马上选择最佳答案的算法。因此贪婪优先算法得到的寻路路径是一种次优路径。算法流程如下：<br><img src="https://i.imgur.com/rZVHfZT.png" alt="流程图"><br>  下面来根据流程图完成代码的编写。<a id="more"></a> </p>
+<h3 id="节点类的编写"><a href="#节点类的编写" class="headerlink" title="节点类的编写"></a>节点类的编写</h3><p>  节点主要用来存放当前地图中位置信息，包括当前位置的行号、列号、父节点、邻居节点集合和当前节点到目标节点的距离，代码如下:</p>
+<figure class="highlight c#"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Node</span></span><br><span class="line">{</span><br><span class="line">    <span class="comment">//行号</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span> Row{ <span class="keyword">get</span>; <span class="keyword">set</span>; }</span><br><span class="line">    <span class="comment">//列号</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span> Col{ <span class="keyword">get</span>; <span class="keyword">set</span>; }</span><br><span class="line">    <span class="comment">//父节点</span></span><br><span class="line">    <span class="keyword">public</span> Node parent;</span><br><span class="line">    <span class="comment">//邻居节点的集合</span></span><br><span class="line">    <span class="keyword">public</span> List<node> adjacent=<span class="keyword">new</span> List<node>();</node></node></span><br><span class="line">    <span class="comment">//到目标节点的距离</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">float</span> h = <span class="number">0</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Clear</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>    {</span><br><span class="line">        parent=<span class="literal">null</span>;</span><br><span class="line">        h=<span class="number">0</span>;</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 
-    public void Clear()
-    {
-        parent=null;
-        h=0;
-    }
-}</node></node></code></pre><p>  其中到目标节点的距离为曼哈顿距离，即当前节点到目标节点的向量的x、y的绝对值的和。</p>
-<h3 id="地图的存储"><a href="#地图的存储" class="headerlink" title="地图的存储"></a>地图的存储</h3><p>  有了节点之后便可以构成一张二维地图，地图中有可行的节点和不可行的节点(障碍物),这里我们用0表示可通过，1表示不可通过。代码如下：    </p>
-<pre><code>public class Map
-{
-    //行数
-    public int Rows;
-    //列数
-    public int Cols;
-    //地图中的节点，行优先排列
-    public Node[] nodes;
+<p>  其中到目标节点的距离为曼哈顿距离，即当前节点到目标节点的向量的x、y的绝对值的和。</p>
+<h3 id="地图的存储"><a href="#地图的存储" class="headerlink" title="地图的存储"></a>地图的存储</h3><p>  有了节点之后便可以构成一张二维地图，地图中有可行的节点和不可行的节点(障碍物),这里我们用0表示可通过，1表示不可通过。代码如下：</p>
+<figure class="highlight c#"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Map</span></span><br><span class="line">{</span><br><span class="line">    <span class="comment">//行数</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span> Rows;</span><br><span class="line">    <span class="comment">//列数</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span> Cols;</span><br><span class="line">    <span class="comment">//地图中的节点，行优先排列</span></span><br><span class="line">    <span class="keyword">public</span> Node[] nodes;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Map</span>(<span class="params"><span class="keyword">int</span>[,] mapArray</span>)</span></span><br><span class="line"><span class="function"></span>    {</span><br><span class="line">        Rows = mapArray.GetLength(<span class="number">0</span>);</span><br><span class="line">        Cols = mapArray.GetLength(<span class="number">1</span>);</span><br><span class="line">        </span><br><span class="line">        <span class="comment">//分配地图节点</span></span><br><span class="line">        nodes=<span class="keyword">new</span> Node[Rows * Cols];</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i < nodes.Length; i++)</span><br><span class="line">        {</span><br><span class="line">            Node node = <span class="keyword">new</span> Node();</span><br><span class="line">            node.Row = i / Cols;</span><br><span class="line">            node.Col = i % Cols;</span><br><span class="line">            </span><br><span class="line">            nodes[i] = node;</span><br><span class="line">        }</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">int</span> row , col;</span><br><span class="line">        <span class="comment">//分配邻居节点</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j < nodes.Length; j++)</span><br><span class="line">        {</span><br><span class="line">            row = nodes[j].Row;</span><br><span class="line">            col = nodes[j].Col;</span><br><span class="line"></span><br><span class="line">            <span class="comment">//1表示有障碍物，不能通过</span></span><br><span class="line">            <span class="comment">//0表示无障碍物，可以通过</span></span><br><span class="line">            <span class="keyword">if</span>(mapArray[row,col] != <span class="number">1</span>)</span><br><span class="line">            {</span><br><span class="line">                <span class="comment">//相邻上方的一个节点</span></span><br><span class="line">                <span class="keyword">if</span> (row > <span class="number">0</span> && mapArray[row - <span class="number">1</span>, col] != <span class="number">1</span>)</span><br><span class="line">                    nodes[j].adjacent.Add(nodes[(row - <span class="number">1</span>) * cols + col]);</span><br><span class="line">                <span class="comment">//相邻右边的一个节点</span></span><br><span class="line">                <span class="keyword">if</span> (col + <span class="number">1</span> < cols && mapArray[row, col + <span class="number">1</span>] != <span class="number">1</span>)</span><br><span class="line">                    nodes[j].adjacent.Add(nodes[row * cols + col + <span class="number">1</span>]);</span><br><span class="line">                <span class="comment">//相邻下方的一个节点</span></span><br><span class="line">                <span class="keyword">if</span> (row + <span class="number">1</span> < rows && mapArray[row + <span class="number">1</span>, col] != <span class="number">1</span>)</span><br><span class="line">                    nodes[j].adjacent.Add(nodes[(row + <span class="number">1</span>) * cols + col]);</span><br><span class="line">                <span class="comment">//相邻左边的一个节点</span></span><br><span class="line">                <span class="keyword">if</span> (col > <span class="number">0</span> && mapArray[row, col - <span class="number">1</span>] != <span class="number">1</span>)</span><br><span class="line">                    nodes[j].adjacent.Add(nodes[row * cols + col - <span class="number">1</span>]);</span><br><span class="line">            }</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 
-    public Map(int[,] mapArray)
-    {
-        Rows = mapArray.GetLength(0);
-        Cols = mapArray.GetLength(1);
-
-        //分配地图节点
-        nodes=new Node[Rows * Cols];
-        for(int i = 0; i < nodes.Length; i++)
-        {
-            Node node = new Node();
-            node.Row = i / Cols;
-            node.Col = i % Cols;
-
-            nodes[i] = node;
-        }
-
-        int row , col;
-        //分配邻居节点
-        for (int j = 0; j < nodes.Length; j++)
-        {
-            row = nodes[j].Row;
-            col = nodes[j].Col;
-
-            //1表示有障碍物，不能通过
-            //0表示无障碍物，可以通过
-            if(mapArray[row,col] != 1)
-            {
-                //相邻上方的一个节点
-                if (row > 0 && mapArray[row - 1, col] != 1)
-                    nodes[j].adjacent.Add(nodes[(row - 1) * cols + col]);
-                //相邻右边的一个节点
-                if (col + 1 < cols && mapArray[row, col + 1] != 1)
-                    nodes[j].adjacent.Add(nodes[row * cols + col + 1]);
-                //相邻下方的一个节点
-                if (row + 1 < rows && mapArray[row + 1, col] != 1)
-                    nodes[j].adjacent.Add(nodes[(row + 1) * cols + col]);
-                //相邻左边的一个节点
-                if (col > 0 && mapArray[row, col - 1] != 1)
-                    nodes[j].adjacent.Add(nodes[row * cols + col - 1]);
-            }
-        }
-    }
-}</code></pre><p>  地图生成完之后，就可以根据起始点和目标点来寻找一条”最优”的到达路径了。</p>
+<p>  地图生成完之后，就可以根据起始点和目标点来寻找一条”最优”的到达路径了。</p>
 <h3 id="寻路算法实现"><a href="#寻路算法实现" class="headerlink" title="寻路算法实现"></a>寻路算法实现</h3><p>  在有了地图信息之后，我们还不能立马去搜索地图寻找”最优”路径，因为我们还需要两个集合来存放地图搜索过程中以确定的节点和未确定但以估算h(x)值的节点，分别是封闭集合和开放集合。这样我们可以根据当前节点的邻居节点信息，算出所有邻居节点到目标点的曼哈顿距离h(x)，并将当前节点作为邻居节点的父节点。而在计算一个节点的h(x)之前，我们首先要判断此节点是否存在于封闭集合中，如果不存在则计算，否侧继续下一个节点的判断，并把此节点加入到开放集合中。<br>  在处理完邻居节点之后，此时我们还需要查看开放集合是否为空，如果为空则证明路径查找失败，退出路径查找。否则从开放集合中找出曼哈顿最小的节点加入到封闭集合从并从开放集合中一处，然后将此节点作为当前节点继续下一轮的查找，直至当前节点为目标节点。这样我们就可以得到一个链表，通过parent从终点指想起点，我们需要将其逆置得到我们想要的从起点到终点的路径。完整代码如下：  </p>
-<pre><code>public class GreedBestPriorityAlgorithm
-{
-    //地图
-    private Map map;
-    //终点
-    private Node destNode;
-    //开放集合
-    private List<node> openSet = new List<node>();
-    //封闭集合
-    private List<node> closedSet = new List<node>();
+<figure class="highlight c#"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">GreedBestPriorityAlgorithm</span></span><br><span class="line">{</span><br><span class="line">    <span class="comment">//地图</span></span><br><span class="line">    <span class="keyword">private</span> Map map;</span><br><span class="line">    <span class="comment">//终点</span></span><br><span class="line">    <span class="keyword">private</span> Node destNode;</span><br><span class="line">    <span class="comment">//开放集合</span></span><br><span class="line">    <span class="keyword">private</span> List<node> openSet = <span class="keyword">new</span> List<node>();</node></node></span><br><span class="line">    <span class="comment">//封闭集合</span></span><br><span class="line">    <span class="keyword">private</span> List<node> closedSet = <span class="keyword">new</span> List<node>();</node></node></span><br><span class="line">    </span><br><span class="line">    <span class="comment">//初始化地图</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">GreedyBestPriorityAlgorithm</span>(<span class="params">Map map</span>)</span></span><br><span class="line"><span class="function"></span>    {</span><br><span class="line">        <span class="keyword">this</span>.map = map</span><br><span class="line">    }</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//计算曼哈顿距离</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">H</span>(<span class="params">Node node</span>)</span></span><br><span class="line"><span class="function"></span>    {</span><br><span class="line">        <span class="keyword">return</span> Mathf.Abs(node.Row - destNode.Row) + Mathf.Abs(node.Col - destNode.Col);</span><br><span class="line">    }</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//查找开放式集合中h(x)值最小的点</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> Node <span class="title">FindLowestH</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>    {</span><br><span class="line">        Node node = openSet[<span class="number">0</span>];</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i < opencSet.Count; i++)</span><br><span class="line">        {</span><br><span class="line">            <span class="keyword">if</span>(openSet[i].h < node.h)</span><br><span class="line">            {</span><br><span class="line">                node = openSet[i];</span><br><span class="line">            }</span><br><span class="line">        }</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> node;</span><br><span class="line">    }</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//计算当前节点邻居节点的h(x)</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">AddAdjacent</span>(<span class="params">Node node</span>)</span></span><br><span class="line"><span class="function"></span>    {</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i < node.adjacent.Count; i++)</span><br><span class="line">        {</span><br><span class="line">            <span class="keyword">if</span>(closedSet.Contains(node.adjacent[i])</span><br><span class="line">                <span class="keyword">continue</span>;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">            {</span><br><span class="line">                node.adjacent[i].parent = node;</span><br><span class="line">                <span class="keyword">if</span>(!openSet.Contains(node.adjacent[i])</span><br><span class="line">                {</span><br><span class="line">                    node.adjacent[i].h = H(node.adjacent[i]);</span><br><span class="line">                    openSet.Add(node.adjacent[i]);</span><br><span class="line">                }</span><br><span class="line">            }</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//更新地图</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">UpdateMap</span>(<span class="params">Map map</span>)</span></span><br><span class="line"><span class="function"></span>    {</span><br><span class="line">        <span class="keyword">this</span>.map = map;</span><br><span class="line">    }</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//设置起点、终点、清楚地图节点存放的信息</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Start</span>(<span class="params">Node startNode, Node endNode</span>)</span></span><br><span class="line"><span class="function"></span>    {</span><br><span class="line">        openSet.Clear();</span><br><span class="line">        closedSet.Clear();</span><br><span class="line">        </span><br><span class="line">        closedSet.Add(startNode);</span><br><span class="line">        destNode = endNode;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i < map.nodes.Length; i++)</span><br><span class="line">        {</span><br><span class="line">            map.nodes[i].Clear();</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//寻找路径</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Stack<node> <span class="title">Find</span>(<span class="params"></span>)</node></span></span><br><span class="line"><span class="function"></span>    {</span><br><span class="line">        Stack<node> path = <span class="keyword">new</span> Stack<node>();</node></node></span><br><span class="line">        Node currNode = closedSet[<span class="number">0</span>];</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">while</span>(currNode != destNode)</span><br><span class="line">        {</span><br><span class="line">            AddAdjacent(currNode);</span><br><span class="line">            <span class="keyword">if</span>(openSet.Count == <span class="number">0</span>)</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            </span><br><span class="line">            currNode = FindLowestH();</span><br><span class="line">            closedSet.Add(currNode);</span><br><span class="line">            openSet.Remove(currNode);</span><br><span class="line">        }</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">if</span>(currNode == destNode)</span><br><span class="line">        {</span><br><span class="line">            Node node = destNode;</span><br><span class="line">            <span class="keyword">while</span>(node != <span class="literal">null</span>)</span><br><span class="line">            {</span><br><span class="line">                path.Push(node);</span><br><span class="line">                </span><br><span class="line">                node = node.parent;</span><br><span class="line">            }</span><br><span class="line">        }</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> path;</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 
-    //初始化地图
-    public GreedyBestPriorityAlgorithm(Map map)
-    {
-        this.map = map
-    }
-
-    //计算曼哈顿距离
-    private void H(Node node)
-    {
-        return Mathf.Abs(node.Row - destNode.Row) + Mathf.Abs(node.Col - destNode.Col);
-    }
-
-    //查找开放式集合中h(x)值最小的点
-    private Node FindLowestH()
-    {
-        Node node = openSet[0];
-
-        for(int i = 0; i < opencSet.Count; i++)
-        {
-            if(openSet[i].h < node.h)
-            {
-                node = openSet[i];
-            }
-        }
-
-        return node;
-    }
-
-    //计算当前节点邻居节点的h(x)
-    private void AddAdjacent(Node node)
-    {
-        for(int i = 0; i < node.adjacent.Count; i++)
-        {
-            if(closedSet.Contains(node.adjacent[i])
-                continue;
-            else
-            {
-                node.adjacent[i].parent = node;
-                if(!openSet.Contains(node.adjacent[i])
-                {
-                    node.adjacent[i].h = H(node.adjacent[i]);
-                    openSet.Add(node.adjacent[i]);
-                }
-            }
-        }
-    }
-
-    //更新地图
-    public UpdateMap(Map map)
-    {
-        this.map = map;
-    }
-
-    //设置起点、终点、清楚地图节点存放的信息
-    public void Start(Node startNode, Node endNode)
-    {
-        openSet.Clear();
-        closedSet.Clear();
-
-        closedSet.Add(startNode);
-        destNode = endNode;
-
-        for(int i = 0; i < map.nodes.Length; i++)
-        {
-            map.nodes[i].Clear();
-        }
-    }
-
-    //寻找路径
-    public Stack<node> Find()
-    {
-        Stack<node> path = new Stack<node>();
-        Node currNode = closedSet[0];
-
-        while(currNode != destNode)
-        {
-            AddAdjacent(currNode);
-            if(openSet.Count == 0)
-                break;
-
-            currNode = FindLowestH();
-            closedSet.Add(currNode);
-            openSet.Remove(currNode);
-        }
-
-        if(currNode == destNode)
-        {
-            Node node = destNode;
-            while(node != null)
-            {
-                path.Push(node);
-
-                node = node.parent;
-            }
-        }
-        else
-            return null;
-
-        return path;
-    }
-}</node></node></node></node></node></node></node></code></pre><p>  对于最后的路径使用栈逆置，如果不想使用也可以直接计算起点到终点的路径，这样可以减少一定的计算开销。对于此算法还可以进行如下优化：   </p>
+<p>  对于最后的路径使用栈逆置，如果不想使用也可以直接计算起点到终点的路径，这样可以减少一定的计算开销。对于此算法还可以进行如下优化：   </p>
 <blockquote>
 <p>对于从开放集合中查找最小h(x)值的节点，我们可以使用二叉树最为开放集合(左边是比根节点小的值，右边是比根节点大的值)，这样查找速度就是O(1)；</p>
 </blockquote>
@@ -648,7 +466,7 @@
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <img class="site-author-image" itemprop="image" alt="柒月" src="/images/headimage.jpg">
   <p class="site-author-name" itemprop="name">柒月</p>
-  <div class="site-description" itemprop="description">目前主要从事新媒体开发，用软件表达艺术</div>
+  <div class="site-description" itemprop="description">Just do it!!!</div>
 </div>
 <div class="site-state-wrap motion-element">
   <nav class="site-state">
@@ -720,35 +538,17 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
+      <span class="post-meta-item-text">站点总字数：</span>
     <span title="站点总字数">15k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">13 分钟</span>
+      <span class="post-meta-item-text">站点阅读时长 ≈</span>
+    <span title="站点阅读时长">14 分钟</span>
 </div>
 
         
-<div class="busuanzi-count">
-  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-user"></i>
-      </span>
-      <span class="site-uv" title="总访客量">
-        <span id="busuanzi_value_site_uv"></span>
-      </span>
-    </span>
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-eye"></i>
-      </span>
-      <span class="site-pv" title="总访问量">
-        <span id="busuanzi_value_site_pv"></span>
-      </span>
-    </span>
-</div>
 
 
 
@@ -779,9 +579,14 @@
                 console.log('Failed to save visitor count', error);
               })
           } else {
-              leancloudSelector(url).innerText = 'Counter not initialized! More info at console err msg.';
-              console.error('ATTENTION! LeanCloud counter has security bug, see how to solve it here: https://github.com/theme-next/hexo-leancloud-counter-security. \n However, you can still use LeanCloud without security, by setting `security` option to `false`.');
-            
+              Counter('post', '/classes/Counter', { title: title, url: url, time: 1 })
+                .then(response => response.json())
+                .then(() => {
+                  leancloudSelector(url).innerText = 1;
+                })
+                .catch(error => {
+                  console.log('Failed to create', error);
+                });
           }
         })
         .catch(error => {
@@ -851,6 +656,8 @@
 
   
   <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
 
@@ -868,7 +675,7 @@
 
 
   <script defer src="/lib/three/three.min.js"></script>
-    <script defer src="/lib/three/three-waves.min.js"></script>
+    <script defer src="/lib/three/canvas_lines.min.js"></script>
 
 
   
@@ -948,7 +755,7 @@
 
 <script>
 NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
-  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+  NexT.utils.getScript('https://cdn.jsdelivr.net/npm/valine@1.3.10/dist/Valine.min.js', () => {
     var GUEST = ['nick', 'mail', 'link'];
     var guest = 'nick,mail,link';
     guest = guest.split(',').filter(item => {
@@ -956,7 +763,7 @@ NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
     });
     new Valine({
       el: '#valine-comments',
-      verify: false,
+      verify: true,
       notify: true,
       appId: '06Q4VfTAzWbkiO4CGJwCu0Cr-gzGzoHsz',
       appKey: 'Vr9BE7XVAxIavhd3ssLeupQD',
