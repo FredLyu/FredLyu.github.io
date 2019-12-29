@@ -30,7 +30,7 @@
     bookmark: {"enable":true,"color":"#222","save":"auto"},
     fancybox: true,
     mediumzoom: false,
-    lazyload: false,
+    lazyload: true,
     pangu: false,
     comments: {"style":"tabs","active":"valine","storage":true,"lazyload":false,"nav":null,"activeClass":"valine"},
     algolia: {
@@ -320,7 +320,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>  贪婪最佳优先算法是一种没有做任何长期计划就马上选择最佳答案的算法。因此贪婪优先算法得到的寻路路径是一种次优路径。算法流程如下：<br><img src="https://i.imgur.com/rZVHfZT.png" alt="流程图"><br>  下面来根据流程图完成代码的编写。<a id="more"></a> </p>
+        <p>  贪婪最佳优先算法是一种没有做任何长期计划就马上选择最佳答案的算法。因此贪婪优先算法得到的寻路路径是一种次优路径。算法流程如下：<br><img data-src="https://i.imgur.com/rZVHfZT.png" alt="流程图"><br>  下面来根据流程图完成代码的编写。<a id="more"></a> </p>
 <h3 id="节点类的编写"><a href="#节点类的编写" class="headerlink" title="节点类的编写"></a>节点类的编写</h3><p>  节点主要用来存放当前地图中位置信息，包括当前位置的行号、列号、父节点、邻居节点集合和当前节点到目标节点的距离，代码如下:</p>
 <figure class="highlight c#"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Node</span></span><br><span class="line">{</span><br><span class="line">    <span class="comment">//行号</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span> Row{ <span class="keyword">get</span>; <span class="keyword">set</span>; }</span><br><span class="line">    <span class="comment">//列号</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span> Col{ <span class="keyword">get</span>; <span class="keyword">set</span>; }</span><br><span class="line">    <span class="comment">//父节点</span></span><br><span class="line">    <span class="keyword">public</span> Node parent;</span><br><span class="line">    <span class="comment">//邻居节点的集合</span></span><br><span class="line">    <span class="keyword">public</span> List<node> adjacent=<span class="keyword">new</span> List<node>();</node></node></span><br><span class="line">    <span class="comment">//到目标节点的距离</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">float</span> h = <span class="number">0</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Clear</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>    {</span><br><span class="line">        parent=<span class="literal">null</span>;</span><br><span class="line">        h=<span class="number">0</span>;</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 
@@ -336,7 +336,7 @@
 <blockquote>
 <p>对于从开放集合中查找最小h(x)值的节点，我们可以使用二叉树最为开放集合(左边是比根节点小的值，右边是比根节点大的值)，这样查找速度就是O(1)；</p>
 </blockquote>
-<h3 id="Unity实现效果"><a href="#Unity实现效果" class="headerlink" title="Unity实现效果"></a>Unity实现效果</h3><p><img src="https://i.imgur.com/oIzyIur.png" alt>    </p>
+<h3 id="Unity实现效果"><a href="#Unity实现效果" class="headerlink" title="Unity实现效果"></a>Unity实现效果</h3><p><img data-src="https://i.imgur.com/oIzyIur.png" alt>    </p>
 <blockquote>
 <p>完整工程仓库地址：<a href="https://github.com/FredLyu/GameProgramingAlgorithmsAndTechniques.git" target="_blank" rel="noopener">贪婪最佳优先算法</a><br>CSDND地址：<a href="https://blog.csdn.net/puraples/article/details/88071496" target="_blank" rel="noopener">基于Unity的贪婪最佳优先算法</a></p>
 </blockquote>
@@ -538,13 +538,11 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-      <span class="post-meta-item-text">站点总字数：</span>
     <span title="站点总字数">15k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-      <span class="post-meta-item-text">站点阅读时长 ≈</span>
     <span title="站点阅读时长">14 分钟</span>
 </div>
 
@@ -565,6 +563,7 @@
   <script src="/lib/anime.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
   <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
 

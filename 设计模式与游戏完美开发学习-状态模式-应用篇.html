@@ -30,7 +30,7 @@
     bookmark: {"enable":true,"color":"#222","save":"auto"},
     fancybox: true,
     mediumzoom: false,
-    lazyload: false,
+    lazyload: true,
     pangu: false,
     comments: {"style":"tabs","active":"valine","storage":true,"lazyload":false,"nav":null,"activeClass":"valine"},
     algolia: {
@@ -322,7 +322,7 @@
       
         <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>  上一个章节，我们已经了解了什么是状态模式，并设计实现了状态模式。本节我们主要来完成状态模式的实际应用。<br>  我们知道，基于Unity3D开发的游戏都只会再一个场景中运行，因此我们可以把每一个场景都当作一个状态类，并维护这个类。这样场景之间的跳转就可以看作是状态之间的跳转；而且同一时间只会有一个状态存在，也符合游戏执行时只有一个场景存在的实际情况。</p>
 <h3 id="场景状态类SceneState的设计"><a href="#场景状态类SceneState的设计" class="headerlink" title="场景状态类SceneState的设计"></a>场景状态类SceneState的设计</h3><p>对于游戏大致可分为开始场景、主画面场景和打斗场景，因此可分别对于三个不同的状态。让三个场景类都继承ISceneState，然后再设计一个拥有者SceneStateController,而我们此次主要基于Unity3D来学习设计模式，因此我们还需要一个GameLoop类，让其拥有SceneStateController，以便完成与Unity3D的互动对接，结构如下图所示：  </p>
-<img src="/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B8%8E%E6%B8%B8%E6%88%8F%E5%AE%8C%E7%BE%8E%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0-%E7%8A%B6%E6%80%81%E6%A8%A1%E5%BC%8F-%E5%BA%94%E7%94%A8%E7%AF%87/SceneState.png" class>
+<img data-src="/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B8%8E%E6%B8%B8%E6%88%8F%E5%AE%8C%E7%BE%8E%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0-%E7%8A%B6%E6%80%81%E6%A8%A1%E5%BC%8F-%E5%BA%94%E7%94%A8%E7%AF%87/SceneState.png" class>
 
 <h4 id="说明如下："><a href="#说明如下：" class="headerlink" title="说明如下："></a>说明如下：</h4><blockquote>
 <p>ISceneSate：场景类的接口，主要用于规范场景状态的行为；<br>StartState、MainMenuState、BattleState：分别对应开始场景、主画面场景和打斗场景；<br>SceneStateController：场景状态的拥有者，保持当前游戏状态，并控制场景状态的转变，而且负责与GameLoop互动操作；<br>GameLoop：游戏的主循环，负责与Unity3D互动，并且可以初始化游戏和定期更新游戏。</p>
@@ -545,13 +545,11 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-      <span class="post-meta-item-text">站点总字数：</span>
     <span title="站点总字数">15k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-      <span class="post-meta-item-text">站点阅读时长 ≈</span>
     <span title="站点阅读时长">14 分钟</span>
 </div>
 
@@ -572,6 +570,7 @@
   <script src="/lib/anime.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
   <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
 

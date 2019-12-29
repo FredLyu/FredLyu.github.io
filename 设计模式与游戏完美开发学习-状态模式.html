@@ -30,7 +30,7 @@
     bookmark: {"enable":true,"color":"#222","save":"auto"},
     fancybox: true,
     mediumzoom: false,
-    lazyload: false,
+    lazyload: true,
     pangu: false,
     comments: {"style":"tabs","active":"valine","storage":true,"lazyload":false,"nav":null,"activeClass":"valine"},
     algolia: {
@@ -322,7 +322,7 @@
         <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>  既然是要学习设计模式，肯定得知道啥是设计模式，又有啥用？设计模式是啥？笔者我也不是特别，只听同道中人天天说。笔者自己的理解就是为了解决某一个问题(软件问题)而归纳总结出来的一套解决方案(软件模式)，而这套方案对以后出现的同样或类似接近的问题同样适用。个人觉得只要理解就好。哈哈哈！！！咱们进入今天的正题：设计模式之状态模式。</p>
 <h3 id="状态模式的概念"><a href="#状态模式的概念" class="headerlink" title="状态模式的概念"></a>状态模式的概念</h3><p>  又要解释概念，好烦哦！GoF定义：让一个对象的行为随着内部状态的改变而改变，而该对象就像换了一个类一样（怎么觉得好像C++的多态）。个人理解就是一个对象对不同的状态做出不同的行为。还请指教！！！</p>
 <p>###状态模式的说明<br>  既然已经知道了什么是状态模式，那怎么去实现呢？在实现之前，我们来先了解一下状态模式的结构。既然是状态模式，那肯定要有一个描述状态的类(State)，而根据定义”…随着内部状态的改变…”，那肯定不止一个状态，因此我们需要将State类作为基类去具体定义不同具体的状态类(ConcreteState),再看定义”让一个对象…”,因此我们还需要一个状态拥有者的类(Context)，去对不同的状态做出不同的行为。具体结构图如下：</p>
-<img src="/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B8%8E%E6%B8%B8%E6%88%8F%E5%AE%8C%E7%BE%8E%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0-%E7%8A%B6%E6%80%81%E6%A8%A1%E5%BC%8F/StateClassDiagram.png" class>
+<img data-src="/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B8%8E%E6%B8%B8%E6%88%8F%E5%AE%8C%E7%BE%8E%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0-%E7%8A%B6%E6%80%81%E6%A8%A1%E5%BC%8F/StateClassDiagram.png" class>
 
 <h4 id="说明如下："><a href="#说明如下：" class="headerlink" title="说明如下："></a>说明如下：</h4><blockquote>
 <p>Context: 状态拥有者，拥有状态属性，主要完成让外界得知状态的改变或者操作状态改变。<br>State: 状态的基类，指定状态的接口，负责规范状态拥有者要表现的行为。<br>ConcreteState: 具体的状态类，拥有特定状态下的行为，是状态的细化。</p>
@@ -343,7 +343,7 @@
 <figure class="highlight c#"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">TestState</span> : <span class="title">MonoBehaviour</span></span><br><span class="line">{</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">Start</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>    {</span><br><span class="line">        Context context = <span class="keyword">new</span> Context();</span><br><span class="line">        context.SetState(<span class="keyword">new</span> ConcreteStateA(context));</span><br><span class="line">        context.Request(<span class="number">5</span>);</span><br><span class="line">        context.Request(<span class="number">15</span>);</span><br><span class="line">        context.Request(<span class="number">25</span>);</span><br><span class="line">        context.Request(<span class="number">35</span>);</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 
 <p>  首先生成一个Context对象，然后设置状态为ConcreteStateA，再调用Request来变现不同行为并转换状态。执行结果如下：  </p>
-<img src="/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B8%8E%E6%B8%B8%E6%88%8F%E5%AE%8C%E7%BE%8E%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0-%E7%8A%B6%E6%80%81%E6%A8%A1%E5%BC%8F/StateTestResult.png" class>
+<img data-src="/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B8%8E%E6%B8%B8%E6%88%8F%E5%AE%8C%E7%BE%8E%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0-%E7%8A%B6%E6%80%81%E6%A8%A1%E5%BC%8F/StateTestResult.png" class>
 
 <h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>  状态设计模式就介绍到这为止，下一篇我们做一个简单的应用案例。笔者也是刚刚学习，如有解释不到的地方还请见谅。对于编程这块，个人认为还是要多加应用才能理解更深。</p>
 <h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><<设计模式与游戏完美开发>></p>
@@ -545,13 +545,11 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-      <span class="post-meta-item-text">站点总字数：</span>
     <span title="站点总字数">15k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-      <span class="post-meta-item-text">站点阅读时长 ≈</span>
     <span title="站点阅读时长">14 分钟</span>
 </div>
 
@@ -572,6 +570,7 @@
   <script src="/lib/anime.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
   <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
 
