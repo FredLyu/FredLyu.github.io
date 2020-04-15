@@ -1,6 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>腾讯AI滤镜之Unity实现</title>
+    <url>/%E8%85%BE%E8%AE%AFAI%E6%BB%A4%E9%95%9C%E4%B9%8BUnity%E5%AE%9E%E7%8E%B0.html</url>
+    <content><![CDATA[<html><head></head><body><h3 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h3><p>  因为我们要调用的是腾讯的远程API滤镜接口，因此要先注册账号（<a href="https://ai.qq.com" target="_blank" rel="noopener">注册地址</a>）,然后创建应用程序,进入控制台，点击“创建应用”即可完成创建。再查看应用信息，拷贝app_id和app_key,后面要用到。如下图所示：</p>
+<div align="center">
+<img data-src="https://raw.githubusercontent.com/FredLyu/FigureBed-Hector/master/BlogFigure/chuangjian.png">
+</div>
+
+<p>这里也给出腾讯AI滤镜的开发文档地址(<a href="https://ai.qq.com/doc/ptuimgfilter.shtml" target="_blank" rel="noopener">开发文档</a>)，大家可以先自己了解一下，然后再往下看。</p>
+<h3 id="核心代码讲解"><a href="#核心代码讲解" class="headerlink" title="核心代码讲解"></a>核心代码讲解</h3><p>  总共有天天P图和AI Lab两个滤镜API接口，不过参数基本相同，都是htpp post请求。本文是基于Unity2018.3.0进行开发，将使用UnityWebRequest进行post请求。API 具体的请求参数如下：</p>
+<div align="center">
+<img data-src="https://raw.githubusercontent.com/FredLyu/FigureBed-Hector/master/BlogFigure/ptu.png">
+</div>
+  对于天天P图的API接口，总共有6个参数，app_id大家可以在上面创建的应用信息中找到，如下图：
+<div align="center">
+<img data-src="https://raw.githubusercontent.com/FredLyu/FigureBed-Hector/master/BlogFigure/appinfo.png">
+</div>
+filter对应的是滤镜的效果id，天天P图有32种效果，为1-32；AI Lab有65种效果为1-65；接下来主要重点讲解一下其他三个个参数。
+  首先是time_stamp，int类型，根据字段描述，可以知道是请求时间戳，以秒为单位，因此只要算出当前时间距1970.01.01：00：00：00的秒数就好，具体代码如下： 
+
+<figure class="highlight c#"><table><tbody><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">string</span> <span class="title">GetUnixTimestamp</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>{</span><br><span class="line">    <span class="comment">//获取时间</span></span><br><span class="line">    TimeSpan timeSpan = DateTime.UtcNow - <span class="keyword">new</span> DateTime(<span class="number">1970</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>);</span><br><span class="line">    <span class="comment">//将时间转换为以秒为单位，因此是64位的整型值</span></span><br><span class="line">    <span class="keyword">return</span> Convert.ToInt64(timeSpan.TotalSeconds).ToString();</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>  然后是image参数，string类型，要求是base64编码数据(这是什么鬼)。刚看到，我也是一头雾水，通过查阅资料发现用C#实现就是先把图片转换为byte数组，然后再转换为base64字符串即可。具体代码如下：</p>
+<figure class="highlight c#"><table><tbody><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">string</span> <span class="title">Bytes2Base64</span>(<span class="params"><span class="keyword">byte</span>[] bytes</span>)</span></span><br><span class="line"><span class="function"></span>{</span><br><span class="line">    <span class="keyword">string</span> base64 = Convert.ToBase64String(bytes);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> mod = base64.Length % <span class="number">4</span>;</span><br><span class="line">    <span class="keyword">if</span>(mod > <span class="number">0</span>)</span><br><span class="line">    {</span><br><span class="line">        base64 += <span class="keyword">new</span> <span class="keyword">string</span>(<span class="string">'='</span>, <span class="number">4</span> - mod);</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> base64;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>  不过有个坑就是，通过在线工具转换的base64字符串长度是4的整数倍，不足的用”=”补足了。因此上面的代码进行了4的倍数判断并自动补足。<br>  最后一个参数是sign，授权密钥，比较头疼，不过看过描述之后，觉得也还好。授权描述如下：</p>
+<div align="center">
+<img data-src="https://raw.githubusercontent.com/FredLyu/FigureBed-Hector/master/BlogFigure/sign.png">
+</div>
+  从上面的描述，我们可以知道主要就是对请求参数按键值对中key值进行升序排列，然后并对value进行URL编码，并且URL编码采用大写字母；接着再将app_key放到字符串的最后；最后对得到的字符串进行MD5加密运算，并把加密字符串全部转换为大写字母。
+  不过问题又来了，什么是URL编码？查阅资料，最后发现Unity中实现该算法，调用UnityWebRequest.EscapeURL(string)即可，但对得到的字符串要转换为大写字母。具体实现代码如下：
+
+<figure class="highlight c#"><table><tbody><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">string</span> <span class="title">ConvertURLEncode</span>(<span class="params"><span class="keyword">string</span> str, <span class="keyword">bool</span> isImage=<span class="literal">false</span></span>)</span></span><br><span class="line"><span class="function"></span>{</span><br><span class="line">    <span class="keyword">string</span> urlCode = UnityWebRequest.EscapeURL(str);</span><br><span class="line">    <span class="keyword">if</span> (isImage)</span><br><span class="line">    {</span><br><span class="line">        <span class="keyword">string</span> str1 = UnityWebRequest.EscapeURL(<span class="string">"+"</span>);</span><br><span class="line">        <span class="keyword">string</span> str2 = UnityWebRequest.EscapeURL(<span class="string">"/"</span>);</span><br><span class="line">        <span class="keyword">string</span> str3 = UnityWebRequest.EscapeURL(<span class="string">"="</span>);</span><br><span class="line"></span><br><span class="line">        urlCode = urlCode.Replace(str1, str1.ToUpper());</span><br><span class="line">        urlCode = urlCode.Replace(str2, str2.ToUpper());</span><br><span class="line">        urlCode = urlCode.Replace(str3, str3.ToUpper());</span><br><span class="line">        <span class="keyword">return</span> urlCode;</span><br><span class="line">    }</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        <span class="keyword">return</span> urlCode;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>  对于上面的代码，大家会发现为什么对于图片的base64字符没有直接进行URL编码。这是因为URL编码只对部分字符进行编码，对数字和英文字母不进行编码(具体请看这里<a href="https://tools.ietf.org/html/rfc1738" target="_blank" rel="noopener">URL编码</a>)。而且如果我们对整个base64字符串进行URL编码，会消耗相当长的一段时间。因此我采用了如上的代码实现URL编码。<br>  URL编码我们已经会了，接下来就是对得到的字符串进行MD5运算，得到sign授权字符串。而C#刚好实现了MD5加密算法，具体代码如下：</p>
+<figure class="highlight c#"><table><tbody><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">string</span> <span class="title">GetMD5Str</span>(<span class="params"><span class="keyword">string</span> str</span>)</span></span><br><span class="line"><span class="function"></span>{</span><br><span class="line">    <span class="keyword">byte</span>[] bytes = md5.ComputeHash(Encoding.UTF8.GetBytes(str));</span><br><span class="line">    <span class="comment">//转换为大写字母字符串</span></span><br><span class="line">    <span class="keyword">return</span> BitConverter.ToString(bytes).ToUpper().Replace(<span class="string">"-"</span>, <span class="string">""</span>);</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>  所有的参数我们都已经准备好了，那就可以进行Http post请求了，不过请求成供返回什么样的结果呢？具体可以看文档的描述，如下图所示：</p>
+<div align="center">
+<img data-src="https://raw.githubusercontent.com/FredLyu/FigureBed-Hector/master/BlogFigure/result.png">
+</div>
+可以看到，返回的图片任然是以base64字符串的形式，因此我们要自己将base64字符串转换为图片，这个实现我就留给大家自己做了。不过有人该问了，这么多数据项，我要怎么拿到呀？其实返回的结果是json字符串给我们的，我们只要把json字符串利用Unity中的JsonUtility转换为对应参数的对象就可以了。我们可以将返回的结果定义为如下的数据结构：
+
+<figure class="highlight c#"><table><tbody><tr><td class="code"><pre><span class="line"></span><br><span class="line">[<span class="meta">Serializable</span>]</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Data</span></span><br><span class="line">{</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">string</span> image;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">[<span class="meta">Serializable</span>]</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">ImageData</span></span><br><span class="line">{</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span> ret;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">string</span> msg;</span><br><span class="line">    <span class="keyword">public</span> Data data;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>  最后一点就是对于AI Lab的API接口参数对了一个session_id参数，对于的是string类型，作用是请求id，只要保证每次请求值与之前不一样即可。下面是post请求表单和sign计算代码：</p>
+<figure class="highlight c#"><table><tbody><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">private</span> WWWForm <span class="title">GetPostForm</span>(<span class="params"><span class="keyword">byte</span>[] imgBytes, FilterType filterType, <span class="keyword">int</span> filterId</span>)</span></span><br><span class="line"><span class="function"></span>{</span><br><span class="line">    <span class="comment">//将图片转换为Base64字符串</span></span><br><span class="line">    <span class="keyword">string</span> imgStr = Bytes2Base64(imgBytes);<span class="comment">//图片转为JPG格式的字符串，减小图片大小</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">//获取时间戳</span></span><br><span class="line">    <span class="keyword">string</span> timeStamp = GetUnixTimestamp();</span><br><span class="line"></span><br><span class="line">    <span class="comment">//设置请求字段</span></span><br><span class="line">    WWWForm form = <span class="keyword">new</span> WWWForm();</span><br><span class="line">    form.AddField(<span class="string">"app_id"</span>, <span class="keyword">int</span>.Parse(app_id));</span><br><span class="line">    form.AddField(<span class="string">"filter"</span>, filterId);</span><br><span class="line">    form.AddField(<span class="string">"image"</span>, imgStr);</span><br><span class="line">    form.AddField(<span class="string">"time_stamp"</span>, <span class="keyword">int</span>.Parse(timeStamp));</span><br><span class="line">    form.AddField(<span class="string">"nonce_str"</span>, timeStamp);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//获取加密原字符串,对<key,value>按key升序排列</span></span><br><span class="line">    <span class="keyword">string</span> originalStr = <span class="string">"app_id="</span> + app_id +</span><br><span class="line">                        <span class="string">"&filter="</span> + filterId +</span><br><span class="line">                        <span class="string">"&image="</span> + ConvertURLEncode(imgStr, <span class="literal">true</span>) +</span><br><span class="line">                        <span class="string">"&nonce_str="</span> + timeStamp;</span><br><span class="line">    <span class="keyword">if</span> (filterType == FilterType.TTPTUFilter)</span><br><span class="line">    {</span><br><span class="line">        originalStr += <span class="string">"&time_stamp="</span> + timeStamp +</span><br><span class="line">                        <span class="string">"&app_key="</span> + app_key;</span><br><span class="line">    }</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    {</span><br><span class="line">        originalStr += <span class="string">"&session_id="</span> + timeStamp +</span><br><span class="line">                        <span class="string">"&time_stamp="</span> + timeStamp +</span><br><span class="line">                        <span class="string">"&app_key="</span> + app_key;</span><br><span class="line">        form.AddField(<span class="string">"session_id"</span>, timeStamp);</span><br><span class="line">    }</span><br><span class="line">    form.AddField(<span class="string">"sign"</span>, GetMD5Str(originalStr));</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> form;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="效果展示"><a href="#效果展示" class="headerlink" title="效果展示"></a>效果展示</h3><div align="center">
+<img data-src="https://raw.githubusercontent.com/FredLyu/FigureBed-Hector/master/BlogFigure/ptufilter.png">
+<img data-src="https://raw.githubusercontent.com/FredLyu/FigureBed-Hector/master/BlogFigure/labfilter.png">
+</div>
+  总算把这篇文章给写完写出来了，本来准备上周日就写的，一直拖到现在......后面会专注于新媒体互动开发的相关分享，不过只做应用方面的分享，不过讲底层的东西，大家可以自己去深挖研究。还有源工程就不放出来了,至于原因，就不说了，github速度......我已经不可以说什么了，不过这个速度慢的原因太多！！！
+
+<blockquote>
+<p>如有侵权，请联系删除！</p>
+</blockquote>
+</body></html>]]></content>
+      <categories>
+        <category>滤镜</category>
+        <category>Unity</category>
+      </categories>
+      <tags>
+        <tag>Unity</tag>
+        <tag>滤镜</tag>
+        <tag>AI</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>设计模式与游戏完美开发学习--状态模式(应用篇)</title>
     <url>/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B8%8E%E6%B8%B8%E6%88%8F%E5%AE%8C%E7%BE%8E%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0-%E7%8A%B6%E6%80%81%E6%A8%A1%E5%BC%8F-%E5%BA%94%E7%94%A8%E7%AF%87.html</url>
     <content><![CDATA[<html><head></head><body><h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>  上一个章节，我们已经了解了什么是状态模式，并设计实现了状态模式。本节我们主要来完成状态模式的实际应用。<br>  我们知道，基于Unity3D开发的游戏都只会再一个场景中运行，因此我们可以把每一个场景都当作一个状态类，并维护这个类。这样场景之间的跳转就可以看作是状态之间的跳转；而且同一时间只会有一个状态存在，也符合游戏执行时只有一个场景存在的实际情况。</p>
