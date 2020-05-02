@@ -20,7 +20,7 @@
 </div>  
 
 <p>  <a href="http://ffmpeg.org/ffmpeg-all.html" target="_blank" rel="noopener">FFmpeg说明文档</a></p>
-<h3 id="Unity操作"><a href="#Unity操作" class="headerlink" title="Unity操作"></a>Unity操作</h3><p>  在unity中添加一个一个游戏GameObject，重命名为VideoPlayer，然后添加一个”VideoPlayer”组件，将视频拖拽到video clip上即可。Camera设置如下：  </p>
+<h3 id="Unity操作"><a href="#Unity操作" class="headerlink" title="Unity操作"></a>Unity操作</h3><p>  在unity中添加一个GameObject，重命名为VideoPlayer，然后添加一个”VideoPlayer”组件，将视频拖拽到video clip上即可。Camera设置如下：  </p>
 <div align="center">
 <img data-src="https://raw.githubusercontent.com/FredLyu/FigureBed-Hector/master/BlogFigure/Camera.png">
 </div>   
@@ -243,8 +243,8 @@ filter对应的是滤镜的效果id，天天P图有32种效果，为1-32；AI La
         <category>A星算法</category>
       </categories>
       <tags>
-        <tag>Unity</tag>
         <tag>寻路</tag>
+        <tag>Unity</tag>
         <tag>A星算法</tag>
       </tags>
   </entry>
@@ -279,8 +279,8 @@ filter对应的是滤镜的效果id，天天P图有32种效果，为1-32；AI La
         <category>贪婪最佳优先算法</category>
       </categories>
       <tags>
-        <tag>Unity</tag>
         <tag>寻路</tag>
+        <tag>Unity</tag>
         <tag>贪婪最佳优先算法</tag>
       </tags>
   </entry>
