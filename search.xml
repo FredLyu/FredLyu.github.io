@@ -1,6 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Unity之AVPro-Video播放透明通道视频</title>
+    <url>/Unity%E4%B9%8BAVPro-Video%E6%92%AD%E6%94%BE%E9%80%8F%E6%98%8E%E9%80%9A%E9%81%93%E8%A7%86%E9%A2%91.html</url>
+    <content><![CDATA[<html><head></head><body><h3 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h3><p>  <a href="https://assetstore.unity.com/packages/tools/video/avpro-video-56355" target="_blank" rel="noopener">Unity AVPro Video插件</a><br>  <a href="https://pan.baidu.com/s/16qbYHGBjYAAEnxNrPftioA" target="_blank" rel="noopener">ReNamer图像批量重名软件</a> 提取码：k0sd<br>  <a href="https://support.apple.com/downloads/quicktime" target="_blank" rel="noopener">QuickTime Pro版</a><br>  <a href="https://github.com/Vidvox/hap-qt-codec/releases" target="_blank" rel="noopener">HAP for QuickTime编码器</a><br>  <a href="https://github.com/Nevcairiel/LAVFilters/releases" target="_blank" rel="noopener">LAV Filter解码器</a><br>  <a href="http://www.hirender.com/#/product-assistant" target="_blank" rel="noopener">Hirender播控助手</a><br>  下载以上软件并安装（请支持正版！！！）。本文主要介绍使用quicktime将图片序列正转换为带透明通道的mov视频，然后通过AVPro Video插件在Unity使用。</p>
+<h3 id="图片重命名"><a href="#图片重命名" class="headerlink" title="图片重命名"></a>图片重命名</h3><p>  关于此软件的应用已在上一篇文章中讲过，大家可以看这边文章：<a href="https://fredlyu.github.io/Unity%E4%B9%8BVideoPlayer%E6%92%AD%E6%94%BE%E9%80%8F%E6%98%8E%E8%A7%86%E9%A2%91.html">Unity之VideoPlayer播放透明视频</a>。</p>
+<h3 id="合成视频"><a href="#合成视频" class="headerlink" title="合成视频"></a>合成视频</h3><p>  打开quicktime pro版，选择“文件”–“打开图像序列”，打开需要合成的图片序列帧，如下图所示：  </p>
+<div align="center">
+<img data-src="https://raw.githubusercontent.com/FredLyu/FigureBed-Hector/master/BlogFigure/quicktime1.png">
+</div>  
+  然后再选择“文件”--“导出”,设置编码格式，如下图所示：  
+<div align="center">
+<img data-src="https://raw.githubusercontent.com/FredLyu/FigureBed-Hector/master/BlogFigure/quicktime2.png">
+</div>  
+  然后点击“选项”设置编码格式，如下图所示：  
+<div align="center">
+<img data-src="https://raw.githubusercontent.com/FredLyu/FigureBed-Hector/master/BlogFigure/quicktime3.png">
+</div>
+<div align="center">
+<img data-src="https://raw.githubusercontent.com/FredLyu/FigureBed-Hector/master/BlogFigure/quicktime4.png">
+</div>  
+  总共有HAP Alpha和HAP Q Alpha两种编码格式可以选择，HAP Alpha可以设置视频的质量，推荐使用。记得一定要安装[HAP for QuickTime编码器](https://github.com/Vidvox/hap-qt-codec/releases)，否则在使用quicktime时会无上述两种编码器选项。  
+
+<h3 id="小坑"><a href="#小坑" class="headerlink" title="小坑"></a>小坑</h3><p>  通过阅读AVPro Video的使用说明，可以发现在Windows端，我们需要安装必须的解码器(<a href="https://github.com/Nevcairiel/LAVFilters/releases" target="_blank" rel="noopener">LAV Filter For DirectShow</a>),否则视频无法播放；还有就是对图像序列帧宽高的要求，宽高必须满足4的倍数，否则视频也无法正常播放。<br>  当前我们也可以安装<a href="https://www.codecguide.com/download_k-lite_codec_pack_mega.htm" target="_blank" rel="noopener">K-Lite mega codec pack</a>解码器。  </p>
+<h3 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h3><p>  使用Unity新建一个工程，然后导入AVPro Video插件，然后在“Hierarchy”视图下创建一个包含Media Player组件的游戏对象和一个包含Display UGUI组件的游戏对象。其中Media Player设置如下图：  </p>
+<div align="center">
+<img data-src="https://raw.githubusercontent.com/FredLyu/FigureBed-Hector/master/BlogFigure/MediaPlayer.png">
+</div>   
+  这里必须选择硬件解码，并且使用Direct Show API；然后再初始化Display UGUI中的Media Player字段，如下图：  
+<div align="center">
+<img data-src="https://raw.githubusercontent.com/FredLyu/FigureBed-Hector/master/BlogFigure/DisPlayUGUI.png">
+</div>  
+  到这就已经完成了AVPro Video播放透明视频的整个流程。
+
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>  由于AVPro Video支持硬件解码，因此对于大分辨的视频我们也可以使用其进行视频播放，并且会节省大量内存空间；有兴趣的可以自己研究说明文档。  </p>
+<blockquote>
+<p>本文如有侵权，请联系删除</p>
+</blockquote>
+</body></html>]]></content>
+      <categories>
+        <category>Unity</category>
+        <category>AVPro-Video</category>
+      </categories>
+      <tags>
+        <tag>Unity</tag>
+        <tag>AVPr-Video</tag>
+        <tag>透明通道视频</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Unity之VideoPlayer播放透明视频</title>
     <url>/Unity%E4%B9%8BVideoPlayer%E6%92%AD%E6%94%BE%E9%80%8F%E6%98%8E%E8%A7%86%E9%A2%91.html</url>
     <content><![CDATA[<html><head></head><body><h3 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h3><p>  由于unity对视频格式的支持有限，因此如果想使用videoplayer播放透明视频需要对视频进行特殊处理；在unity中原生支持vp8编码的webm带透明通道的视频，所以我们需要将视频转成此格式；可以使用格式工厂将带透明通道的mov视频转换为webm格式的视频，然后在unity中使用。不过本文主要介绍另一种方式，使用ffmpeg将序列帧合成为带透明通道的视频。因此需要如下工具：<br>  <a href="http://ffmpeg.org/download.html#releases" target="_blank" rel="noopener">ffmpeg3.4.2</a><br>  <a href="https://pan.baidu.com/s/16qbYHGBjYAAEnxNrPftioA" target="_blank" rel="noopener">ReNamer</a>图片批量重命名，提取码：k0sd  </p>
@@ -243,8 +291,8 @@ filter对应的是滤镜的效果id，天天P图有32种效果，为1-32；AI La
         <category>A星算法</category>
       </categories>
       <tags>
-        <tag>寻路</tag>
         <tag>Unity</tag>
+        <tag>寻路</tag>
         <tag>A星算法</tag>
       </tags>
   </entry>
@@ -279,8 +327,8 @@ filter对应的是滤镜的效果id，天天P图有32种效果，为1-32；AI La
         <category>贪婪最佳优先算法</category>
       </categories>
       <tags>
-        <tag>寻路</tag>
         <tag>Unity</tag>
+        <tag>寻路</tag>
         <tag>贪婪最佳优先算法</tag>
       </tags>
   </entry>
