@@ -1,6 +1,84 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Unity之动态加载播放外部mp3音频</title>
+    <url>/Unity%E4%B9%8B%E5%8A%A8%E6%80%81%E5%8A%A0%E8%BD%BD%E6%92%AD%E6%94%BE%E5%A4%96%E9%83%A8mp3%E9%9F%B3%E9%A2%91.html</url>
+    <content><![CDATA[<html><head></head><body><h3 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h3><p>  由于Unity支持的外部加载的音频格式有限(wav、ogg等),因此本文使用支持.Net的NAudio库来完成MP3音频的加载与播放。<br>  <a href="https://github.com/naudio/NAudio/releases" target="_blank" rel="noopener">NAudio</a><br>  下载NAudio动态库，然后放在Unity中的Plugins文件夹下。在Unity使用NAudio播放MP3音频有两种方式，使用声卡直接播放和使用Unity的AudioSource播放。接下来我们一一了解。  </p>
+<h3 id="直接播放"><a href="#直接播放" class="headerlink" title="直接播放"></a>直接播放</h3><p>  在Unity中直接播放，需要先申请实例化一个WaveOutEvent对象，用于将音频直接发送到声卡输出；然后需要一个AudioFileReader加载外部的MP3音频，再将音频绑定到WaveOutEvent输出设备。在音频播放完毕之后，同时也要释放资源，避免内存的泄露与浪费，这时我们可以使用WaveOutEvent对象的PlaybackStopped事件来完成这个操作。具体代码实现如下：  </p>
+<pre><code class="C#">
+<span class="function"><span class="keyword">void</span> <span class="title">Start</span>(<span class="params"></span>)</span>
+<span class="function"></span>{
+    <span class="keyword">if</span>(<span class="keyword">string</span>.IsNullOrEmpty(audioUrl))
+    {
+        audioUrl = System.Environment.CurrentDirectory + <span class="string">"/Audios/test.mp3"</span>;
+    }
+
+    <span class="comment">//使用声卡直接播放</span>
+    <span class="keyword">if</span>(outputDevice == <span class="literal">null</span>)
+    {
+        <span class="comment">//初始化播放设备</span>
+        outputDevice = <span class="keyword">new</span> WaveOutEvent();
+        <span class="comment">//绑定播放结束事件</span>
+        outputDevice.PlaybackStopped += OutputDevice_PlaybackStopped;
+    }
+    <span class="keyword">if</span>(audioFileReader == <span class="literal">null</span>)
+    {
+        <span class="comment">//加载音乐</span>
+        audioFileReader = <span class="keyword">new</span> AudioFileReader(@audioUrl);
+
+        outputDevice.Init(audioFileReader);
+    }
+
+    outputDevice.Play();
+}
+
+<span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">OutputDevice_PlaybackStopped</span>(<span class="params"><span class="keyword">object</span> sender, StoppedEventArgs e</span>)</span>
+<span class="function"></span>{
+    <span class="comment">//释放资源</span>
+    outputDevice.Dispose();
+    outputDevice = <span class="literal">null</span>;
+    audioFileReader.Dispose();
+    audioFileReader = <span class="literal">null</span>;
+}</code></pre>
+<p>  其他具体操作可以参考NAudio的<a href="https://github.com/naudio/NAudio/blob/master/Docs/PlayAudioFileWinForms.md" target="_blank" rel="noopener">说明手册</a>  </p>
+<h3 id="使用Unity播放"><a href="#使用Unity播放" class="headerlink" title="使用Unity播放"></a>使用Unity播放</h3><p>  使用Unity的AudioSource播放，需要先将MP3转换成Unity支持的外部加载音频格式，这里我们使用wav格式。转换MP3需要用到NAudio中的WaveFileWriter中的CreateWaveFile静态方法，并且在此需要使用Mp3FileReader先将MP3音频加载到内存。接着就可以使用UnityWebRequestMultimedia加载转换完成的mav文件到Unity了。具体代码如下：  </p>
+<pre><code class="C#">
+<span class="function"><span class="keyword">void</span> <span class="title">PlayAudio</span>(<span class="params"><span class="keyword">string</span> url</span>)</span>
+<span class="function"></span>{
+    <span class="comment">//获取音频名称</span>
+    FileInfo fileInfo = <span class="keyword">new</span> FileInfo(@url);
+    <span class="comment">//wav保存地址</span>
+    cacheUrl = Path.Combine(System.Environment.CurrentDirectory + <span class="string">"/Cache"</span>, fileInfo.Name.Replace(<span class="string">".mp3"</span>, <span class="string">".wav"</span>));
+    <span class="comment">//判断是否已经转换过</span>
+    <span class="keyword">if</span> (!File.Exists(@cacheUrl))
+    {
+        <span class="comment">//将MP3转换成WAV</span>
+        <span class="keyword">using</span> (<span class="keyword">var</span> audioStrem = <span class="keyword">new</span> Mp3FileReader(@url))
+        {
+            WaveFileWriter.CreateWaveFile(@cacheUrl, audioStrem);
+        }
+    }
+
+    <span class="comment">//使用Unity加载wav音频并播放</span>
+    StartCoroutine(LoadAndPlay(@cacheUrl));
+}</code></pre>
+<p>  这里Unity加载外部音频的代码就不给出了，大家自行查阅资料学习。补充一点就是对于转换完成后的WAV音频是保存到本地的，因此我们在转换一个MP3音频前可以先检查本地是否存在已经转换好wav音频，因此就有了if (!File.Exists(@cacheUrl))这段代码。<br>  具体其他注意点，可以查考<a href="https://github.com/naudio/NAudio/blob/master/Docs/ConvertMp3ToWav.md" target="_blank" rel="noopener">ConvertMp3ToWav</a>  </p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>  对于这两种方式，哪种较好，我个人推荐使用Unity中的AudioSource去播放，虽然会耗时稍微长一点。但做好预加载应该是没啥问题的。至于为什么不推荐使用声卡直接播放，因为如果处理不好容易导致内存泄露，程序闪退。  </p>
+<blockquote>
+<p>如有侵权，请联系删除！</p>
+</blockquote>
+</body></html>]]></content>
+      <categories>
+        <category>Unity</category>
+        <category>NAudio</category>
+      </categories>
+      <tags>
+        <tag>Unity</tag>
+        <tag>NAudio</tag>
+        <tag>MP3</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>读《解忧杂货店》之后感</title>
     <url>/%E8%AF%BB%E3%80%8A%E8%A7%A3%E5%BF%A7%E6%9D%82%E8%B4%A7%E5%BA%97%E3%80%8B%E4%B9%8B%E5%90%8E%E6%84%9F.html</url>
     <content><![CDATA[<html><head></head><body><p>  好久没有“写作”了，希望不会令我的语文老师失望。哈哈哈……<br>  至于为何想写，可能内心压抑了太多……<br>  《解忧杂货店》讲述了一个老爷爷在晚年失去伴侣陪伴之后，以一个玩笑之举去帮助小孩子解决一些无厘头的问题转为帮助解答成年人的一些人生烦恼而找到人生价值的故事；同时书中又以杂货店和丸光院孤儿院为两个节点去讲述书中每个主人公的故事；不过杂货店的老爷爷和孤儿院的创始人也有一段故事。<br>  第一章《回答在牛奶箱里》，讲述一个为即将到来的奥运赛事在时刻训练，争取参赛名额女子，因为男友的病情持续恶化，而不知所措，无心训练，为此咨询浪矢杂货店。书中女子说的一段话“我比任何人都爱你，想要永远和你在一起。如果我放弃比赛就能让你好起来，我会毫不犹豫地放弃梦想。但如果不是这样，我希望坚持我的梦想。因为一直以来追寻着梦想，我才活出了自我，而你喜欢的也正是这样的我”，我想这段话应该表达了这一章节作者想说的话。<br>  我们对彼此的爱都是基于对方那个真实的自我，那个追寻梦想的自我，正是这样的自我才吸引了对方，才让对方有了探索彼此的兴趣，同时可以让爱更持久。也正是这份和谐的统一，让彼此更真实，更优秀，彼此成长成熟，相伴前行。<br>  第二章《深夜的口琴声》，以一个追寻音乐梦想的人为中心，讲述在梦想的道路碰壁；此时家里父亲身体日益欠佳，需要他回去继承家业。为此他去咨询了杂货店。与父亲的争吵，和最后向现实妥协准备继承家业，却遭到父亲的质问。父亲最终的一句“那怕梦想失败，也要留下足迹”，让他重拾信心，继续在梦想的道路上奋斗。最终主人公在孤儿院的一场大火中因救一个孩子而逝去，但他的一首自创的曲子却流传了下来。<br>  在梦想的选择上，父母有时其实并没有太多的在意，他们只是在意我们今后会不会幸福，可不可以养活自己生存下去。他们也更希望我们能够坚持自己的梦想，哪怕最后失败，家还在我们的后方，随时都可以回去，休整之后再出发。所以对于梦想，想好了，认定了，就去做，可能现实很残忍，路途很曲折，不尝试，不全力以赴，又怎么知道结果。<br>  第三章《在思域车上等到天亮》，讲述老爷爷对于自己关于对别人烦恼给出的回答是否是正确的，是否给了当事人正确的指引而怀疑自己，否定自己，最终得到了自己满意答案的一个过程。<br>  对于有些事，其实我们不必去追寻答案，重要的是对于这件事，我们用心，尽力做了吗？还有就是其实在我们想去咨询的时候，其实内心早就有了自己的答案，所以有时要跟随内心，坚定自己。对生活，我们要积极乐观，这样阳光才能照射进来。还有一点，个人理解，虽然在文中只是简单的一句“人的心声是绝对不能无视的”，这就告诉我们，在与人，与朋友，与家人，与爱人相处的过程中，要彼此交心，多交心，多倾听对方内心深处的声音，多去关心，了解，尊重。<br>  第四章《听着披头士默祈》，讲述一个被宠爱长大的男孩，由于家庭遇上社会金融危机，父亲负债，举家深夜潜逃；但因为父亲路上不经意的行为动摇了男孩坚持的理念，男孩趁中途服务区休息逃离父母。多年之后，男孩了解到父母为了保全男孩而双双自杀，此时，男孩才明白父母永远都是爱他的，那怕付出生命。<br>  所以如果问世上有什么超越了父母之爱，答案是没有。因为他们绝大部分是无条件的爱。只要一家人在一起，没有过不去的坎。不要与父母心存羁绊，也不要与他人心存羁绊，不然真相只会离我们越来越远。<br>  第五章《来自天上的祈祷》，本书的大结局，所有故事都归于了杂货店与孤儿院。杂货店的老爷爷和孤儿院的创始人青年私奔失败；正值芳龄的女孩为了照顾养父与养母，烦恼于要不要专职于陪酒赚钱，然后自己开店；孤儿院的三个青年因为气愤阴差阳错偷了指点女孩的家里财产；由于杂货店连通着过去与未来，三个青年得到了自我的救赎。<br>  对于爱，让Ta幸福便以心满意足。遇见便是最好的告白。对于人生的选择，在合适的年纪做正确的事，有些事就是如同便面看起来那般会让你坠入深渊，要抵得住诱惑。更好去全面了解这个社会，这样才能更好的做出选择。对于生活，理想，有时也不能太专注，要停下脚步让自己歇歇，不能只看前方，还要环顾四周，生活更需要一个从容的心态。<br>  最后文章以一张白纸折射人生的意义：一切都是自由的，在你面前是无限的可能。<br>  而我们要做的便是勇敢，自信，坚持，积极。心里有火，眼里有光！<br>  好了，今天的心灵毒鸡汤就到此结束。大家不要太认真。同时估计也要让我的语文老师们失望了，哈哈哈</p>

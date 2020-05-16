@@ -46,18 +46,22 @@
   };
 </script>
 
-  <meta name="description" content="Just do it!!!">
-<meta property="og:type" content="website">
-<meta property="og:title" content="新媒体开发">
-<meta property="og:url" content="https://fredlyu.github.io/archives/2019/03/index.html">
+  <meta name="description" content="Unity动态加载并播放mp3音频">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Unity之动态加载播放外部mp3音频">
+<meta property="og:url" content="https://fredlyu.github.io/Unity%E4%B9%8B%E5%8A%A8%E6%80%81%E5%8A%A0%E8%BD%BD%E6%92%AD%E6%94%BE%E5%A4%96%E9%83%A8mp3%E9%9F%B3%E9%A2%91.html">
 <meta property="og:site_name" content="新媒体开发">
-<meta property="og:description" content="Just do it!!!">
+<meta property="og:description" content="Unity动态加载并播放mp3音频">
 <meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-05-16T01:11:52.000Z">
+<meta property="article:modified_time" content="2020-05-16T01:46:28.051Z">
 <meta property="article:author" content="柒月">
-<meta property="article:tag" content="Unity 多媒体互动 新媒体开发">
+<meta property="article:tag" content="NAudio">
+<meta property="article:tag" content="MP3">
+<meta property="article:tag" content="外部加载">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="https://fredlyu.github.io/archives/2019/03/">
+<link rel="canonical" href="https://fredlyu.github.io/Unity%E4%B9%8B%E5%8A%A8%E6%80%81%E5%8A%A0%E8%BD%BD%E6%92%AD%E6%94%BE%E5%A4%96%E9%83%A8mp3%E9%9F%B3%E9%A2%91.html">
 
 
 <script id="page-configurations">
@@ -65,11 +69,11 @@
   CONFIG.page = {
     sidebar: "",
     isHome: false,
-    isPost: false
+    isPost: true
   };
 </script>
 
-  <title>归档 | 新媒体开发</title>
+  <title>Unity之动态加载播放外部mp3音频 | 新媒体开发</title>
   
 
 
@@ -212,51 +216,233 @@
           <div class="content">
             
 
+  <div class="posts-expand">
+      
   
   
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://fredlyu.github.io/Unity%E4%B9%8B%E5%8A%A8%E6%80%81%E5%8A%A0%E8%BD%BD%E6%92%AD%E6%94%BE%E5%A4%96%E9%83%A8mp3%E9%9F%B3%E9%A2%91.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/headimage.jpg">
+      <meta itemprop="name" content="柒月">
+      <meta itemprop="description" content="Just do it!!!">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="新媒体开发">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          Unity之动态加载播放外部mp3音频
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2020-05-16 09:11:52 / 修改时间：09:46:28" itemprop="dateCreated datePublished" datetime="2020-05-16T09:11:52+08:00">2020-05-16</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Unity/" itemprop="url" rel="index">
+                    <span itemprop="name">Unity</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Unity/NAudio/" itemprop="url" rel="index">
+                    <span itemprop="name">NAudio</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span id="/Unity%E4%B9%8B%E5%8A%A8%E6%80%81%E5%8A%A0%E8%BD%BD%E6%92%AD%E6%94%BE%E5%A4%96%E9%83%A8mp3%E9%9F%B3%E9%A2%91.html" class="post-meta-item leancloud_visitors" data-flag-title="Unity之动态加载播放外部mp3音频" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
   
-  <div class="post-block">
-    <div class="posts-collapse">
-      <div class="collection-title">
-        <span class="collection-header">嗯..! 目前共计 10 篇日志。 继续努力。</span>
-      </div>
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">评论次数：</span>
+    
+    <a title="valine" href="/Unity%E4%B9%8B%E5%8A%A8%E6%80%81%E5%8A%A0%E8%BD%BD%E6%92%AD%E6%94%BE%E5%A4%96%E9%83%A8mp3%E9%9F%B3%E9%A2%91.html#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/Unity%E4%B9%8B%E5%8A%A8%E6%80%81%E5%8A%A0%E8%BD%BD%E6%92%AD%E6%94%BE%E5%A4%96%E9%83%A8mp3%E9%9F%B3%E9%A2%91.html" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>2k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 ≈</span>
+              <span>2 分钟</span>
+            </span>
+            <div class="post-description">Unity动态加载并播放mp3音频</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-    <div class="collection-year">
-      <h2 class="collection-header">2019</h2>
+        <h3 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h3><p>  由于Unity支持的外部加载的音频格式有限(wav、ogg等),因此本文使用支持.Net的NAudio库来完成MP3音频的加载与播放。<br>  <a href="https://github.com/naudio/NAudio/releases" target="_blank" rel="noopener">NAudio</a><br>  下载NAudio动态库，然后放在Unity中的Plugins文件夹下。在Unity使用NAudio播放MP3音频有两种方式，使用声卡直接播放和使用Unity的AudioSource播放。接下来我们一一了解。  </p>
+<h3 id="直接播放"><a href="#直接播放" class="headerlink" title="直接播放"></a>直接播放</h3><p>  在Unity中直接播放，需要先申请实例化一个WaveOutEvent对象，用于将音频直接发送到声卡输出；然后需要一个AudioFileReader加载外部的MP3音频，再将音频绑定到WaveOutEvent输出设备。在音频播放完毕之后，同时也要释放资源，避免内存的泄露与浪费，这时我们可以使用WaveOutEvent对象的PlaybackStopped事件来完成这个操作。具体代码实现如下：  </p>
+<pre><code class="C#">
+<span class="function"><span class="keyword">void</span> <span class="title">Start</span>(<span class="params"></span>)</span>
+<span class="function"></span>{
+    <span class="keyword">if</span>(<span class="keyword">string</span>.IsNullOrEmpty(audioUrl))
+    {
+        audioUrl = System.Environment.CurrentDirectory + <span class="string">"/Audios/test.mp3"</span>;
+    }
+
+    <span class="comment">//使用声卡直接播放</span>
+    <span class="keyword">if</span>(outputDevice == <span class="literal">null</span>)
+    {
+        <span class="comment">//初始化播放设备</span>
+        outputDevice = <span class="keyword">new</span> WaveOutEvent();
+        <span class="comment">//绑定播放结束事件</span>
+        outputDevice.PlaybackStopped += OutputDevice_PlaybackStopped;
+    }
+    <span class="keyword">if</span>(audioFileReader == <span class="literal">null</span>)
+    {
+        <span class="comment">//加载音乐</span>
+        audioFileReader = <span class="keyword">new</span> AudioFileReader(@audioUrl);
+
+        outputDevice.Init(audioFileReader);
+    }
+
+    outputDevice.Play();
+}
+
+<span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">OutputDevice_PlaybackStopped</span>(<span class="params"><span class="keyword">object</span> sender, StoppedEventArgs e</span>)</span>
+<span class="function"></span>{
+    <span class="comment">//释放资源</span>
+    outputDevice.Dispose();
+    outputDevice = <span class="literal">null</span>;
+    audioFileReader.Dispose();
+    audioFileReader = <span class="literal">null</span>;
+}</code></pre>
+<p>  其他具体操作可以参考NAudio的<a href="https://github.com/naudio/NAudio/blob/master/Docs/PlayAudioFileWinForms.md" target="_blank" rel="noopener">说明手册</a>  </p>
+<h3 id="使用Unity播放"><a href="#使用Unity播放" class="headerlink" title="使用Unity播放"></a>使用Unity播放</h3><p>  使用Unity的AudioSource播放，需要先将MP3转换成Unity支持的外部加载音频格式，这里我们使用wav格式。转换MP3需要用到NAudio中的WaveFileWriter中的CreateWaveFile静态方法，并且在此需要使用Mp3FileReader先将MP3音频加载到内存。接着就可以使用UnityWebRequestMultimedia加载转换完成的mav文件到Unity了。具体代码如下：  </p>
+<pre><code class="C#">
+<span class="function"><span class="keyword">void</span> <span class="title">PlayAudio</span>(<span class="params"><span class="keyword">string</span> url</span>)</span>
+<span class="function"></span>{
+    <span class="comment">//获取音频名称</span>
+    FileInfo fileInfo = <span class="keyword">new</span> FileInfo(@url);
+    <span class="comment">//wav保存地址</span>
+    cacheUrl = Path.Combine(System.Environment.CurrentDirectory + <span class="string">"/Cache"</span>, fileInfo.Name.Replace(<span class="string">".mp3"</span>, <span class="string">".wav"</span>));
+    <span class="comment">//判断是否已经转换过</span>
+    <span class="keyword">if</span> (!File.Exists(@cacheUrl))
+    {
+        <span class="comment">//将MP3转换成WAV</span>
+        <span class="keyword">using</span> (<span class="keyword">var</span> audioStrem = <span class="keyword">new</span> Mp3FileReader(@url))
+        {
+            WaveFileWriter.CreateWaveFile(@cacheUrl, audioStrem);
+        }
+    }
+
+    <span class="comment">//使用Unity加载wav音频并播放</span>
+    StartCoroutine(LoadAndPlay(@cacheUrl));
+}</code></pre>
+<p>  这里Unity加载外部音频的代码就不给出了，大家自行查阅资料学习。补充一点就是对于转换完成后的WAV音频是保存到本地的，因此我们在转换一个MP3音频前可以先检查本地是否存在已经转换好wav音频，因此就有了if (!File.Exists(@cacheUrl))这段代码。<br>  具体其他注意点，可以查考<a href="https://github.com/naudio/NAudio/blob/master/Docs/ConvertMp3ToWav.md" target="_blank" rel="noopener">ConvertMp3ToWav</a>  </p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>  对于这两种方式，哪种较好，我个人推荐使用Unity中的AudioSource去播放，虽然会耗时稍微长一点。但做好预加载应该是没啥问题的。至于为什么不推荐使用声卡直接播放，因为如果处理不好容易导致内存泄露，程序闪退。  </p>
+<blockquote>
+<p>如有侵权，请联系删除！</p>
+</blockquote>
+
     </div>
 
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+    
+    
+    
 
-      <div class="post-meta">
-        <time itemprop="dateCreated" datetime="2019-03-01T22:23:48+08:00" content="2019-03-01">
-          03-01
-        </time>
-      </div>
 
-      <h3 class="post-title">
-          <a class="post-title-link" href="/%E8%B4%AA%E5%A9%AA%E6%9C%80%E4%BD%B3%E4%BC%98%E5%85%88%E7%AE%97%E6%B3%95.html" itemprop="url">
-            <span itemprop="name">游戏寻路--基于Unity的贪婪最佳优先算法实现</span>
-          </a>
-      </h3>
+	  <div>
+		
+			<div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+		
+	  </div>
+        
 
-    </header>
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>柒月
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://fredlyu.github.io/Unity%E4%B9%8B%E5%8A%A8%E6%80%81%E5%8A%A0%E8%BD%BD%E6%92%AD%E6%94%BE%E5%A4%96%E9%83%A8mp3%E9%9F%B3%E9%A2%91.html" title="Unity之动态加载播放外部mp3音频">https://fredlyu.github.io/Unity之动态加载播放外部mp3音频.html</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-CN" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/Unity/" rel="tag"><i class="fa fa-tag"></i> Unity</a>
+              <a href="/tags/NAudio/" rel="tag"><i class="fa fa-tag"></i> NAudio</a>
+              <a href="/tags/MP3/" rel="tag"><i class="fa fa-tag"></i> MP3</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/%E8%AF%BB%E3%80%8A%E8%A7%A3%E5%BF%A7%E6%9D%82%E8%B4%A7%E5%BA%97%E3%80%8B%E4%B9%8B%E5%90%8E%E6%84%9F.html" rel="prev" title="读《解忧杂货店》之后感">
+      <i class="fa fa-chevron-left"></i> 读《解忧杂货店》之后感
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
   </article>
+  
+  
+  
 
-
-    </div>
   </div>
-  
-  
-  
-
-  
-
 
 
           </div>
           
+    <div class="comments" id="valine-comments"></div>
 
 <script>
   window.addEventListener('tabs:register', () => {
@@ -303,6 +489,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#准备工作"><span class="nav-number">1.</span> <span class="nav-text">准备工作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#直接播放"><span class="nav-number">2.</span> <span class="nav-text">直接播放</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用Unity播放"><span class="nav-number">3.</span> <span class="nav-text">使用Unity播放</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结"><span class="nav-number">4.</span> <span class="nav-text">总结</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
