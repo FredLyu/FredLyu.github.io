@@ -158,13 +158,6 @@
   </url>
   
   <url>
-    <loc>https://fredlyu.github.io/tags/%E9%80%8F%E6%98%8E%E8%A7%86%E9%A2%91/</loc>
-    <lastmod>2021-06-11</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://fredlyu.github.io/tags/NAudio/</loc>
     <lastmod>2021-06-11</lastmod>
     <changefreq>daily</changefreq>
@@ -193,6 +186,13 @@
   </url>
   
   <url>
+    <loc>https://fredlyu.github.io/tags/%E9%80%8F%E6%98%8E%E8%A7%86%E9%A2%91/</loc>
+    <lastmod>2021-06-11</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://fredlyu.github.io/tags/%E5%AF%BB%E8%B7%AF/</loc>
     <lastmod>2021-06-11</lastmod>
     <changefreq>daily</changefreq>
@@ -201,20 +201,6 @@
   
   <url>
     <loc>https://fredlyu.github.io/tags/A%E6%98%9F%E7%AE%97%E6%B3%95/</loc>
-    <lastmod>2021-06-11</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://fredlyu.github.io/tags/%E6%BB%A4%E9%95%9C/</loc>
-    <lastmod>2021-06-11</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://fredlyu.github.io/tags/AI/</loc>
     <lastmod>2021-06-11</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -236,6 +222,20 @@
   
   <url>
     <loc>https://fredlyu.github.io/tags/Unity3D/</loc>
+    <lastmod>2021-06-11</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://fredlyu.github.io/tags/%E6%BB%A4%E9%95%9C/</loc>
+    <lastmod>2021-06-11</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://fredlyu.github.io/tags/AI/</loc>
     <lastmod>2021-06-11</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -272,7 +272,7 @@
   </url>
   
   <url>
-    <loc>https://fredlyu.github.io/categories/Unity/NAudio/</loc>
+    <loc>https://fredlyu.github.io/categories/hexo/</loc>
     <lastmod>2021-06-11</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -286,7 +286,7 @@
   </url>
   
   <url>
-    <loc>https://fredlyu.github.io/categories/hexo/</loc>
+    <loc>https://fredlyu.github.io/categories/Unity/%E9%80%8F%E6%98%8E%E8%A7%86%E9%A2%91/</loc>
     <lastmod>2021-06-11</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -307,13 +307,6 @@
   </url>
   
   <url>
-    <loc>https://fredlyu.github.io/categories/%E6%BB%A4%E9%95%9C/</loc>
-    <lastmod>2021-06-11</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://fredlyu.github.io/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</loc>
     <lastmod>2021-06-11</lastmod>
     <changefreq>daily</changefreq>
@@ -321,7 +314,14 @@
   </url>
   
   <url>
-    <loc>https://fredlyu.github.io/categories/Unity/%E9%80%8F%E6%98%8E%E8%A7%86%E9%A2%91/</loc>
+    <loc>https://fredlyu.github.io/categories/%E6%BB%A4%E9%95%9C/</loc>
+    <lastmod>2021-06-11</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://fredlyu.github.io/categories/Unity/NAudio/</loc>
     <lastmod>2021-06-11</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -349,14 +349,14 @@
   </url>
   
   <url>
-    <loc>https://fredlyu.github.io/categories/%E6%BB%A4%E9%95%9C/Unity/</loc>
+    <loc>https://fredlyu.github.io/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E7%8A%B6%E6%80%81%E6%A8%A1%E5%BC%8F/</loc>
     <lastmod>2021-06-11</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>https://fredlyu.github.io/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E7%8A%B6%E6%80%81%E6%A8%A1%E5%BC%8F/</loc>
+    <loc>https://fredlyu.github.io/categories/%E6%BB%A4%E9%95%9C/Unity/</loc>
     <lastmod>2021-06-11</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>

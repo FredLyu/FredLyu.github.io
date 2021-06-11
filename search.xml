@@ -63,55 +63,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Unity之VideoPlayer播放透明视频</title>
-    <url>/Unity%E4%B9%8BVideoPlayer%E6%92%AD%E6%94%BE%E9%80%8F%E6%98%8E%E8%A7%86%E9%A2%91.html</url>
-    <content><![CDATA[<html><head></head><body><h3 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h3><p>  由于unity对视频格式的支持有限，因此如果想使用videoplayer播放透明视频需要对视频进行特殊处理；在unity中原生支持vp8编码的webm带透明通道的视频，所以我们需要将视频转成此格式；可以使用格式工厂将带透明通道的mov视频转换为webm格式的视频，然后在unity中使用。不过本文主要介绍另一种方式，使用ffmpeg将序列帧合成为带透明通道的视频。因此需要如下工具：<br>  <a href="http://ffmpeg.org/download.html#releases" target="_blank" rel="noopener">ffmpeg3.4.2</a><br>  <a href="https://pan.baidu.com/s/16qbYHGBjYAAEnxNrPftioA" target="_blank" rel="noopener">ReNamer</a>图片批量重命名，提取码：k0sd  </p>
-<h3 id="图片重命名"><a href="#图片重命名" class="headerlink" title="图片重命名"></a>图片重命名</h3><p>  打开ReNamer软件，将所有图片拖拽到软件下方提示的额空白处，然后添加一个名称移除规则和一个名称序列化规则，完成图片的重命名，如下图所示：  </p>
-<div align="center">
-<img data-src="https://raw.githubusercontent.com/FredLyu/FigureBed-Hector/master/BlogFigure/ReNamer.png">
-</div>  
-
-<h3 id="视频合成"><a href="#视频合成" class="headerlink" title="视频合成"></a>视频合成</h3><p>  下载ffmpeg，进入到”…/bin/“目录下，然后按下键盘下的“shift”+“鼠标右键”，打开Powershell命令行窗口，输入类似如下命令：  </p>
-<p>  ./ffmpeg -y -r 25 -i 01/%3d.png -c:v libvpx -auto-alt-ref 0 -minrate 8500k -maxrate 8500k -b:v 8500k -quality best 1.webm<br>  说明：<br>  -r 表示视频帧率 -i 表示输入源 -c:v libvpx 表示视频编码格式，这里指明使用vp8编码格式（如果缺少此项，则默认使用vp9）<br>  下面两张图一个指定了编码格式，一个使用默认编码格式：  </p>
-<div align="center">
-<img data-src="https://raw.githubusercontent.com/FredLyu/FigureBed-Hector/master/BlogFigure/vp8.png">
-</div>  
-
-<div align="center">
-<img data-src="https://raw.githubusercontent.com/FredLyu/FigureBed-Hector/master/BlogFigure/vp9.png">
-</div>  
-
-<p>  <a href="http://ffmpeg.org/ffmpeg-all.html" target="_blank" rel="noopener">FFmpeg说明文档</a></p>
-<h3 id="Unity操作"><a href="#Unity操作" class="headerlink" title="Unity操作"></a>Unity操作</h3><p>  在unity中添加一个GameObject，重命名为VideoPlayer，然后添加一个”VideoPlayer”组件，将视频拖拽到video clip上即可。Camera设置如下：  </p>
-<div align="center">
-<img data-src="https://raw.githubusercontent.com/FredLyu/FigureBed-Hector/master/BlogFigure/Camera.png">
-</div>   
-
-<p>  最终效果如下:  </p>
-
-
-<div style="position: relative; width: 100%; height: 0; padding-bottom: 75%;">
-    <iframe src="//player.bilibili.com/player.html?aid=753099945&amp;bvid=BV18k4y1k7FK&amp;cid=185964691&amp;page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" style="position: absolute; width: 100%; height: 100%; left: 0; top: 0;">
-    </iframe>
-</div>
-
-
-
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>  本次分享就到此结束。不过有时在实际的项目上我们会遇到需要播放大分辨的带透明通道的视频，此时还使用videoplayer播放，会发现合成的webm视频会模糊。有时可能还会有点卡顿。那么怎么解决呢？下一篇介绍另一种在unity播放透明视频的方法。</p>
-<blockquote>
-<p>上述介绍的软件如有收费，请大家支持正版<br>本文如有侵权，请联系删除</p>
-</blockquote>
-</body></html>]]></content>
-      <categories>
-        <category>Unity</category>
-        <category>透明视频</category>
-      </categories>
-      <tags>
-        <tag>Unity</tag>
-        <tag>透明视频</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Unity之动态加载播放外部mp3音频</title>
     <url>/Unity%E4%B9%8B%E5%8A%A8%E6%80%81%E5%8A%A0%E8%BD%BD%E6%92%AD%E6%94%BE%E5%A4%96%E9%83%A8mp3%E9%9F%B3%E9%A2%91.html</url>
     <content><![CDATA[<html><head></head><body><h3 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h3><p>  由于Unity支持的外部加载的音频格式有限(wav、ogg等),因此本文使用支持.Net的NAudio库来完成MP3音频的加载与播放。<br>  <a href="https://github.com/naudio/NAudio/releases" target="_blank" rel="noopener">NAudio</a><br>  下载NAudio动态库，然后放在Unity中的Plugins文件夹下。在Unity使用NAudio播放MP3音频有两种方式，使用声卡直接播放和使用Unity的AudioSource播放。接下来我们一一了解。  </p>
@@ -206,6 +157,55 @@
       </tags>
   </entry>
   <entry>
+    <title>Unity之VideoPlayer播放透明视频</title>
+    <url>/Unity%E4%B9%8BVideoPlayer%E6%92%AD%E6%94%BE%E9%80%8F%E6%98%8E%E8%A7%86%E9%A2%91.html</url>
+    <content><![CDATA[<html><head></head><body><h3 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h3><p>  由于unity对视频格式的支持有限，因此如果想使用videoplayer播放透明视频需要对视频进行特殊处理；在unity中原生支持vp8编码的webm带透明通道的视频，所以我们需要将视频转成此格式；可以使用格式工厂将带透明通道的mov视频转换为webm格式的视频，然后在unity中使用。不过本文主要介绍另一种方式，使用ffmpeg将序列帧合成为带透明通道的视频。因此需要如下工具：<br>  <a href="http://ffmpeg.org/download.html#releases" target="_blank" rel="noopener">ffmpeg3.4.2</a><br>  <a href="https://pan.baidu.com/s/16qbYHGBjYAAEnxNrPftioA" target="_blank" rel="noopener">ReNamer</a>图片批量重命名，提取码：k0sd  </p>
+<h3 id="图片重命名"><a href="#图片重命名" class="headerlink" title="图片重命名"></a>图片重命名</h3><p>  打开ReNamer软件，将所有图片拖拽到软件下方提示的额空白处，然后添加一个名称移除规则和一个名称序列化规则，完成图片的重命名，如下图所示：  </p>
+<div align="center">
+<img data-src="https://raw.githubusercontent.com/FredLyu/FigureBed-Hector/master/BlogFigure/ReNamer.png">
+</div>  
+
+<h3 id="视频合成"><a href="#视频合成" class="headerlink" title="视频合成"></a>视频合成</h3><p>  下载ffmpeg，进入到”…/bin/“目录下，然后按下键盘下的“shift”+“鼠标右键”，打开Powershell命令行窗口，输入类似如下命令：  </p>
+<p>  ./ffmpeg -y -r 25 -i 01/%3d.png -c:v libvpx -auto-alt-ref 0 -minrate 8500k -maxrate 8500k -b:v 8500k -quality best 1.webm<br>  说明：<br>  -r 表示视频帧率 -i 表示输入源 -c:v libvpx 表示视频编码格式，这里指明使用vp8编码格式（如果缺少此项，则默认使用vp9）<br>  下面两张图一个指定了编码格式，一个使用默认编码格式：  </p>
+<div align="center">
+<img data-src="https://raw.githubusercontent.com/FredLyu/FigureBed-Hector/master/BlogFigure/vp8.png">
+</div>  
+
+<div align="center">
+<img data-src="https://raw.githubusercontent.com/FredLyu/FigureBed-Hector/master/BlogFigure/vp9.png">
+</div>  
+
+<p>  <a href="http://ffmpeg.org/ffmpeg-all.html" target="_blank" rel="noopener">FFmpeg说明文档</a></p>
+<h3 id="Unity操作"><a href="#Unity操作" class="headerlink" title="Unity操作"></a>Unity操作</h3><p>  在unity中添加一个GameObject，重命名为VideoPlayer，然后添加一个”VideoPlayer”组件，将视频拖拽到video clip上即可。Camera设置如下：  </p>
+<div align="center">
+<img data-src="https://raw.githubusercontent.com/FredLyu/FigureBed-Hector/master/BlogFigure/Camera.png">
+</div>   
+
+<p>  最终效果如下:  </p>
+
+
+<div style="position: relative; width: 100%; height: 0; padding-bottom: 75%;">
+    <iframe src="//player.bilibili.com/player.html?aid=753099945&amp;bvid=BV18k4y1k7FK&amp;cid=185964691&amp;page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" style="position: absolute; width: 100%; height: 100%; left: 0; top: 0;">
+    </iframe>
+</div>
+
+
+
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>  本次分享就到此结束。不过有时在实际的项目上我们会遇到需要播放大分辨的带透明通道的视频，此时还使用videoplayer播放，会发现合成的webm视频会模糊。有时可能还会有点卡顿。那么怎么解决呢？下一篇介绍另一种在unity播放透明视频的方法。</p>
+<blockquote>
+<p>上述介绍的软件如有收费，请大家支持正版<br>本文如有侵权，请联系删除</p>
+</blockquote>
+</body></html>]]></content>
+      <categories>
+        <category>Unity</category>
+        <category>透明视频</category>
+      </categories>
+      <tags>
+        <tag>Unity</tag>
+        <tag>透明视频</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>基于Unity的A星算法实现</title>
     <url>/%E5%9F%BA%E4%BA%8EUnity%E7%9A%84A%E6%98%9F%E7%AE%97%E6%B3%95%E5%AE%9E%E7%8E%B0-md.html</url>
     <content><![CDATA[<html><head></head><body><p>  本篇实现的A星算法是基于贪婪优先算法实现的，由于贪婪优先算法得到的是次优路径，因此我们增加一个当前节点到起始节点的一个路径开销分量来提升路径的质量，筛选最优路径。具体实现如下：</p>
@@ -238,6 +238,54 @@
         <tag>Unity</tag>
         <tag>寻路</tag>
         <tag>A星算法</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>设计模式与游戏完美开发学习--状态模式(应用篇)</title>
+    <url>/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B8%8E%E6%B8%B8%E6%88%8F%E5%AE%8C%E7%BE%8E%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0-%E7%8A%B6%E6%80%81%E6%A8%A1%E5%BC%8F-%E5%BA%94%E7%94%A8%E7%AF%87.html</url>
+    <content><![CDATA[<html><head></head><body><h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>  上一个章节，我们已经了解了什么是状态模式，并设计实现了状态模式。本节我们主要来完成状态模式的实际应用。<br>  我们知道，基于Unity3D开发的游戏都只会再一个场景中运行，因此我们可以把每一个场景都当作一个状态类，并维护这个类。这样场景之间的跳转就可以看作是状态之间的跳转；而且同一时间只会有一个状态存在，也符合游戏执行时只有一个场景存在的实际情况。</p>
+<h3 id="场景状态类SceneState的设计"><a href="#场景状态类SceneState的设计" class="headerlink" title="场景状态类SceneState的设计"></a>场景状态类SceneState的设计</h3><p>对于游戏大致可分为开始场景、主画面场景和打斗场景，因此可分别对于三个不同的状态。让三个场景类都继承ISceneState，然后再设计一个拥有者SceneStateController,而我们此次主要基于Unity3D来学习设计模式，因此我们还需要一个GameLoop类，让其拥有SceneStateController，以便完成与Unity3D的互动对接，结构如下图所示：</p>
+<div align="center">
+<img data-src="https://raw.githubusercontent.com/FredLyu/FigureBed-Hector/master/BlogFigure/SceneState.png">
+</div>
+
+<h4 id="说明如下："><a href="#说明如下：" class="headerlink" title="说明如下："></a>说明如下：</h4><blockquote>
+<p>ISceneSate：场景类的接口，主要用于规范场景状态的行为；<br>StartState、MainMenuState、BattleState：分别对应开始场景、主画面场景和打斗场景；<br>SceneStateController：场景状态的拥有者，保持当前游戏状态，并控制场景状态的转变，而且负责与GameLoop互动操作；<br>GameLoop：游戏的主循环，负责与Unity3D互动，并且可以初始化游戏和定期更新游戏。</p>
+</blockquote>
+<h3 id="场景状态模式的实现"><a href="#场景状态模式的实现" class="headerlink" title="场景状态模式的实现"></a>场景状态模式的实现</h3><h4 id="ISceneState接口类实现"><a href="#ISceneState接口类实现" class="headerlink" title="ISceneState接口类实现"></a>ISceneState接口类实现</h4><figure class="highlight plain"><table><tbody><tr><td class="code"><pre><span class="line">public class ISceneState</span><br><span class="line">{</span><br><span class="line">    // 状态名称</span><br><span class="line">    private string m_StateName = "ISceneState";</span><br><span class="line">    public string StateName</span><br><span class="line">    {</span><br><span class="line">        get</span><br><span class="line">        {</span><br><span class="line">            return m_StateName;</span><br><span class="line">        }</span><br><span class="line">        set</span><br><span class="line">        {</span><br><span class="line">            m_StateName = value;</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    // 状态控制者</span><br><span class="line">    protected SceneStateController m_Controller = null;</span><br><span class="line"></span><br><span class="line">    public ISceneState(SceneStateController controller)</span><br><span class="line">    {</span><br><span class="line">        m_Controller = controller;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    // 状态开始，可初始化一些数据</span><br><span class="line">    public virtual void StateBegin() { }</span><br><span class="line"></span><br><span class="line">    // 状态更新，可以做游戏定时更新输入等</span><br><span class="line">    public virtual void StateUpdate() { }</span><br><span class="line"></span><br><span class="line">    // 状态结束，可做资源释放</span><br><span class="line">    public virtual void StateEnd() { }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>  StateBegin、StateUpdate和StateEnd三个方法分别完成每个场景状态的初始化、更新和结束场景状态时一些释放操作。</p>
+<h4 id="开始状态类StartState的实现"><a href="#开始状态类StartState的实现" class="headerlink" title="开始状态类StartState的实现"></a>开始状态类StartState的实现</h4><figure class="highlight plain"><table><tbody><tr><td class="code"><pre><span class="line">public class StartState : ISceneState</span><br><span class="line">{</span><br><span class="line">    public StartState(SceneStateController controller) : base(controller)</span><br><span class="line">    {</span><br><span class="line">        StateName = "StartState";</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    // 开始</span><br><span class="line">    public override void StateBegin()</span><br><span class="line">    {</span><br><span class="line">        //可以在此进行游戏数据加载和初始化等</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    // 更新</span><br><span class="line">    public override void StateUpdate()</span><br><span class="line">    {</span><br><span class="line">        //更新状态</span><br><span class="line">        m_Controller.SetState(new MainMenuState(m_Controller), "MainMenuScene");</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>  开始场景主要完成一些游戏数据的加载，因此可以放在StateBegin方法中执行，而在StateUpdate方法中数据加载完成之后来切换游戏的状态，进入MainMenuState主画面场景。</p>
+<h4 id="主画面场景类MainMenuState的实现"><a href="#主画面场景类MainMenuState的实现" class="headerlink" title="主画面场景类MainMenuState的实现"></a>主画面场景类MainMenuState的实现</h4><figure class="highlight csharp"><table><tbody><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">MainMenuState</span> : <span class="title">ISceneState</span></span><br><span class="line">{</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">MainMenuState</span>(<span class="params">SceneStateController controller</span>) : <span class="title">base</span>(<span class="params">controller</span>)</span></span><br><span class="line"><span class="function"></span>    {</span><br><span class="line">        StateName = <span class="string">"MainMenuState"</span>;</span><br><span class="line">    }</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 开始</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="keyword">void</span> <span class="title">StateBegin</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>    {</span><br><span class="line">        Button tempBtn = GameObject.Find(<span class="string">"StartGameBtn"</span>).GetComponent&lt; Button &gt;();</span><br><span class="line">        <span class="keyword">if</span> (tempBtn)</span><br><span class="line">            tempBtn.onClick.AddListener(() =&gt; OnStartGameBtnClick(tempBtn));</span><br><span class="line">    }</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 开始游戏按键的响应事件</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">OnStartGameBtnClick</span>(<span class="params">Button button</span>)</span></span><br><span class="line"><span class="function"></span>    {</span><br><span class="line">        m_Controller.SetState(<span class="keyword">new</span> BattleState(m_Controller), <span class="string">"BattleScene"</span>);</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>  主画面场景主要用来展示玩家的UI一些操作，本次只是简单的应用案例，因此我们在此场景主要时一个“开始”按钮，用来切换进入打斗场景。因此在StateBegin方法中完成开始按钮的查找和点击事件的初始化，当玩家点击按钮时，状态就会被切换为打斗状态，从而进入打斗场景。</p>
+<h4 id="打斗场景BattleState的实现"><a href="#打斗场景BattleState的实现" class="headerlink" title="打斗场景BattleState的实现"></a>打斗场景BattleState的实现</h4><figure class="highlight plain"><table><tbody><tr><td class="code"><pre><span class="line">public class BattleState : ISceneState</span><br><span class="line">{</span><br><span class="line">    public BattleState(SceneStateController controller) : base(controller)</span><br><span class="line">    {</span><br><span class="line">        StateName = "BattleState";</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    public override void StateBegin()</span><br><span class="line">    {</span><br><span class="line">        //游戏初始化等</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    public override void StateEnd()</span><br><span class="line">    {</span><br><span class="line">        //状态的释放或其他资源的释放</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    public override void StateUpdate()</span><br><span class="line">    {</span><br><span class="line">        //输入</span><br><span class="line">        InputProcess();</span><br><span class="line"></span><br><span class="line">        //游戏逻辑更新</span><br><span class="line"></span><br><span class="line">        //游戏是否结束</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    // 游戏输入</span><br><span class="line">    private void InputProcess()</span><br><span class="line">    {</span><br><span class="line">        //玩家输入程序判断代码......</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>  在刚开始的StateBegin方法中完成游戏画面等一些的初始化，然后在StateUpdate方法中完成游戏的输入、游戏逻辑、游戏状态的一些更新，最后如果状态结束就在StateEnd方法中完成一些资源的释放等操作。</p>
+<h4 id="状态拥有者SceneStateController的实现"><a href="#状态拥有者SceneStateController的实现" class="headerlink" title="状态拥有者SceneStateController的实现"></a>状态拥有者SceneStateController的实现</h4><figure class="highlight plain"><table><tbody><tr><td class="code"><pre><span class="line">public class SceneStateController</span><br><span class="line">{</span><br><span class="line">    // 状态</span><br><span class="line">    private ISceneState m_State = null;</span><br><span class="line"></span><br><span class="line">    // 状态是不是刚启动</span><br><span class="line">    private bool m_bRunBegin = false;</span><br><span class="line"></span><br><span class="line">    // 场景加载的进度</span><br><span class="line">    private AsyncOperation asyncOperation;</span><br><span class="line"></span><br><span class="line">    public SceneStateController() { }</span><br><span class="line"></span><br><span class="line">    // 设置状态</span><br><span class="line">    // &lt;param name="state"&gt;具体状态的实例&lt;/param&gt;</span><br><span class="line">    // &lt;param name="loadSceneName"&gt;场景名称&lt;/param&gt;</span><br><span class="line">    public void SetState(ISceneState state,string loadSceneName)</span><br><span class="line">    {</span><br><span class="line">        m_bRunBegin = false;</span><br><span class="line"></span><br><span class="line">        //加载场景</span><br><span class="line">        LoadScene(loadSceneName);</span><br><span class="line"></span><br><span class="line">        //释放前一个状态</span><br><span class="line">        if (m_State != null)</span><br><span class="line">            m_State.StateEnd();</span><br><span class="line"></span><br><span class="line">        //更新状态</span><br><span class="line">        m_State = state;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    // 载入场景</span><br><span class="line">    // &lt;param name="sceneName"&gt;场景名称&lt;/param&gt;</span><br><span class="line">    private void LoadScene(string sceneName)</span><br><span class="line">    {</span><br><span class="line">        if (string.IsNullOrEmpty(sceneName))</span><br><span class="line">            return;</span><br><span class="line">        //异步加载场景</span><br><span class="line">        asyncOperation = SceneManager.LoadSceneAsync(sceneName);</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    // 更新</span><br><span class="line">    public void StateUpdate()</span><br><span class="line">    {</span><br><span class="line">        //Debug.Log(asyncOperation.progress);</span><br><span class="line">        //场景是否加载完成</span><br><span class="line">        if (asyncOperation != null &amp;&amp; !asyncOperation.isDone)</span><br><span class="line">            return;</span><br><span class="line"></span><br><span class="line">        //通知新的State开始</span><br><span class="line">        if(m_State != null &amp;&amp; m_bRunBegin == false)</span><br><span class="line">        {</span><br><span class="line">            m_bRunBegin = true;</span><br><span class="line">            m_State.StateBegin();</span><br><span class="line">        }</span><br><span class="line"></span><br><span class="line">        //更新</span><br><span class="line">        if (m_State != null)</span><br><span class="line">            m_State.StateUpdate();</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>  SceneStateController拥有一个IScneState字段，用来存储当前的游戏状态；SetState实现场景之间的相互转换，首先加载新场景，然后释放前一个场景并把当前场景设置为新的场景，由于加载场景使用了异步加载，因此在StateUpdate方法中先判断场景是否加载完毕，如果加载完毕则初始化新的场景并更新场景。</p>
+<h4 id="游戏主循环GameLoop的实现"><a href="#游戏主循环GameLoop的实现" class="headerlink" title="游戏主循环GameLoop的实现"></a>游戏主循环GameLoop的实现</h4><figure class="highlight plain"><table><tbody><tr><td class="code"><pre><span class="line">public class GameLoop : MonoBehaviour</span><br><span class="line">{</span><br><span class="line">    private SceneStateController sceneStateController = new SceneStateController();</span><br><span class="line"></span><br><span class="line">    private void Awake()</span><br><span class="line">    {</span><br><span class="line">        //切换场景时不销毁</span><br><span class="line">        DontDestroyOnLoad(this.gameObject);</span><br><span class="line"></span><br><span class="line">        //随机数种子</span><br><span class="line">        Random.InitState((int)System.DateTime.Now.Ticks);</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    private void Start()</span><br><span class="line">    {</span><br><span class="line">        //设置起始场景</span><br><span class="line">        sceneStateController.SetState(new StartState(sceneStateController), "");</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    // Update is called once per frame</span><br><span class="line">    void Update()</span><br><span class="line">    {</span><br><span class="line">        //更新</span><br><span class="line">        sceneStateController.StateUpdate();</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>  GameLoop中定义并初始化SceneStateController对象，在Start方法中初始化游戏场景状态，在Update方法中定时更新游戏状态。</p>
+<p>  游戏结果在此就不放出了，有兴趣的可自行实现并体验，下面会给出具体的项目工程地址。</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>  在此状态模式的应用也就讲完了，但为什么我们要使用状态模式呢？<br>  首先，状态模式可以降低维护的难度：当有新的状态增加时，我们只要实现具体的状态，并完成状态的调用就好；也可以减少switch的使用。<br>  其次，状态执行环境单一化：因为每一个场景状态类已经完成了对一个状态的操作相关工作，因此可以清晰了解一个状态执行所需要的资源。<br>  最后我们再回到设计模式的最初目的，就是减少代码的重写，提高复用；因此使用状态模式可以在项目之间共享场景。<br>  那么状态模式还有哪些应用场景？动画有限状态机、NPC角色AI和服务器连接状态等。</p>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p>&lt;&lt;设计模式与游戏完美开发&gt;&gt;</p>
+<hr>
+<blockquote>
+<p>项目工程地址：<a href="https://github.com/FredLyu/DesignPatternsLearn.git" target="_blank" rel="noopener">基于Unity的状态模式实现</a><br>如有侵权，请联系删除</p>
+</blockquote>
+</body></html>]]></content>
+      <categories>
+        <category>设计模式</category>
+        <category>状态模式</category>
+      </categories>
+      <tags>
+        <tag>设计模式</tag>
+        <tag>状态模式</tag>
+        <tag>Unity3D</tag>
       </tags>
   </entry>
   <entry>
@@ -306,54 +354,6 @@ filter对应的是滤镜的效果id，天天P图有32种效果，为1-32；AI La
         <tag>Unity</tag>
         <tag>滤镜</tag>
         <tag>AI</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>设计模式与游戏完美开发学习--状态模式(应用篇)</title>
-    <url>/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B8%8E%E6%B8%B8%E6%88%8F%E5%AE%8C%E7%BE%8E%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0-%E7%8A%B6%E6%80%81%E6%A8%A1%E5%BC%8F-%E5%BA%94%E7%94%A8%E7%AF%87.html</url>
-    <content><![CDATA[<html><head></head><body><h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>  上一个章节，我们已经了解了什么是状态模式，并设计实现了状态模式。本节我们主要来完成状态模式的实际应用。<br>  我们知道，基于Unity3D开发的游戏都只会再一个场景中运行，因此我们可以把每一个场景都当作一个状态类，并维护这个类。这样场景之间的跳转就可以看作是状态之间的跳转；而且同一时间只会有一个状态存在，也符合游戏执行时只有一个场景存在的实际情况。</p>
-<h3 id="场景状态类SceneState的设计"><a href="#场景状态类SceneState的设计" class="headerlink" title="场景状态类SceneState的设计"></a>场景状态类SceneState的设计</h3><p>对于游戏大致可分为开始场景、主画面场景和打斗场景，因此可分别对于三个不同的状态。让三个场景类都继承ISceneState，然后再设计一个拥有者SceneStateController,而我们此次主要基于Unity3D来学习设计模式，因此我们还需要一个GameLoop类，让其拥有SceneStateController，以便完成与Unity3D的互动对接，结构如下图所示：</p>
-<div align="center">
-<img data-src="https://raw.githubusercontent.com/FredLyu/FigureBed-Hector/master/BlogFigure/SceneState.png">
-</div>
-
-<h4 id="说明如下："><a href="#说明如下：" class="headerlink" title="说明如下："></a>说明如下：</h4><blockquote>
-<p>ISceneSate：场景类的接口，主要用于规范场景状态的行为；<br>StartState、MainMenuState、BattleState：分别对应开始场景、主画面场景和打斗场景；<br>SceneStateController：场景状态的拥有者，保持当前游戏状态，并控制场景状态的转变，而且负责与GameLoop互动操作；<br>GameLoop：游戏的主循环，负责与Unity3D互动，并且可以初始化游戏和定期更新游戏。</p>
-</blockquote>
-<h3 id="场景状态模式的实现"><a href="#场景状态模式的实现" class="headerlink" title="场景状态模式的实现"></a>场景状态模式的实现</h3><h4 id="ISceneState接口类实现"><a href="#ISceneState接口类实现" class="headerlink" title="ISceneState接口类实现"></a>ISceneState接口类实现</h4><figure class="highlight plain"><table><tbody><tr><td class="code"><pre><span class="line">public class ISceneState</span><br><span class="line">{</span><br><span class="line">    // 状态名称</span><br><span class="line">    private string m_StateName = "ISceneState";</span><br><span class="line">    public string StateName</span><br><span class="line">    {</span><br><span class="line">        get</span><br><span class="line">        {</span><br><span class="line">            return m_StateName;</span><br><span class="line">        }</span><br><span class="line">        set</span><br><span class="line">        {</span><br><span class="line">            m_StateName = value;</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    // 状态控制者</span><br><span class="line">    protected SceneStateController m_Controller = null;</span><br><span class="line"></span><br><span class="line">    public ISceneState(SceneStateController controller)</span><br><span class="line">    {</span><br><span class="line">        m_Controller = controller;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    // 状态开始，可初始化一些数据</span><br><span class="line">    public virtual void StateBegin() { }</span><br><span class="line"></span><br><span class="line">    // 状态更新，可以做游戏定时更新输入等</span><br><span class="line">    public virtual void StateUpdate() { }</span><br><span class="line"></span><br><span class="line">    // 状态结束，可做资源释放</span><br><span class="line">    public virtual void StateEnd() { }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
-
-<p>  StateBegin、StateUpdate和StateEnd三个方法分别完成每个场景状态的初始化、更新和结束场景状态时一些释放操作。</p>
-<h4 id="开始状态类StartState的实现"><a href="#开始状态类StartState的实现" class="headerlink" title="开始状态类StartState的实现"></a>开始状态类StartState的实现</h4><figure class="highlight plain"><table><tbody><tr><td class="code"><pre><span class="line">public class StartState : ISceneState</span><br><span class="line">{</span><br><span class="line">    public StartState(SceneStateController controller) : base(controller)</span><br><span class="line">    {</span><br><span class="line">        StateName = "StartState";</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    // 开始</span><br><span class="line">    public override void StateBegin()</span><br><span class="line">    {</span><br><span class="line">        //可以在此进行游戏数据加载和初始化等</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    // 更新</span><br><span class="line">    public override void StateUpdate()</span><br><span class="line">    {</span><br><span class="line">        //更新状态</span><br><span class="line">        m_Controller.SetState(new MainMenuState(m_Controller), "MainMenuScene");</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
-
-<p>  开始场景主要完成一些游戏数据的加载，因此可以放在StateBegin方法中执行，而在StateUpdate方法中数据加载完成之后来切换游戏的状态，进入MainMenuState主画面场景。</p>
-<h4 id="主画面场景类MainMenuState的实现"><a href="#主画面场景类MainMenuState的实现" class="headerlink" title="主画面场景类MainMenuState的实现"></a>主画面场景类MainMenuState的实现</h4><figure class="highlight csharp"><table><tbody><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">MainMenuState</span> : <span class="title">ISceneState</span></span><br><span class="line">{</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">MainMenuState</span>(<span class="params">SceneStateController controller</span>) : <span class="title">base</span>(<span class="params">controller</span>)</span></span><br><span class="line"><span class="function"></span>    {</span><br><span class="line">        StateName = <span class="string">"MainMenuState"</span>;</span><br><span class="line">    }</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 开始</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="keyword">void</span> <span class="title">StateBegin</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>    {</span><br><span class="line">        Button tempBtn = GameObject.Find(<span class="string">"StartGameBtn"</span>).GetComponent&lt; Button &gt;();</span><br><span class="line">        <span class="keyword">if</span> (tempBtn)</span><br><span class="line">            tempBtn.onClick.AddListener(() =&gt; OnStartGameBtnClick(tempBtn));</span><br><span class="line">    }</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 开始游戏按键的响应事件</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">OnStartGameBtnClick</span>(<span class="params">Button button</span>)</span></span><br><span class="line"><span class="function"></span>    {</span><br><span class="line">        m_Controller.SetState(<span class="keyword">new</span> BattleState(m_Controller), <span class="string">"BattleScene"</span>);</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
-
-<p>  主画面场景主要用来展示玩家的UI一些操作，本次只是简单的应用案例，因此我们在此场景主要时一个“开始”按钮，用来切换进入打斗场景。因此在StateBegin方法中完成开始按钮的查找和点击事件的初始化，当玩家点击按钮时，状态就会被切换为打斗状态，从而进入打斗场景。</p>
-<h4 id="打斗场景BattleState的实现"><a href="#打斗场景BattleState的实现" class="headerlink" title="打斗场景BattleState的实现"></a>打斗场景BattleState的实现</h4><figure class="highlight plain"><table><tbody><tr><td class="code"><pre><span class="line">public class BattleState : ISceneState</span><br><span class="line">{</span><br><span class="line">    public BattleState(SceneStateController controller) : base(controller)</span><br><span class="line">    {</span><br><span class="line">        StateName = "BattleState";</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    public override void StateBegin()</span><br><span class="line">    {</span><br><span class="line">        //游戏初始化等</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    public override void StateEnd()</span><br><span class="line">    {</span><br><span class="line">        //状态的释放或其他资源的释放</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    public override void StateUpdate()</span><br><span class="line">    {</span><br><span class="line">        //输入</span><br><span class="line">        InputProcess();</span><br><span class="line"></span><br><span class="line">        //游戏逻辑更新</span><br><span class="line"></span><br><span class="line">        //游戏是否结束</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    // 游戏输入</span><br><span class="line">    private void InputProcess()</span><br><span class="line">    {</span><br><span class="line">        //玩家输入程序判断代码......</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
-
-<p>  在刚开始的StateBegin方法中完成游戏画面等一些的初始化，然后在StateUpdate方法中完成游戏的输入、游戏逻辑、游戏状态的一些更新，最后如果状态结束就在StateEnd方法中完成一些资源的释放等操作。</p>
-<h4 id="状态拥有者SceneStateController的实现"><a href="#状态拥有者SceneStateController的实现" class="headerlink" title="状态拥有者SceneStateController的实现"></a>状态拥有者SceneStateController的实现</h4><figure class="highlight plain"><table><tbody><tr><td class="code"><pre><span class="line">public class SceneStateController</span><br><span class="line">{</span><br><span class="line">    // 状态</span><br><span class="line">    private ISceneState m_State = null;</span><br><span class="line"></span><br><span class="line">    // 状态是不是刚启动</span><br><span class="line">    private bool m_bRunBegin = false;</span><br><span class="line"></span><br><span class="line">    // 场景加载的进度</span><br><span class="line">    private AsyncOperation asyncOperation;</span><br><span class="line"></span><br><span class="line">    public SceneStateController() { }</span><br><span class="line"></span><br><span class="line">    // 设置状态</span><br><span class="line">    // &lt;param name="state"&gt;具体状态的实例&lt;/param&gt;</span><br><span class="line">    // &lt;param name="loadSceneName"&gt;场景名称&lt;/param&gt;</span><br><span class="line">    public void SetState(ISceneState state,string loadSceneName)</span><br><span class="line">    {</span><br><span class="line">        m_bRunBegin = false;</span><br><span class="line"></span><br><span class="line">        //加载场景</span><br><span class="line">        LoadScene(loadSceneName);</span><br><span class="line"></span><br><span class="line">        //释放前一个状态</span><br><span class="line">        if (m_State != null)</span><br><span class="line">            m_State.StateEnd();</span><br><span class="line"></span><br><span class="line">        //更新状态</span><br><span class="line">        m_State = state;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    // 载入场景</span><br><span class="line">    // &lt;param name="sceneName"&gt;场景名称&lt;/param&gt;</span><br><span class="line">    private void LoadScene(string sceneName)</span><br><span class="line">    {</span><br><span class="line">        if (string.IsNullOrEmpty(sceneName))</span><br><span class="line">            return;</span><br><span class="line">        //异步加载场景</span><br><span class="line">        asyncOperation = SceneManager.LoadSceneAsync(sceneName);</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    // 更新</span><br><span class="line">    public void StateUpdate()</span><br><span class="line">    {</span><br><span class="line">        //Debug.Log(asyncOperation.progress);</span><br><span class="line">        //场景是否加载完成</span><br><span class="line">        if (asyncOperation != null &amp;&amp; !asyncOperation.isDone)</span><br><span class="line">            return;</span><br><span class="line"></span><br><span class="line">        //通知新的State开始</span><br><span class="line">        if(m_State != null &amp;&amp; m_bRunBegin == false)</span><br><span class="line">        {</span><br><span class="line">            m_bRunBegin = true;</span><br><span class="line">            m_State.StateBegin();</span><br><span class="line">        }</span><br><span class="line"></span><br><span class="line">        //更新</span><br><span class="line">        if (m_State != null)</span><br><span class="line">            m_State.StateUpdate();</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
-
-<p>  SceneStateController拥有一个IScneState字段，用来存储当前的游戏状态；SetState实现场景之间的相互转换，首先加载新场景，然后释放前一个场景并把当前场景设置为新的场景，由于加载场景使用了异步加载，因此在StateUpdate方法中先判断场景是否加载完毕，如果加载完毕则初始化新的场景并更新场景。</p>
-<h4 id="游戏主循环GameLoop的实现"><a href="#游戏主循环GameLoop的实现" class="headerlink" title="游戏主循环GameLoop的实现"></a>游戏主循环GameLoop的实现</h4><figure class="highlight plain"><table><tbody><tr><td class="code"><pre><span class="line">public class GameLoop : MonoBehaviour</span><br><span class="line">{</span><br><span class="line">    private SceneStateController sceneStateController = new SceneStateController();</span><br><span class="line"></span><br><span class="line">    private void Awake()</span><br><span class="line">    {</span><br><span class="line">        //切换场景时不销毁</span><br><span class="line">        DontDestroyOnLoad(this.gameObject);</span><br><span class="line"></span><br><span class="line">        //随机数种子</span><br><span class="line">        Random.InitState((int)System.DateTime.Now.Ticks);</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    private void Start()</span><br><span class="line">    {</span><br><span class="line">        //设置起始场景</span><br><span class="line">        sceneStateController.SetState(new StartState(sceneStateController), "");</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    // Update is called once per frame</span><br><span class="line">    void Update()</span><br><span class="line">    {</span><br><span class="line">        //更新</span><br><span class="line">        sceneStateController.StateUpdate();</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
-
-<p>  GameLoop中定义并初始化SceneStateController对象，在Start方法中初始化游戏场景状态，在Update方法中定时更新游戏状态。</p>
-<p>  游戏结果在此就不放出了，有兴趣的可自行实现并体验，下面会给出具体的项目工程地址。</p>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>  在此状态模式的应用也就讲完了，但为什么我们要使用状态模式呢？<br>  首先，状态模式可以降低维护的难度：当有新的状态增加时，我们只要实现具体的状态，并完成状态的调用就好；也可以减少switch的使用。<br>  其次，状态执行环境单一化：因为每一个场景状态类已经完成了对一个状态的操作相关工作，因此可以清晰了解一个状态执行所需要的资源。<br>  最后我们再回到设计模式的最初目的，就是减少代码的重写，提高复用；因此使用状态模式可以在项目之间共享场景。<br>  那么状态模式还有哪些应用场景？动画有限状态机、NPC角色AI和服务器连接状态等。</p>
-<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p>&lt;&lt;设计模式与游戏完美开发&gt;&gt;</p>
-<hr>
-<blockquote>
-<p>项目工程地址：<a href="https://github.com/FredLyu/DesignPatternsLearn.git" target="_blank" rel="noopener">基于Unity的状态模式实现</a><br>如有侵权，请联系删除</p>
-</blockquote>
-</body></html>]]></content>
-      <categories>
-        <category>设计模式</category>
-        <category>状态模式</category>
-      </categories>
-      <tags>
-        <tag>设计模式</tag>
-        <tag>状态模式</tag>
-        <tag>Unity3D</tag>
       </tags>
   </entry>
   <entry>
